@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      phoneNum: DataTypes.BOUBLE,
+      phoneNum: DataTypes.DOUBLE,
       account: DataTypes.DOUBLE,
     },
     { freezeTableName: true }
