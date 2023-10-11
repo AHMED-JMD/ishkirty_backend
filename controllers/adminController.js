@@ -1,11 +1,11 @@
-// const db = require("../../models/index");
-// const User = db.models.Admin;
+// const db = require("../models/index");
+// const Admin = db.models.Admin;
 const bcrypt = require("bcryptjs");
 const xssFilter = require("xss-filters");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const admin = {
+let admin = {
   signup: async (req, res) => {
     try {
       let { username, phoneNum, email, password } = req.body;
@@ -21,7 +21,7 @@ const admin = {
       });
 
       //make sure no admin is replicated
-      let admin = await User.findOne({ where: { username } });
+      let admin = await Admin.findOne({ where: { username } });
       if (admin) return res.status(400).json("admin already exist");
 
       //hash user password
@@ -110,7 +110,7 @@ const admin = {
       })
       .catch((err) => console.log(err));
   },
-  delete: async (req, res) => {
+  delete_user: async (req, res) => {
     try {
       let { username } = req.body;
 

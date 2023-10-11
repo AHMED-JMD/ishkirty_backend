@@ -2,10 +2,10 @@
   "name": "oil_pump",
   "version": "1.0.0",
   "description": "system for oil pump station",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "author": "Jmd",
   "license": "ISC",
