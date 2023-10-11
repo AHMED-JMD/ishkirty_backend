@@ -18,11 +18,18 @@ db.sequelize = sequelize;
 db.models = {};
 //require the objects
 let Admin = require("./admin")(sequelize, Sequelize.DataTypes);
+let Client = require("./client")(sequelize, Sequelize.DataTypes);
+let Spieces = require("./spieces")(sequelize, Sequelize.DataTypes);
+let Bill = require("./bill")(sequelize, Sequelize.DataTypes);
 
 //sql relationship here -------------------------------
+Spieces.hasMany(Bill);
 // //-----------------------------------------------------
 
 // //add to db models
 db.models.Admin = Admin;
+db.models.Client = Client;
+db.models.Spieces = Spieces;
+db.models.Bill = Bill;
 
 module.exports = db;
