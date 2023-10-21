@@ -1,5 +1,5 @@
-// const db = require("../models/index");
-// const Admin = db.models.Admin;
+const db = require("../models/index");
+const Admin = db.models.Admin;
 const bcrypt = require("bcryptjs");
 const xssFilter = require("xss-filters");
 const jwt = require("jsonwebtoken");
@@ -8,17 +8,11 @@ require("dotenv").config();
 let admin = {
   signup: async (req, res) => {
     try {
-      let { username, phoneNum, email, password } = req.body;
+      let { username, phoneNum, password } = req.body;
       //check req.body
-      if (!(username && phoneNum && email && password)) {
+      if (!(username && phoneNum && password)) {
         return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
       }
-
-      const data = [username, phoneNum, email, password];
-      //filter input
-      data.forEach((data) => {
-        data = xssFilter.inHTMLData(data);
-      });
 
       //make sure no admin is replicated
       let admin = await Admin.findOne({ where: { username } });
@@ -32,7 +26,6 @@ let admin = {
       const newAdmin = await Admin.create({
         username,
         phoneNum,
-        email,
         password: hashedPassword,
       });
 
