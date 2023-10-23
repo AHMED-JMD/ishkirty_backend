@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const Bill = db.models.Bill;
+const Spieces = db.models.Spieces;
 const bcrypt = require("bcryptjs");
 const xssFilter = require("xss-filters");
 const jwt = require("jsonwebtoken");
@@ -45,9 +46,13 @@ let admin = {
     try {
       let { bill_id } = req.body;
 
+      //find the bill
       let bill = Bill.findOne({
         where: { bill_id },
       });
+
+      //find all sepieces
+      let spieces = await Spieces.finAll();
 
       //send the bill
       res.json(bill);

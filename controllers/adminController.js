@@ -32,9 +32,8 @@ let admin = {
       //send to client
       res.json({
         user: {
-          id: newAdmin.id,
+          id: newAdmin.admin_id,
           phoneNum: newAdmin.phoneNum,
-          email: newAdmin.email,
           username: newAdmin.username,
         },
       });

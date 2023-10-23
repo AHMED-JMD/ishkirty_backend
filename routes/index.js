@@ -1,5 +1,8 @@
 const { Router } = require("express");
 const admin = require("./admin");
+const spieces = require("./spieces");
+// const client = require("./client");
+// const bill = require("./bill");
 
 /**
  * @description register all of your routes here and they will be
@@ -9,5 +12,6 @@ const admin = require("./admin");
 const router = Router();
 
 router.use("/admin", admin);
+router.use("/spieces", spieces);
 
 module.exports = router;

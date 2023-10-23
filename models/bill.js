@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       amount: { type: DataTypes.DOUBLE, allowNull: false },
       isDeleted: { type: DataTypes.BOOLEAN, defaulValue: false },
-      paymentMethod: { type: DataTypes.STRING, allowNull: false },
+      paymentMethod: {
+        type: DataTypes.ENUM("BANKK, CASH, ACCOUNT"),
+        allowNull: false,
+      },
       date: { type: DataTypes.DATEONLY, allowNull: false },
     },
     { freezeTablaName: true }

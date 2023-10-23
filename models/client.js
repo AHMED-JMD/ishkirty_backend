@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       phoneNum: DataTypes.DOUBLE,
-      account: DataTypes.DOUBLE,
+      account: { type: DataTypes.DOUBLE, defaultValue: 0 },
+      date: DataTypes.DATEONLY,
     },
     { freezeTableName: true }
   );

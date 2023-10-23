@@ -24,6 +24,7 @@ let Bill = require("./bill")(sequelize, Sequelize.DataTypes);
 
 //sql relationship here -------------------------------
 Bill.hasMany(Spieces);
+Client.hasMany(Bill);
 // //-----------------------------------------------------
 
 // //add to db models
