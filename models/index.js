@@ -21,9 +21,11 @@ let Admin = require("./admin")(sequelize, Sequelize.DataTypes);
 let Client = require("./client")(sequelize, Sequelize.DataTypes);
 let Spieces = require("./spieces")(sequelize, Sequelize.DataTypes);
 let Bill = require("./bill")(sequelize, Sequelize.DataTypes);
+let BillTrans = require("./billTrans")(sequelize, Sequelize.DataTypes);
 
 //sql relationship here -------------------------------
-Bill.hasMany(Spieces);
+Bill.hasMany(BillTrans);
+Spieces.hasMany(BillTrans);
 Client.hasMany(Bill);
 // //-----------------------------------------------------
 
@@ -32,5 +34,6 @@ db.models.Admin = Admin;
 db.models.Client = Client;
 db.models.Spieces = Spieces;
 db.models.Bill = Bill;
+db.models.BillTrans = BillTrans;
 
 module.exports = db;

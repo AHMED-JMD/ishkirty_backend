@@ -52,7 +52,7 @@ let admin = {
       });
 
       //find all sepieces
-      let spieces = await Spieces.finAll();
+      // let spieces = await Spieces.finAll();
 
       //send the bill
       res.json(bill);

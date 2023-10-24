@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       date: { type: DataTypes.DATEONLY, allowNull: false },
+      shiftTime: { type: DataTypes.ENUM("MORNING", "NIGHT"), allowNull: false },
     },
     { freezeTablaName: true }
   );

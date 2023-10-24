@@ -1,11 +1,28 @@
 const db = require("../models/index");
 const Spieces = db.models.Spieces;
 const _ = require("lodash");
+const deleteFile = require("../middlewares/deleteImage");
 
 module.exports = {
   getAll: async (req, res) => {
     try {
-      let spieces = await Spieces.findAll({});
+      let spieces = await Spieces.findAll({ order: [["price", "DESC"]] });
+
+      res.json(spieces);
+    } catch (error) {
+      if (error) throw error;
+    }
+  },
+  getByType: async (req, res) => {
+    try {
+      let { category } = req.body;
+
+      if (!category) return res.status(400).json("enter all feilds");
+
+      let spieces = await Spieces.findAll({
+        where: { category },
+        order: [["price", "DESC"]],
+      });
 
       res.json(spieces);
     } catch (error) {
@@ -16,7 +33,7 @@ module.exports = {
     try {
       const _feilds = _.pick(req.body, ["name", "category", "price"]);
 
-      let filename = req.file;
+      let { filename } = req.file;
       //make sure image is sent
       if (!filename) return res.status(400).json("enter the image");
       //make sure feilds are completed
@@ -47,18 +64,29 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      const _feilds = _.pick(req.body, [
-        "id",
-        "name",
-        "category",
-        "imgLink",
-        "price",
-      ]);
+      const _feilds = _.pick(req.body, ["id", "name", "category", "price"]);
 
-      if (_feilds.length < 4) return res.status(400).json("enter all feilds");
+      let { filename } = req.file;
+      //make sure image is sent
+      if (!filename) return res.status(400).json("enter the image");
+      //make sure data is sent
+      if (_feilds.length < 3) return res.status(400).json("enter all feilds");
 
-      //add new clients
-      await Spieces.update(_feilds, { where: { id: _feilds.id } });
+      //find image pathe and delete it
+      let spieces = await Spieces.findOne({ where: { id: _feilds.id } });
+      //delete image
+      deleteFile(`../public/${spieces.ImgLink}`);
+
+      //update clients
+      await Spieces.update(
+        {
+          name: _feilds.name,
+          category: _feilds.category,
+          ImgLink: filename,
+          price: _feilds.price,
+        },
+        { where: { id: _feilds.id } }
+      );
 
       res.json("success");
     } catch (error) {
