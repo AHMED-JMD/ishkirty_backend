@@ -1,8 +1,9 @@
 const db = require("../models/index");
 const Client = db.models.Client;
+const Bill = db.models.Bill;
 const _ = require("lodash");
 
-module.export = {
+module.exports = {
   add: async (req, res) => {
     try {
       const _feilds = _.pick(req.body, ["name", "phoneNum", "account", "date"]);
@@ -21,6 +22,32 @@ module.export = {
       res.json("success");
     } catch (error) {
       if (error) throw error;
+    }
+  },
+  getAll: async (req, res) => {
+    try {
+      let clients = await Client.findAll({ order: [["account", "DESC"]] });
+
+      //send request
+      res.json(clients);
+    } catch (error) {
+      throw error;
+    }
+  },
+  getOne: async (req, res) => {
+    try {
+      let { id } = req.body;
+
+      //find the bill
+      let clients = Client.findOne({
+        where: { id },
+        include: Bill,
+      });
+
+      //send the bill
+      res.json(clients);
+    } catch (error) {
+      throw error;
     }
   },
   update: async (req, res) => {
