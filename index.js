@@ -7,7 +7,7 @@ const router = require("./routes");
 //middlewares
 app.use(express.urlencoded({ extended: false }));
 //static routes
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 app.use(cors());
 

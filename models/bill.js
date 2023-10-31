@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         defaulValue: DataTypes.UUIDV1,
       },
-      amount: { type: DataTypes.DOUBLE, allowNull: false },
+      amount: { type: DataTypes.BIGINT, allowNull: false },
       isDeleted: { type: DataTypes.BOOLEAN, defaulValue: false },
       paymentMethod: {
         type: DataTypes.ENUM("BANKK, CASH, ACCOUNT"),

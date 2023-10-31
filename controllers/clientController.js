@@ -6,13 +6,13 @@ const _ = require("lodash");
 module.exports = {
   add: async (req, res) => {
     try {
-      const _feilds = _.pick(req.body, ["name", "phoneNum", "account", "date"]);
+      const _feilds = _.pick(req.body, ["name", "phoneNum", "account"]);
 
-      if (_feilds.length < 3) return res.status(400).json("enter all feilds");
+      if (_feilds.length < 2) return res.status(400).json("enter all feilds");
 
       //check if client exist
       let client = await Client.findOne({
-        where: { phoneNum: _feilds.phoneNum },
+        where: { name: _feilds.name },
       });
       if (client) return res.status(400).json("client exist");
 
@@ -39,9 +39,24 @@ module.exports = {
       let { id } = req.body;
 
       //find the bill
-      let clients = Client.findOne({
+      let clients = await Client.findOne({
         where: { id },
         include: Bill,
+      });
+
+      //send the bill
+      res.json(clients);
+    } catch (error) {
+      throw error;
+    }
+  },
+  findOne: async (req, res) => {
+    try {
+      let { name } = req.body;
+
+      //find the bill
+      let clients = await Client.findAll({
+        where: { name },
       });
 
       //send the bill
@@ -72,25 +87,25 @@ module.exports = {
   },
   modify: async (req, res) => {
     try {
-      const _feilds = _.pick(req.body, ["id", "type", "amount"]);
+      const _feilds = _.pick(req.body, ["name", "type", "amount"]);
 
       if (_feilds.length < 2) return res.status(400).json("enter all feilds");
 
       //check type
-      let client = await client.findOne({ where: { id: _feilds.id } });
-      if (_feilds.type === "add") {
+      let client = await Client.findOne({ where: { name: _feilds.name } });
+      if (_feilds.type === "اضافة") {
         await Client.update(
           {
             account: client.account + parseInt(_feilds.amount),
           },
-          { where: { id: _feilds.id } }
+          { where: { id: client.id } }
         );
       } else {
         await Client.update(
           {
             account: client.account - parseInt(_feilds.amount),
           },
-          { where: { id: _feilds.id } }
+          { where: { id: client.id } }
         );
       }
 
@@ -101,11 +116,12 @@ module.exports = {
   },
   deleteClient: async (req, res) => {
     try {
-      if (!req.body) return res.status(400).json("enter all feilds");
+      const { id } = req.body;
 
-      req.body.map(async (id) => {
-        await Client.destroy({ where: { id } });
-      });
+      if (!id) return res.status(400).json("enter all feilds");
+      //deleteClient
+      await Client.destroy({ where: { id } });
+      //deleteBills
 
       res.json("success");
     } catch (error) {

@@ -4,6 +4,8 @@ const validUser = require("../middlewares/auth");
 const uploadImage = require("../middlewares/multer");
 const {
   getAll,
+  getByType,
+  findOne,
   add,
   update,
   deleteSpieces,
@@ -11,11 +13,10 @@ const {
 
 //routes here
 router.post("/", uploadImage, add);
-
 router.get("/", getAll);
-
+router.post("/type", getByType);
+router.post("/find_one", findOne);
 router.post("/update", update);
-
 router.post("/delete", deleteSpieces);
 
 module.exports = router;

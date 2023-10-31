@@ -6,9 +6,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      phoneNum: DataTypes.DOUBLE,
-      account: { type: DataTypes.DOUBLE, defaultValue: 0 },
-      date: DataTypes.DATEONLY,
+      phoneNum: DataTypes.BIGINT,
+      account: { type: DataTypes.BIGINT, defaultValue: 0 },
     },
     { freezeTableName: true }
   );

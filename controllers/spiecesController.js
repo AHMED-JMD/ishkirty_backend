@@ -1,6 +1,7 @@
 const db = require("../models/index");
 const Spieces = db.models.Spieces;
 const _ = require("lodash");
+const path = require("path");
 const deleteFile = require("../middlewares/deleteImage");
 
 module.exports = {
@@ -27,6 +28,21 @@ module.exports = {
       res.json(spieces);
     } catch (error) {
       if (error) throw error;
+    }
+  },
+  findOne: async (req, res) => {
+    try {
+      let { name } = req.body;
+
+      //find the bill
+      let spieces = await Spieces.findAll({
+        where: { name },
+      });
+
+      //send the bill
+      res.json(spieces);
+    } catch (error) {
+      throw error;
     }
   },
   add: async (req, res) => {
@@ -75,7 +91,7 @@ module.exports = {
       //find image pathe and delete it
       let spieces = await Spieces.findOne({ where: { id: _feilds.id } });
       //delete image
-      deleteFile(`../public/${spieces.ImgLink}`);
+      deleteFile(path.join(__dirname, `../public/${spieces.ImgLink}`));
 
       //update clients
       await Spieces.update(
@@ -95,11 +111,17 @@ module.exports = {
   },
   deleteSpieces: async (req, res) => {
     try {
-      if (!req.body) return res.status(400).json("enter all feilds");
+      let { id } = req.body;
 
-      req.body.map(async (id) => {
-        await Spieces.destroy({ where: { id } });
-      });
+      if (!id) return res.status(400).json("enter all feilds");
+
+      //get spieces data and delete img
+      let spieces = await Spieces.findOne({ where: { id } });
+      //delete image
+      deleteFile(path.join(__dirname, `../public/${spieces.ImgLink}`));
+
+      //delete all data
+      await Spieces.destroy({ where: { id } });
 
       res.json("success");
     } catch (error) {

@@ -3,9 +3,9 @@ module.exports = (sequelize, DataTypes) => {
     "BillTrans",
     {
       name: DataTypes.STRING,
-      price: DataTypes.DOUBLE,
-      quantity: DataTypes.DOUBLE,
-      amount: DataTypes.DOUBLE,
+      price: DataTypes.BIGINT,
+      quantity: DataTypes.BIGINT,
+      amount: DataTypes.BIGINT,
     },
     { freezeTableName: true }
   );
