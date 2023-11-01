@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV1,
       },
       username: DataTypes.STRING,
-      phoneNum: DataTypes.INTEGER,
+      phoneNum: DataTypes.BIGINT,
       password: DataTypes.STRING,
     },
     { freezeTableName: true }

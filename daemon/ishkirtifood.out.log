@@ -1,0 +1,117 @@
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` WHERE `Client`.`name` = 'oday';
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`name` = 'اناناس';
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): INSERT INTO `Admin` (`admin_id`,`username`,`phoneNum`,`password`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?);
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Error
+    at Query.run (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\query.js:52:25)
+    at E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:315:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async MySQLQueryInterface.insert (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:308:21)
+    at async model.save (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:2490:35)
+    at async Admin.create (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:1362:12)
+    at async signup (E:\Projects\ishkirty_backend\controllers\adminController.js:26:24) {
+  name: 'SequelizeDatabaseError',
+  parent: Error: Out of range value for column 'phoneNum' at row 1
+      at Packet.asError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packets\packet.js:728:17)
+      at Execute.execute (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:492:32)
+      at PacketParser.onPacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:97:12)
+      at PacketParser.executeStart (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:104:25)
+      at Socket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:324:12)
+      at readableAddChunk (node:internal/streams/readable:297:9)
+      at Readable.push (node:internal/streams/readable:234:10) {
+    code: 'ER_WARN_DATA_OUT_OF_RANGE',
+    errno: 1264,
+    sqlState: '22003',
+    sqlMessage: "Out of range value for column 'phoneNum' at row 1",
+    sql: 'INSERT INTO `Admin` (`admin_id`,`username`,`phoneNum`,`password`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?);',
+    parameters: [
+      '324c0cf0-786c-11ee-b005-8f3d3e8d9b70',
+      'test1',
+      9123456780,
+      '$2a$10$vPB9e1kjWWT6P4l0m/PRm.L.1l9WHatXNnDXqc5nVrRQGrcYHHKGq',
+      '2023-11-01 04:07:39',
+      '2023-11-01 04:07:39'
+    ]
+  },
+  original: Error: Out of range value for column 'phoneNum' at row 1
+      at Packet.asError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packets\packet.js:728:17)
+      at Execute.execute (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:492:32)
+      at PacketParser.onPacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:97:12)
+      at PacketParser.executeStart (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:104:25)
+      at Socket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:324:12)
+      at readableAddChunk (node:internal/streams/readable:297:9)
+      at Readable.push (node:internal/streams/readable:234:10) {
+    code: 'ER_WARN_DATA_OUT_OF_RANGE',
+    errno: 1264,
+    sqlState: '22003',
+    sqlMessage: "Out of range value for column 'phoneNum' at row 1",
+    sql: 'INSERT INTO `Admin` (`admin_id`,`username`,`phoneNum`,`password`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?);',
+    parameters: [
+      '324c0cf0-786c-11ee-b005-8f3d3e8d9b70',
+      'test1',
+      9123456780,
+      '$2a$10$vPB9e1kjWWT6P4l0m/PRm.L.1l9WHatXNnDXqc5nVrRQGrcYHHKGq',
+      '2023-11-01 04:07:39',
+      '2023-11-01 04:07:39'
+    ]
+  },
+  sql: 'INSERT INTO `Admin` (`admin_id`,`username`,`phoneNum`,`password`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?);',
+  parameters: [
+    '324c0cf0-786c-11ee-b005-8f3d3e8d9b70',
+    'test1',
+    9123456780,
+    '$2a$10$vPB9e1kjWWT6P4l0m/PRm.L.1l9WHatXNnDXqc5nVrRQGrcYHHKGq',
+    '2023-11-01 04:07:39',
+    '2023-11-01 04:07:39'
+  ]
+}
+Connected to MySQL

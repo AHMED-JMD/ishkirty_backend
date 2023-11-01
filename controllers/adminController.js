@@ -20,7 +20,7 @@ let admin = {
 
       //hash user password
       const salt = await bcrypt.genSalt(10);
-      hashedPassword = await bcrypt.hash(password, salt);
+      let hashedPassword = await bcrypt.hash(password, salt);
 
       //save to database
       const newAdmin = await Admin.create({
@@ -31,7 +31,9 @@ let admin = {
 
       //send to client
       res.json({
-        user: {
+        statusCode: 200,
+        message: "Success",
+        data: {
           id: newAdmin.admin_id,
           phoneNum: newAdmin.phoneNum,
           username: newAdmin.username,
@@ -43,27 +45,16 @@ let admin = {
   },
   login: async (req, res) => {
     try {
-      let { username, password, deviceId } = req.body;
+      let { username, password } = req.body;
 
       if (!username || !password) {
         return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
       }
 
-      //filter input
-      (username = xssFilter.inHTMLData(username)),
-        (password = xssFilter.inHTMLData(password));
-
       Admin.findOne({ where: { username } }).then((user) => {
         if (!user) {
           return res.status(400).json({ msg: "المستخدم غير موجود !" });
         }
-        //device id check
-        if (user.deviceId !== deviceId)
-          return res.status(400).json("الجهاز غير مسجل");
-
-        //check user is verified
-        if (user.role !== "verified")
-          return res.status(400).json("الرجاء انتظار التأكيد من المدرسة");
 
         bcrypt.compare(password, user.password).then((isMatch) => {
           if (!isMatch) {
@@ -76,11 +67,15 @@ let admin = {
               (err, token) => {
                 if (err) throw err;
                 res.json({
-                  token,
-                  user: {
-                    id: user.id,
-                    phoneNum: user.phoneNum,
-                    username: user.username,
+                  statusCode: 200,
+                  message: "Success",
+                  data: {
+                    token,
+                    user: {
+                      id: user.admin_id,
+                      phoneNum: user.phoneNum,
+                      username: user.username,
+                    },
                   },
                 });
               }
@@ -96,18 +91,59 @@ let admin = {
     Admin.findOne({ where: { admin_id: req.user.id } })
       .then((user) => {
         res.json({
-          username: user.username,
-          phoneNum: user.phoneNum,
+          statusCode: 200,
+          message: "Success",
+          data: {
+            username: user.username,
+            phoneNum: user.phoneNum,
+          },
         });
       })
       .catch((err) => console.log(err));
+  },
+  updatePassword: async (req, res) => {
+    try {
+      let { admin_id, password, newPassword } = req.body;
+
+      if (!admin_id || !password || !newPassword) {
+        return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
+      }
+
+      //find and verify admin
+      let admin = await Admin.findOne({ where: { admin_id } });
+
+      if (!admin) return res.status(404).json("provide a valid id");
+      //match password
+      let isMatch = await bcrypt.compare(password, admin.password);
+      if (!isMatch) return res.status(404).json("كلمة المرور غير صحيحة");
+
+      //hash user password
+      const salt = await bcrypt.genSalt(10);
+      let hashedPassword = await bcrypt.hash(newPassword, salt);
+
+      //update admin
+      await admin.update({ password: hashedPassword }, { where: { admin_id } });
+
+      res.json({
+        statusCode: 200,
+        message: "User updated successfully",
+        data: {},
+      });
+    } catch (error) {
+      if (error) throw error;
+      console.log(error);
+    }
   },
   delete_user: async (req, res) => {
     try {
       let { username } = req.body;
 
       await Admin.destroy({ where: { username } });
-      res.json("deleted successfully");
+      res.json({
+        statusCode: 200,
+        message: "User deleted",
+        data: {},
+      });
     } catch (error) {
       if (error) throw error;
       console.log(error);

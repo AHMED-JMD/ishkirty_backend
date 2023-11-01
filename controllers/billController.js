@@ -9,9 +9,9 @@ require("dotenv").config();
 module.exports = {
   add: async (req, res) => {
     try {
-      let { date, amount, trans_id, paymentMethod } = req.body;
+      let { date, amount, trans, paymentMethod } = req.body;
       //check req.body
-      if (!(date && amount && spieces_id && paymentMethod)) {
+      if (!(date && amount && trans && paymentMethod)) {
         return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
       }
 
@@ -76,10 +76,14 @@ module.exports = {
     }
   },
   deleteBill: async (req, res) => {
-    if (!req.body) return res.status(400).json("enter all feilds");
+    let { id } = req.body;
+
+    if (!id) return res.status(400).json("enter all feilds");
 
     //delete from db
-    await Bill.destroy({ bill_id: req.body });
+    let bill = await Bill.findOne({ where: { bill_id: id } });
+
+    await Bill.destroy({ bill_id: id });
 
     //sent request
     res.json("success");
