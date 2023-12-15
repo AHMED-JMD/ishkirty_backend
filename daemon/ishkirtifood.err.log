@@ -1,0 +1,801 @@
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102
+          throw new SequelizeErrors.ConnectionError(err);
+                ^
+
+ConnectionError [SequelizeConnectionError]: connect ETIMEDOUT
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  },
+  original: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24) {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102
+          throw new SequelizeErrors.ConnectionError(err);
+                ^
+
+ConnectionError [SequelizeConnectionError]: connect ETIMEDOUT
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102:17)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at runNextTicks (node:internal/process/task_queues:64:3)
+    at listOnTimeout (node:internal/timers:533:9)
+    at process.processTimers (node:internal/timers:507:7)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24) {
+  parent: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  },
+  original: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24) {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102
+          throw new SequelizeErrors.ConnectionError(err);
+                ^
+
+ConnectionError [SequelizeConnectionError]: connect ETIMEDOUT
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24) {
+  parent: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  },
+  original: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102
+          throw new SequelizeErrors.ConnectionError(err);
+                ^
+
+ConnectionError [SequelizeConnectionError]: connect ETIMEDOUT
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  },
+  original: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102
+          throw new SequelizeErrors.ConnectionError(err);
+                ^
+
+ConnectionError [SequelizeConnectionError]: connect ETIMEDOUT
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  },
+  original: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102
+          throw new SequelizeErrors.ConnectionError(err);
+                ^
+
+ConnectionError [SequelizeConnectionError]: connect ETIMEDOUT
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  },
+  original: Error: connect ETIMEDOUT
+      at Connection._handleTimeoutError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:205:17)
+      at listOnTimeout (node:internal/timers:564:17)
+      at process.processTimers (node:internal/timers:507:7) {
+    errorno: 'ETIMEDOUT',
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+Warning: got packets out of order. Expected 2 but received 1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102
+          throw new SequelizeErrors.ConnectionError(err);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Got timeout reading communication packets
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: Got timeout reading communication packets
+      at Packet.asError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packets\packet.js:728:17)
+      at ClientHandshake.execute (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:492:32)
+      at PacketParser.onPacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:97:12)
+      at PacketParser.executeStart (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:104:25)
+      at Socket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:324:12)
+      at readableAddChunk (node:internal/streams/readable:297:9)
+      at Readable.push (node:internal/streams/readable:234:10) {
+    code: 'ER_NET_READ_INTERRUPTED',
+    errno: 1159,
+    sqlState: '08S01',
+    sqlMessage: 'Got timeout reading communication packets',
+    sql: undefined
+  },
+  original: Error: Got timeout reading communication packets
+      at Packet.asError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packets\packet.js:728:17)
+      at ClientHandshake.execute (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:492:32)
+      at PacketParser.onPacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:97:12)
+      at PacketParser.executeStart (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:104:25)
+      at Socket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:324:12)
+      at readableAddChunk (node:internal/streams/readable:297:9)
+      at Readable.push (node:internal/streams/readable:234:10) {
+    code: 'ER_NET_READ_INTERRUPTED',
+    errno: 1159,
+    sqlState: '08S01',
+    sqlMessage: 'Got timeout reading communication packets',
+    sql: undefined
+  }
+}
+
+Node.js v18.12.1
+Warning: got packets out of order. Expected 2 but received 1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102
+          throw new SequelizeErrors.ConnectionError(err);
+                ^
+
+ConnectionError [SequelizeConnectionError]: Got timeout reading communication packets
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:102:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32 {
+  parent: Error: Got timeout reading communication packets
+      at Packet.asError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packets\packet.js:728:17)
+      at ClientHandshake.execute (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:492:32)
+      at PacketParser.onPacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:97:12)
+      at PacketParser.executeStart (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:104:25)
+      at Socket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:324:12)
+      at readableAddChunk (node:internal/streams/readable:297:9)
+      at Readable.push (node:internal/streams/readable:234:10) {
+    code: 'ER_NET_READ_INTERRUPTED',
+    errno: 1159,
+    sqlState: '08S01',
+    sqlMessage: 'Got timeout reading communication packets',
+    sql: undefined
+  },
+  original: Error: Got timeout reading communication packets
+      at Packet.asError (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packets\packet.js:728:17)
+      at ClientHandshake.execute (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\commands\command.js:29:26)
+      at Connection.handlePacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:492:32)
+      at PacketParser.onPacket (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:97:12)
+      at PacketParser.executeStart (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\packet_parser.js:75:16)
+      at Socket.<anonymous> (E:\Projects\ishkirty_backend\node_modules\mysql2\lib\connection.js:104:25)
+      at Socket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:324:12)
+      at readableAddChunk (node:internal/streams/readable:297:9)
+      at Readable.push (node:internal/streams/readable:234:10) {
+    code: 'ER_NET_READ_INTERRUPTED',
+    errno: 1159,
+    sqlState: '08S01',
+    sqlMessage: 'Got timeout reading communication packets',
+    sql: undefined
+  }
+}
+
+Node.js v18.12.1

@@ -115,3 +115,470 @@ Error
   ]
 }
 Connected to MySQL
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'jmd' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'jmd' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+server running on port 3000
+server running on port 3000
+server running on port 3000
+server running on port 3000
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+server running on port 3000
+server running on port 3000
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'صبصث' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+server running on port 3000
+server running on port 3000
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+server running on port 3000
+server running on port 3000
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+server running on port 3000
+server running on port 3000
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'محمد' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+server running on port 3000
+server running on port 3000
+server running on port 3000

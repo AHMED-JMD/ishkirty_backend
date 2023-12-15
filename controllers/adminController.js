@@ -48,17 +48,17 @@ let admin = {
       let { username, password } = req.body;
 
       if (!username || !password) {
-        return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
+        return res.status(400).json("قم بادخال جميع الحقول");
       }
 
       Admin.findOne({ where: { username } }).then((user) => {
         if (!user) {
-          return res.status(400).json({ msg: "المستخدم غير موجود !" });
+          return res.status(400).json("المستخدم غير موجود !");
         }
 
         bcrypt.compare(password, user.password).then((isMatch) => {
           if (!isMatch) {
-            return res.status(400).json({ msg: "كلمة المرور غير صحيحة" });
+            return res.status(400).json("كلمة المرور غير صحيحة");
           } else {
             //sign user
             jwt.sign(
@@ -67,15 +67,11 @@ let admin = {
               (err, token) => {
                 if (err) throw err;
                 res.json({
-                  statusCode: 200,
-                  message: "Success",
-                  data: {
-                    token,
-                    user: {
-                      id: user.admin_id,
-                      phoneNum: user.phoneNum,
-                      username: user.username,
-                    },
+                  token,
+                  user: {
+                    id: user.admin_id,
+                    phoneNum: user.phoneNum,
+                    username: user.username,
                   },
                 });
               }

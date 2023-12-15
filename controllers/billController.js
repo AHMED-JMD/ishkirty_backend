@@ -9,17 +9,22 @@ require("dotenv").config();
 module.exports = {
   add: async (req, res) => {
     try {
-      let { date, amount, trans, paymentMethod } = req.body;
+      let { date, amount, trans, paymentMethod, shiftTime } = req.body;
       //check req.body
-      if (!(date && amount && trans && paymentMethod)) {
+      if (!(date && amount && trans && paymentMethod && shiftTime)) {
         return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
       }
 
       //send the bill to db
-      let newbill = await Bill.create({ amount, paymentMethod, date });
+      let newbill = await Bill.create({
+        amount,
+        paymentMethod,
+        date,
+        shiftTime,
+      });
 
       //add the new bill id to the bill transaction
-      trans_id.map(async (id) => {
+      trans.map(async (id) => {
         await BillTrans.update(
           { BILLBILLID: newbill.bill_id },
           { where: { id } }
@@ -34,13 +39,14 @@ module.exports = {
   },
   addbillTrans: async (req, res) => {
     try {
-      let { amount, name, price, quantity } = req.body;
+      let { name, price, quantity } = req.body;
       //check req.body
-      if (!(name && amount && price && quantity)) {
+      if (!(name && price && quantity)) {
         return res.status(400).json("قم بادخال جميع الحقول");
       }
 
       //send the bill to db
+      let amount = parseInt(quantity) * price;
       let billTrans = await BillTrans.create({ name, price, quantity, amount });
 
       //send to client
@@ -64,7 +70,7 @@ module.exports = {
       let { bill_id } = req.body;
 
       //find the bill
-      let bill = Bill.findOne({
+      let bill = await Bill.findOne({
         where: { bill_id },
         include: BillTrans,
       });
@@ -83,7 +89,10 @@ module.exports = {
     //delete from db
     let bill = await Bill.findOne({ where: { bill_id: id } });
 
-    await Bill.destroy({ bill_id: id });
+    //delete bill trans
+    await BillTrans.destroy({ where: { BILLBILLID: id } });
+
+    await Bill.destroy({ where: { bill_id: id } });
 
     //sent request
     res.json("success");
