@@ -4,12 +4,14 @@ const BillTrans = db.models.BillTrans;
 const bcrypt = require("bcryptjs");
 const xssFilter = require("xss-filters");
 const jwt = require("jsonwebtoken");
+const { where } = require("sequelize");
 require("dotenv").config();
 
 module.exports = {
   add: async (req, res) => {
     try {
       let { date, amount, trans, paymentMethod, shiftTime } = req.body;
+
       //check req.body
       if (!(date && amount && trans && paymentMethod && shiftTime)) {
         return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
@@ -24,15 +26,19 @@ module.exports = {
       });
 
       //add the new bill id to the bill transaction
-      trans.map(async (id) => {
-        await BillTrans.update(
-          { BILLBILLID: newbill.bill_id },
-          { where: { id } }
-        );
+      trans.map(async (billtran) => {
+        //creat new bill trans
+        await BillTrans.create({
+          name: billtran.spices,
+          price: billtran.unit_price,
+          quantity: billtran.counter,
+          amount: billtran.total_price,
+          BILLBILLID: newbill.bill_id,
+        });
       });
 
       //send to client
-      res.json(newbill);
+      res.json("created new bill successfully");
     } catch (error) {
       throw error;
     }
@@ -61,6 +67,16 @@ module.exports = {
 
       //send request
       res.json(bills);
+    } catch (error) {
+      throw error;
+    }
+  },
+  getBillTrans: async (req, res) => {
+    try {
+      let billtrans = await BillTrans.findAll({});
+
+      //send request
+      res.json(billtrans);
     } catch (error) {
       throw error;
     }

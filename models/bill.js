@@ -8,13 +8,16 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV1,
       },
       amount: { type: DataTypes.BIGINT, allowNull: false },
-      isDeleted: { type: DataTypes.BOOLEAN, defaulValue: false },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+        defaulValue: false,
+      },
       paymentMethod: {
-        type: DataTypes.ENUM("BANKK", "CASH", "ACCOUNT"),
+        type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
         allowNull: false,
       },
       date: { type: DataTypes.DATEONLY, allowNull: false },
-      shiftTime: { type: DataTypes.ENUM("MORNING", "NIGHT"), allowNull: false },
+      shiftTime: { type: DataTypes.ENUM("صباحية", "مسائية"), allowNull: false },
     },
     { freezeTablaName: true }
   );

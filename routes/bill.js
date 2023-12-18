@@ -5,6 +5,7 @@ const {
   add,
   addbillTrans,
   getAll,
+  getBillTrans,
   getOne,
   deleteBill,
 } = require("../controllers/billController");
@@ -12,6 +13,7 @@ const {
 router.post("/bill_trans", addbillTrans);
 router.post("/", add);
 router.get("/", getAll);
+router.get("/getTrans", getBillTrans);
 router.post("/get_one", getOne);
 router.post("/delete", deleteBill);
 

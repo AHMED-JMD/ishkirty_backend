@@ -799,3 +799,234 @@ ConnectionError [SequelizeConnectionError]: Got timeout reading communication pa
 }
 
 Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24) {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
+E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96
+          throw new SequelizeErrors.HostNotFoundError(err);
+                ^
+
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND db4free.net
+    at ConnectionManager.connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.tableExists (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\dialects\abstract\query-interface.js:102:17)
+    at async Admin.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\model.js:939:21)
+    at async Sequelize.sync (E:\Projects\ishkirty_backend\node_modules\sequelize\lib\sequelize.js:377:9)
+    at async E:\Projects\ishkirty_backend\server.js:7:3 {
+  parent: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND db4free.net
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'db4free.net',
+    fatal: true
+  }
+}
+
+Node.js v18.12.1
