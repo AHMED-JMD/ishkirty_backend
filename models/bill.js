@@ -2,15 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   let bill = sequelize.define(
     "Bill",
     {
-      bill_id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        defaultValue: DataTypes.UUIDV1,
-      },
       amount: { type: DataTypes.BIGINT, allowNull: false },
       isDeleted: {
         type: DataTypes.BOOLEAN,
-        defaulValue: false,
+        defaultValue: false,
+        allowNull: false,
       },
       paymentMethod: {
         type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
@@ -18,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       date: { type: DataTypes.DATEONLY, allowNull: false },
       shiftTime: { type: DataTypes.ENUM("صباحية", "مسائية"), allowNull: false },
+      comment: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
     },
     { freezeTablaName: true }
   );

@@ -63,7 +63,7 @@ module.exports = {
           price: _feilds.price,
         },
       });
-      if (spieces) return res.status(400).json("client exist");
+      if (spieces) return res.status(400).json("spices exist");
 
       //add new clients
       await Spieces.create({
@@ -80,25 +80,24 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      const _feilds = _.pick(req.body, ["id", "name", "category", "price"]);
-
-      let { filename } = req.file;
-      //make sure image is sent
-      if (!filename) return res.status(400).json("enter the image");
+      const _feilds = _.pick(req.body, ["id", "name", "price", "category"]);
       //make sure data is sent
       if (_feilds.length < 3) return res.status(400).json("enter all feilds");
 
+      // let { filename } = req.file;
+      // //make sure image is sent
+      // if (!filename) return res.status(400).json("enter the image");
+
       //find image pathe and delete it
-      let spieces = await Spieces.findOne({ where: { id: _feilds.id } });
-      //delete image
-      deleteFile(path.join(__dirname, `../public/${spieces.ImgLink}`));
+      // let spieces = await Spieces.findOne({ where: { id: _feilds.id } });
+      // //delete image
+      // deleteFile(path.join(__dirname, `../public/${spieces.ImgLink}`));
 
       //update clients
       await Spieces.update(
         {
           name: _feilds.name,
           category: _feilds.category,
-          ImgLink: filename,
           price: _feilds.price,
         },
         { where: { id: _feilds.id } }

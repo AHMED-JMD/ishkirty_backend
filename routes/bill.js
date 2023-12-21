@@ -3,17 +3,25 @@ const router = Router();
 const validUser = require("../middlewares/auth");
 const {
   add,
-  addbillTrans,
   getAll,
-  getBillTrans,
   getOne,
+  todaysBill,
+  getClientBills,
+  deletedBillsUpdate,
+  SearchInDates,
+  getBillTrans,
+  deleteBillTrans,
   deleteBill,
 } = require("../controllers/billController");
 
-router.post("/bill_trans", addbillTrans);
 router.post("/", add);
-router.get("/", getAll);
-router.get("/getTrans", getBillTrans);
+router.post("/by_type", getAll);
+router.post("/today_bill", todaysBill);
+router.post("/client_bills", getClientBills);
+router.post("/deletd_update", deletedBillsUpdate);
+router.post("/search_dates", SearchInDates);
+router.post("/getTrans", getBillTrans);
+router.post("/delTrans", deleteBillTrans);
 router.post("/get_one", getOne);
 router.post("/delete", deleteBill);
 
