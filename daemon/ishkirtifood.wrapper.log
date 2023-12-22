@@ -210,3 +210,19 @@ Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInter
    at winsw.WrapperService.OnShutdown()
 2023-12-18 11:55:11 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
 2023-12-18 11:55:11 - Started 6440
+2023-12-22 07:34:55 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-12-22 07:34:55 - Started 6664
+2023-12-22 20:49:45 - Stopping ishkirtifood.exe
+2023-12-22 20:49:45 - ProcessKill 6664
+2023-12-22 20:49:45 - Found child process: 6712 Name: conhost.exe
+2023-12-22 20:49:45 - Found child process: 652 Name: node.exe
+2023-12-22 20:49:46 - Stopping process 6712
+2023-12-22 20:49:46 - Send SIGINT 6712
+2023-12-22 20:49:46 - SIGINT to 6712 failed - Killing as fallback
+2023-12-22 20:49:46 - Stopping process 652
+2023-12-22 20:49:46 - Send SIGINT 652
+2023-12-22 20:49:46 - SIGINT to 652 failed - Killing as fallback
+2023-12-22 20:49:46 - Stopping process 6664
+2023-12-22 20:49:46 - Send SIGINT 6664
+2023-12-22 20:49:46 - SIGINT to 6664 failed - Killing as fallback
+2023-12-22 20:49:46 - Finished ishkirtifood.exe

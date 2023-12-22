@@ -33,12 +33,10 @@ module.exports = {
   findOne: async (req, res) => {
     try {
       let { name } = req.body;
-
       //find the bill
       let spieces = await Spieces.findAll({
         where: { name },
       });
-
       //send the bill
       res.json(spieces);
     } catch (error) {

@@ -4,7 +4,6 @@ const BillTrans = db.models.BillTrans;
 const Client = db.models.Client;
 
 const { Op } = require("sequelize");
-require("dotenv").config();
 
 module.exports = {
   add: async (req, res) => {
@@ -34,6 +33,7 @@ module.exports = {
           price: billtran.unit_price,
           quantity: billtran.counter,
           amount: billtran.total_price,
+          date,
           BillId: newbill.id,
         });
       });
@@ -70,15 +70,17 @@ module.exports = {
       throw error;
     }
   },
-  todaysBill: async (req, res) => {
+  getOne: async (req, res) => {
     try {
-      const { curr_date } = req.body;
+      let { bill_id } = req.body;
 
-      let bill = await Bill.findAll({
-        where: { date: curr_date },
+      //find the bill
+      let bill = await Bill.findOne({
+        where: { bill_id },
+        include: BillTrans,
       });
 
-      //send request
+      //send the bill
       res.json(bill);
     } catch (error) {
       throw error;
@@ -97,6 +99,20 @@ module.exports = {
 
       //send request
       res.json(bills);
+    } catch (error) {
+      throw error;
+    }
+  },
+  getBillTrans: async (req, res) => {
+    try {
+      let { billId } = req.body;
+      if (!billId) return res.status(400).json("no bill id found");
+
+      //find transaction for the bill
+      let billtrans = await BillTrans.findAll({ where: { BillId: billId } });
+
+      //send request
+      res.json(billtrans);
     } catch (error) {
       throw error;
     }
@@ -147,20 +163,6 @@ module.exports = {
       throw error;
     }
   },
-  getBillTrans: async (req, res) => {
-    try {
-      let { billId } = req.body;
-      if (!billId) return res.status(400).json("no bill id found");
-
-      //find transaction for the bill
-      let billtrans = await BillTrans.findAll({ where: { BillId: billId } });
-
-      //send request
-      res.json(billtrans);
-    } catch (error) {
-      throw error;
-    }
-  },
   deleteBillTrans: async (req, res) => {
     const { id } = req.body;
     try {
@@ -168,22 +170,6 @@ module.exports = {
 
       //send request
       res.json(billtrans);
-    } catch (error) {
-      throw error;
-    }
-  },
-  getOne: async (req, res) => {
-    try {
-      let { bill_id } = req.body;
-
-      //find the bill
-      let bill = await Bill.findOne({
-        where: { bill_id },
-        include: BillTrans,
-      });
-
-      //send the bill
-      res.json(bill);
     } catch (error) {
       throw error;
     }

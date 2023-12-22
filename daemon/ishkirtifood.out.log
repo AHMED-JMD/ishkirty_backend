@@ -754,3 +754,157 @@ Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `creat
 server running on port 3000
 server running on port 3000
 server running on port 3000
+server running on port 3000
+server running on port 3000
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): INSERT INTO `Bills` (`id`,`amount`,`isDeleted`,`paymentMethod`,`date`,`shiftTime`,`comment`,`createdAt`,`updatedAt`,`ClientId`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): INSERT INTO `Bills` (`id`,`amount`,`isDeleted`,`paymentMethod`,`date`,`shiftTime`,`comment`,`createdAt`,`updatedAt`,`ClientId`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` = '2023-12-22';
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `name`, `price`, `quantity`, `amount`, `createdAt`, `updatedAt`, `BillId`, `SpieceId` FROM `BillTrans` AS `BillTrans` WHERE `BillTrans`.`BillId` = 17;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `name`, `price`, `quantity`, `amount`, `createdAt`, `updatedAt`, `BillId`, `SpieceId` FROM `BillTrans` AS `BillTrans` WHERE `BillTrans`.`BillId` = 16;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): INSERT INTO `Bills` (`id`,`amount`,`isDeleted`,`paymentMethod`,`date`,`shiftTime`,`comment`,`createdAt`,`updatedAt`,`ClientId`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` WHERE `Client`.`id` = '1';
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): UPDATE `Client` SET `account`=?,`updatedAt`=? WHERE `id` = ?
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): INSERT INTO `Bills` (`id`,`amount`,`isDeleted`,`paymentMethod`,`date`,`shiftTime`,`comment`,`createdAt`,`updatedAt`,`ClientId`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): INSERT INTO `Bills` (`id`,`amount`,`isDeleted`,`paymentMethod`,`date`,`shiftTime`,`comment`,`createdAt`,`updatedAt`,`ClientId`) VALUES (DEFAULT,?,?,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): INSERT INTO `BillTrans` (`id`,`name`,`price`,`quantity`,`amount`,`createdAt`,`updatedAt`,`BillId`) VALUES (DEFAULT,?,?,?,?,?,?,?);
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` = '2023-12-22';
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` = '2023-12-22';
+{
+  start_date: '2023-12-15T08:06:29.110478',
+  end_date: '2023-12-22T08:06:29.110478',
+  isDeleted: false
+}
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` BETWEEN '2023-12-15' AND '2023-12-22' AND `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+{
+  start_date: '2023-11-22T08:06:29.110478',
+  end_date: '2023-12-22T08:06:29.110478',
+  isDeleted: false
+}
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` BETWEEN '2023-11-22' AND '2023-12-22' AND `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` = '2023-12-22';
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` = '2023-12-22';
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = true ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` = '2023-12-22';

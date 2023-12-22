@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       price: DataTypes.BIGINT,
       quantity: DataTypes.BIGINT,
       amount: DataTypes.BIGINT,
+      date: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
     },
     { freezeTableName: true }
   );

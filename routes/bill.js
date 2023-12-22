@@ -5,7 +5,6 @@ const {
   add,
   getAll,
   getOne,
-  todaysBill,
   getClientBills,
   deletedBillsUpdate,
   SearchInDates,
@@ -16,7 +15,6 @@ const {
 
 router.post("/", add);
 router.post("/by_type", getAll);
-router.post("/today_bill", todaysBill);
 router.post("/client_bills", getClientBills);
 router.post("/deletd_update", deletedBillsUpdate);
 router.post("/search_dates", SearchInDates);
