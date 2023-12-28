@@ -226,3 +226,69 @@ Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInter
 2023-12-22 20:49:46 - Send SIGINT 6664
 2023-12-22 20:49:46 - SIGINT to 6664 failed - Killing as fallback
 2023-12-22 20:49:46 - Finished ishkirtifood.exe
+2023-12-24 14:03:14 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-12-24 14:03:14 - Started 6420
+2023-12-25 08:08:46 - Stopping ishkirtifood.exe
+2023-12-25 08:08:46 - ProcessKill 6420
+2023-12-25 08:08:47 - Found child process: 6472 Name: conhost.exe
+2023-12-25 08:08:47 - Found child process: 7520 Name: node.exe
+2023-12-25 08:08:47 - Stopping process 6472
+2023-12-25 08:08:47 - Send SIGINT 6472
+2023-12-25 08:08:47 - SIGINT to 6472 failed - Killing as fallback
+2023-12-25 08:08:47 - Stopping process 7520
+2023-12-25 08:08:47 - Send SIGINT 7520
+2023-12-25 08:08:47 - SIGINT to 7520 failed - Killing as fallback
+2023-12-25 08:08:47 - Stopping process 6420
+2023-12-25 08:08:47 - Send SIGINT 6420
+2023-12-25 08:08:47 - SIGINT to 6420 failed - Killing as fallback
+2023-12-25 08:08:47 - Finished ishkirtifood.exe
+2023-12-25 10:28:10 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-12-25 10:28:10 - Started 10144
+2023-12-25 16:14:57 - Stopping ishkirtifood.exe
+2023-12-25 16:14:57 - ProcessKill 10144
+2023-12-25 16:14:57 - Found child process: 8692 Name: conhost.exe
+2023-12-25 16:14:57 - Found child process: 20256 Name: node.exe
+2023-12-25 16:14:57 - Stopping process 8692
+2023-12-25 16:14:57 - Send SIGINT 8692
+2023-12-25 16:14:57 - SIGINT to 8692 failed - Killing as fallback
+2023-12-25 16:14:57 - Stopping process 20256
+2023-12-25 16:14:57 - Send SIGINT 20256
+2023-12-25 16:14:57 - SIGINT to 20256 failed - Killing as fallback
+2023-12-25 16:14:57 - Stopping process 10144
+2023-12-25 16:14:57 - Send SIGINT 10144
+2023-12-25 16:14:57 - SIGINT to 10144 failed - Killing as fallback
+2023-12-25 16:14:57 - Finished ishkirtifood.exe
+2023-12-25 16:14:58 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-12-25 16:14:58 - Started 20340
+2023-12-25 16:16:37 - Stopping ishkirtifood.exe
+2023-12-25 16:16:37 - ProcessKill 20340
+2023-12-25 16:16:38 - Found child process: 14980 Name: conhost.exe
+2023-12-25 16:16:38 - Found child process: 16880 Name: node.exe
+2023-12-25 16:16:38 - Stopping process 14980
+2023-12-25 16:16:38 - Send SIGINT 14980
+2023-12-25 16:16:38 - SIGINT to 14980 failed - Killing as fallback
+2023-12-25 16:16:38 - Stopping process 16880
+2023-12-25 16:16:38 - Send SIGINT 16880
+2023-12-25 16:16:38 - SIGINT to 16880 failed - Killing as fallback
+2023-12-25 16:16:38 - Stopping process 20340
+2023-12-25 16:16:38 - Send SIGINT 20340
+2023-12-25 16:16:38 - SIGINT to 20340 failed - Killing as fallback
+2023-12-25 16:16:38 - Finished ishkirtifood.exe
+2023-12-25 16:16:39 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-12-25 16:16:39 - Started 9468
+2023-12-25 16:17:59 - Stopping ishkirtifood.exe
+2023-12-25 16:17:59 - ProcessKill 9468
+2023-12-25 16:17:59 - Found child process: 9688 Name: conhost.exe
+2023-12-25 16:17:59 - Found child process: 13400 Name: node.exe
+2023-12-25 16:17:59 - Stopping process 9688
+2023-12-25 16:17:59 - Send SIGINT 9688
+2023-12-25 16:17:59 - SIGINT to 9688 failed - Killing as fallback
+2023-12-25 16:17:59 - Stopping process 13400
+2023-12-25 16:17:59 - Send SIGINT 13400
+2023-12-25 16:17:59 - SIGINT to 13400 failed - Killing as fallback
+2023-12-25 16:17:59 - Stopping process 9468
+2023-12-25 16:17:59 - Send SIGINT 9468
+2023-12-25 16:17:59 - SIGINT to 9468 failed - Killing as fallback
+2023-12-25 16:17:59 - Finished ishkirtifood.exe
+2023-12-28 16:01:34 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2023-12-28 16:01:34 - Started 6392

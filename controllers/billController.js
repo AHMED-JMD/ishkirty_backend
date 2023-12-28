@@ -58,13 +58,22 @@ module.exports = {
   getAll: async (req, res) => {
     try {
       const { isDeleted } = req.body;
+      const offset = parseInt(req.header("offset"));
+      const pageSize = parseInt(req.header("pageSize"));
 
+      //check body
+      if (!(offset !== undefined && isDeleted !== undefined && pageSize))
+        return res.status(400).json("invalid req body");
+      //finding and paginating bills from db
+      console.log(offset, pageSize);
       let bills = await Bill.findAll({
-        where: { isDeleted: isDeleted },
+        offset,
+        pageSize,
+        where: { isDeleted },
         order: [["date", "DESC"]],
       });
-
-      //send request
+      console.log(bills.length);
+      //send response
       res.json(bills);
     } catch (error) {
       throw error;
