@@ -1,7 +1,7 @@
 {
-  "name": "oil_pump",
+  "name": "ishkirty_food",
   "version": "1.0.0",
-  "description": "system for oil pump station",
+  "description": "restaurant managment system for ishkirty_food",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

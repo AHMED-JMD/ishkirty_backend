@@ -18,6 +18,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BIGINT,
         allowNull: false,
       },
+      isFavourites: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      isControll: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      favBtn: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+      },
     },
     { freezeTableName: true }
   );

@@ -292,3 +292,51 @@ Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInter
 2023-12-25 16:17:59 - Finished ishkirtifood.exe
 2023-12-28 16:01:34 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
 2023-12-28 16:01:34 - Started 6392
+2024-01-03 18:42:01 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-01-03 18:42:01 - Started 6624
+2024-01-03 18:42:18 - Stopping ishkirtifood.exe
+2024-01-03 18:42:18 - ProcessKill 6624
+2024-01-03 18:42:18 - Shutdown exception
+Message:Class not registered
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
+2024-01-03 21:26:29 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-01-03 21:26:29 - Started 6980
+2024-01-06 08:25:26 - Stopping ishkirtifood.exe
+2024-01-06 08:25:26 - ProcessKill 6980
+2024-01-06 08:25:27 - Found child process: 7040 Name: conhost.exe
+2024-01-06 08:25:27 - Found child process: 7900 Name: node.exe
+2024-01-06 08:25:27 - Stopping process 7040
+2024-01-06 08:25:27 - Send SIGINT 7040
+2024-01-06 08:25:27 - SIGINT to 7040 failed - Killing as fallback
+2024-01-06 08:25:27 - Stopping process 7900
+2024-01-06 08:25:27 - Send SIGINT 7900
+2024-01-06 08:25:27 - SIGINT to 7900 failed - Killing as fallback
+2024-01-06 08:25:27 - Stopping process 6980
+2024-01-06 08:25:27 - Send SIGINT 6980
+2024-01-06 08:25:27 - SIGINT to 6980 failed - Killing as fallback
+2024-01-06 08:25:27 - Finished ishkirtifood.exe
+2024-01-06 08:25:28 - Starting C:\Program Files\nodejs\node.exe  --harmony E:\Projects\ishkirty_backend\node_modules\node-windows\lib\wrapper.js --file E:\Projects\ishkirty_backend\server.js --scriptoptions= --log "Ishkirti Food wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-01-06 08:25:28 - Started 18604
+2024-01-06 09:07:44 - Stopping ishkirtifood.exe
+2024-01-06 09:07:44 - ProcessKill 18604
+2024-01-06 09:07:45 - Found child process: 17896 Name: conhost.exe
+2024-01-06 09:07:45 - Found child process: 9260 Name: node.exe
+2024-01-06 09:07:45 - Stopping process 17896
+2024-01-06 09:07:45 - Send SIGINT 17896
+2024-01-06 09:07:45 - SIGINT to 17896 failed - Killing as fallback
+2024-01-06 09:07:45 - Stopping process 9260
+2024-01-06 09:07:45 - Send SIGINT 9260
+2024-01-06 09:07:45 - SIGINT to 9260 failed - Killing as fallback
+2024-01-06 09:07:45 - Stopping process 18604
+2024-01-06 09:07:45 - Send SIGINT 18604
+2024-01-06 09:07:45 - SIGINT to 18604 failed - Killing as fallback
+2024-01-06 09:07:45 - Finished ishkirtifood.exe

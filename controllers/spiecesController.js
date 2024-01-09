@@ -30,6 +30,18 @@ module.exports = {
       if (error) throw error;
     }
   },
+  getFavourites: async (req, res) => {
+    try {
+      let spieces = await Spieces.findAll({
+        where: { isFavourites: true },
+        order: [["price", "DESC"]],
+      });
+
+      res.json(spieces);
+    } catch (error) {
+      if (error) throw error;
+    }
+  },
   findOne: async (req, res) => {
     try {
       let { name } = req.body;
@@ -78,28 +90,50 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      const _feilds = _.pick(req.body, ["id", "name", "price", "category"]);
+      const _feilds = _.pick(req.body, [
+        "id",
+        "name",
+        "price",
+        "category",
+        "isFavourites",
+        "favBtn",
+        "isControll",
+        "cancel",
+      ]);
       //make sure data is sent
-      if (_feilds.length < 3) return res.status(400).json("enter all feilds");
+      if (!_feilds) return res.status(400).json("enter all feilds");
 
-      // let { filename } = req.file;
-      // //make sure image is sent
-      // if (!filename) return res.status(400).json("enter the image");
-
-      //find image pathe and delete it
-      // let spieces = await Spieces.findOne({ where: { id: _feilds.id } });
-      // //delete image
-      // deleteFile(path.join(__dirname, `../public/${spieces.ImgLink}`));
+      let spieces = await Spieces.findOne({
+        where: { favBtn: _feilds.favBtn, isControll: _feilds.isControll },
+      });
+      if (spieces) return res.status(400).json("تم اختيار الزر في صنف مسبقا");
 
       //update clients
-      await Spieces.update(
-        {
-          name: _feilds.name,
-          category: _feilds.category,
-          price: _feilds.price,
-        },
-        { where: { id: _feilds.id } }
-      );
+      if (_feilds.cancel === true) {
+        await Spieces.update(
+          {
+            name: _feilds.name,
+            category: _feilds.category,
+            price: _feilds.price,
+            isFavourites: false,
+            favBtn: "",
+            isControll: false,
+          },
+          { where: { id: _feilds.id } }
+        );
+      } else {
+        await Spieces.update(
+          {
+            name: _feilds.name,
+            category: _feilds.category,
+            price: _feilds.price,
+            isFavourites: _feilds.isFavourites,
+            favBtn: _feilds.favBtn,
+            isControll: _feilds.isControll,
+          },
+          { where: { id: _feilds.id } }
+        );
+      }
 
       res.json("success");
     } catch (error) {

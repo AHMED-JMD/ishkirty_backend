@@ -64,17 +64,20 @@ module.exports = {
       //check body
       if (!(offset !== undefined && isDeleted !== undefined && pageSize))
         return res.status(400).json("invalid req body");
+
       //finding and paginating bills from db
-      console.log(offset, pageSize);
       let bills = await Bill.findAll({
-        offset,
-        pageSize,
         where: { isDeleted },
+        offset,
+        limit: pageSize,
         order: [["date", "DESC"]],
       });
-      console.log(bills.length);
+
+      //get total bills count
+      let bills_length = await Bill.count({ where: { isDeleted } });
+
       //send response
-      res.json(bills);
+      res.json({ bills, bills_length });
     } catch (error) {
       throw error;
     }

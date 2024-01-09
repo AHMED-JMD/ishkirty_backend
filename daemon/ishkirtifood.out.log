@@ -1033,3 +1033,160 @@ Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABL
 server running on port 3000
 server running on port 3000
 server running on port 3000
+server running on port 3000
+server running on port 3000
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+server running on port 3000
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Admin' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Admin`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Client' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Client`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Spieces' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Spieces`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'Bills' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `Bills`
+Executing (default): SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_NAME = 'BillTrans' AND TABLE_SCHEMA = 'ishkirty_food'
+Executing (default): SHOW INDEX FROM `BillTrans`
+Connected to MySQL
+Executing (default): SELECT `admin_id`, `username`, `phoneNum`, `password`, `createdAt`, `updatedAt` FROM `Admin` AS `Admin` WHERE `Admin`.`username` = 'test1' LIMIT 1;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'تقليدي' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'لحوم' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'اضافات' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`category` = 'عصائر' ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+{
+  start_date: '2023-12-23T00:00:00.000',
+  end_date: '2023-12-25T00:00:00.000',
+  isDeleted: false
+}
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` BETWEEN '2023-12-23' AND '2023-12-25' AND `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+{
+  start_date: '2023-12-28T00:00:00.000',
+  end_date: '2023-12-28T00:00:00.000',
+  isDeleted: false
+}
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` BETWEEN '2023-12-28' AND '2023-12-28' AND `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+{
+  start_date: '2023-12-28T00:00:00.000',
+  end_date: '2023-12-28T00:00:00.000',
+  isDeleted: false
+}
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` BETWEEN '2023-12-28' AND '2023-12-28' AND `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+{
+  start_date: '2023-12-28T00:00:00.000',
+  end_date: '2023-12-28T00:00:00.000',
+  isDeleted: false
+}
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` BETWEEN '2023-12-28' AND '2023-12-28' AND `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+Executing (default): SELECT `id`, `name`, `phoneNum`, `account`, `createdAt`, `updatedAt` FROM `Client` AS `Client` ORDER BY `Client`.`account` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`name` = 'buftake';
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` WHERE `Spieces`.`name` = 'banana-milk';
+Executing (default): SELECT `id`, `name`, `category`, `ImgLink`, `price`, `createdAt`, `updatedAt` FROM `Spieces` AS `Spieces` ORDER BY `Spieces`.`price` DESC;
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+{
+  start_date: '2023-12-28T00:00:00.000',
+  end_date: '2023-12-31T00:00:00.000',
+  isDeleted: false
+}
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` BETWEEN '2023-12-28' AND '2023-12-31' AND `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+{
+  start_date: '2023-12-28T00:00:00.000',
+  end_date: '2023-12-28T00:00:00.000',
+  isDeleted: false
+}
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`date` BETWEEN '2023-12-28' AND '2023-12-28' AND `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC;
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
+0 10
+Executing (default): SELECT `id`, `amount`, `isDeleted`, `paymentMethod`, `date`, `shiftTime`, `comment`, `createdAt`, `updatedAt`, `ClientId` FROM `Bills` AS `Bill` WHERE `Bill`.`isDeleted` = false ORDER BY `Bill`.`date` DESC LIMIT 0, 10000000000000;
+12
