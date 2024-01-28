@@ -27,6 +27,7 @@ let BillTrans = require("./billTrans")(sequelize, Sequelize.DataTypes);
 Bill.hasMany(BillTrans);
 Spieces.hasMany(BillTrans);
 Client.hasMany(Bill);
+Admin.hasMany(Bill);
 // //-----------------------------------------------------
 
 // //add to db models

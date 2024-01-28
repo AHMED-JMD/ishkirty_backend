@@ -8,10 +8,10 @@ require("dotenv").config();
 let admin = {
   signup: async (req, res) => {
     try {
-      let { username, phoneNum, password } = req.body;
+      let { username, phoneNum, password, shift } = req.body;
       //check req.body
       if (!(username && phoneNum && password)) {
-        return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
+        return res.status(400).json("قم بادخال جميع الحقول");
       }
 
       //make sure no admin is replicated
@@ -26,6 +26,7 @@ let admin = {
       const newAdmin = await Admin.create({
         username,
         phoneNum,
+        shift,
         password: hashedPassword,
       });
 
@@ -72,6 +73,7 @@ let admin = {
                     id: user.admin_id,
                     phoneNum: user.phoneNum,
                     username: user.username,
+                    role: user.role,
                   },
                 });
               }
@@ -111,7 +113,8 @@ let admin = {
       if (!admin) return res.status(404).json("provide a valid id");
       //match password
       let isMatch = await bcrypt.compare(password, admin.password);
-      if (!isMatch) return res.status(404).json("كلمة المرور غير صحيحة");
+      if (!isMatch)
+        return res.status(404).json("كلمة المرور الرئيسية غير صحيحة");
 
       //hash user password
       const salt = await bcrypt.genSalt(10);
@@ -120,11 +123,7 @@ let admin = {
       //update admin
       await admin.update({ password: hashedPassword }, { where: { admin_id } });
 
-      res.json({
-        statusCode: 200,
-        message: "User updated successfully",
-        data: {},
-      });
+      res.json("User updated successfully");
     } catch (error) {
       if (error) throw error;
       console.log(error);

@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const Bill = db.models.Bill;
+const Admin = db.models.Admin;
 const BillTrans = db.models.BillTrans;
 const Client = db.models.Client;
 
@@ -8,21 +9,34 @@ const { Op } = require("sequelize");
 module.exports = {
   add: async (req, res) => {
     try {
-      let { date, amount, trans, paymentMethod, shiftTime, clientId } =
-        req.body;
+      let {
+        date,
+        amount,
+        trans,
+        paymentMethod,
+        shiftTime,
+        clientId,
+        admin_id,
+      } = req.body;
 
       //check req.body
       if (!(date && amount && trans && paymentMethod && shiftTime)) {
         return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
       }
 
+      if (trans.length === 0)
+        return res.status(400).json("الرجاء اختيار صنف معين");
       //send the bill to db
+      let admin = await Admin.findOne({ where: { admin_id } });
+
       let newbill = await Bill.create({
         amount,
         paymentMethod,
         date,
         shiftTime,
+        admin: admin.username,
         ClientId: clientId,
+        AdminAdminId: admin_id,
       });
 
       //add the new bill id to the bill transaction
@@ -58,26 +72,20 @@ module.exports = {
   getAll: async (req, res) => {
     try {
       const { isDeleted } = req.body;
-      const offset = parseInt(req.header("offset"));
-      const pageSize = parseInt(req.header("pageSize"));
 
       //check body
-      if (!(offset !== undefined && isDeleted !== undefined && pageSize))
+      if (isDeleted === undefined)
         return res.status(400).json("invalid req body");
 
+      let currentDate = new Date();
       //finding and paginating bills from db
       let bills = await Bill.findAll({
-        where: { isDeleted },
-        offset,
-        limit: pageSize,
+        where: { isDeleted, date: currentDate },
         order: [["date", "DESC"]],
       });
 
-      //get total bills count
-      let bills_length = await Bill.count({ where: { isDeleted } });
-
       //send response
-      res.json({ bills, bills_length });
+      res.json(bills);
     } catch (error) {
       throw error;
     }
@@ -115,6 +123,25 @@ module.exports = {
       throw error;
     }
   },
+  getAdminBills: async (req, res) => {
+    try {
+      const { admin_id } = req.body;
+
+      if (!admin_id) return res.status(400).json("wrong req feilds");
+
+      let currentDate = new Date();
+      //get data from db
+      let bills = await Bill.findAll({
+        where: { AdminAdminId: admin_id, date: currentDate },
+        order: [["date", "DESC"]],
+      });
+
+      //send request
+      res.json(bills);
+    } catch (error) {
+      throw error;
+    }
+  },
   getBillTrans: async (req, res) => {
     try {
       let { billId } = req.body;
@@ -132,7 +159,7 @@ module.exports = {
   SearchInDates: async (req, res) => {
     try {
       const { start_date, end_date, isDeleted } = req.body;
-      console.log(req.body);
+
       if (!(start_date && end_date))
         return res.status(400).json("bad request feilds");
 

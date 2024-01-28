@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       date: { type: DataTypes.DATEONLY, allowNull: false },
       shiftTime: { type: DataTypes.ENUM("صباحية", "مسائية"), allowNull: false },
+      admin: {
+        type: DataTypes.STRING,
+      },
       comment: {
         type: DataTypes.STRING,
         allowNull: false,

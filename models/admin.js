@@ -10,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
       username: DataTypes.STRING,
       phoneNum: DataTypes.BIGINT,
       password: DataTypes.STRING,
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: "manager",
+      },
+      shift: {
+        type: DataTypes.ENUM("صباحية", "مسائية", "كامل"),
+        defaultValue: "كامل",
+      },
     },
     { freezeTableName: true }
   );
