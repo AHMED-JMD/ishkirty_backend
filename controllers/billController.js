@@ -158,15 +158,30 @@ module.exports = {
   },
   SearchInDates: async (req, res) => {
     try {
-      const { start_date, end_date, isDeleted } = req.body;
+      const { start_date, end_date, isDeleted, admin_id } = req.body;
 
       if (!(start_date && end_date))
         return res.status(400).json("bad request feilds");
 
-      let bills = await Bill.findAll({
-        where: { date: { [Op.between]: [start_date, end_date] }, isDeleted },
-        order: [["date", "DESC"]],
-      });
+      //check admin exist or not
+      let bills;
+      if (admin_id) {
+        //get with admin
+        bills = await Bill.findAll({
+          where: {
+            date: { [Op.between]: [start_date, end_date] },
+            isDeleted,
+            AdminAdminId: admin_id,
+          },
+          order: [["date", "DESC"]],
+        });
+      } else {
+        //without admin
+        bills = await Bill.findAll({
+          where: { date: { [Op.between]: [start_date, end_date] }, isDeleted },
+          order: [["date", "DESC"]],
+        });
+      }
 
       //send request
       if (bills.length != 0) {

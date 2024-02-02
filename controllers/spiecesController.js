@@ -122,14 +122,24 @@ module.exports = {
           { where: { id: _feilds.id } }
         );
       } else {
+        //check if it is normal update
+        let favBtn = _feilds.favBtn;
+        let isFav = _feilds.isFavourites;
+        let isCtrl = _feilds.isControll;
+        if (!_feilds.isFavourites && !_feilds.favBtn && !_feilds.isControll) {
+          favBtn = "";
+          isFav = false;
+          isCtrl = false;
+        }
+        //favourites update
         await Spieces.update(
           {
             name: _feilds.name,
             category: _feilds.category,
             price: _feilds.price,
-            isFavourites: _feilds.isFavourites,
-            favBtn: _feilds.favBtn,
-            isControll: _feilds.isControll,
+            isFavourites: isFav,
+            favBtn: favBtn,
+            isControll: isCtrl,
           },
           { where: { id: _feilds.id } }
         );

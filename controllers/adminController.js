@@ -1,7 +1,6 @@
 const db = require("../models/index");
 const Admin = db.models.Admin;
 const bcrypt = require("bcryptjs");
-const xssFilter = require("xss-filters");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -85,6 +84,18 @@ let admin = {
       console.log(error);
     }
   },
+  getAll: async (req, res) => {
+    try {
+      let managers = await Admin.findAll({
+        attributes: { exclude: ["password"] },
+        where: { role: "manager" },
+      });
+
+      res.json(managers);
+    } catch (error) {
+      throw error;
+    }
+  },
   getbyid: async (req, res) => {
     Admin.findOne({ where: { admin_id: req.user.id } })
       .then((user) => {
@@ -134,11 +145,8 @@ let admin = {
       let { username } = req.body;
 
       await Admin.destroy({ where: { username } });
-      res.json({
-        statusCode: 200,
-        message: "User deleted",
-        data: {},
-      });
+      //send response
+      res.json("manager deleted");
     } catch (error) {
       if (error) throw error;
       console.log(error);
