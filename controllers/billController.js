@@ -21,7 +21,7 @@ module.exports = {
 
       //check req.body
       if (!(date && amount && trans && paymentMethod && shiftTime)) {
-        return res.status(400).json({ msg: "قم بادخال جميع الحقول" });
+        return res.status(400).json("الرجاء ادخال جميع الحقول");
       }
 
       if (trans.length === 0)
@@ -53,9 +53,9 @@ module.exports = {
       });
 
       //update client id if it is not null
-      if (clientId) {
-        let client = await Client.findOne({ where: { id: clientId } });
+      let client = await Client.findOne({ where: { id: clientId } });
 
+      if (client) {
         //update account
         await Client.update(
           { account: client.account + parseInt(amount) },
@@ -71,16 +71,19 @@ module.exports = {
   },
   getAll: async (req, res) => {
     try {
-      const { isDeleted } = req.body;
+      const { isDeleted, todayDate } = req.body;
 
       //check body
       if (isDeleted === undefined)
         return res.status(400).json("invalid req body");
 
-      let currentDate = new Date();
+      console.log(todayDate);
       //finding and paginating bills from db
       let bills = await Bill.findAll({
-        where: { isDeleted, date: currentDate },
+        where: {
+          isDeleted,
+          [Op.or]: [{ date: todayDate }, { updatedAt: todayDate }],
+        },
         order: [["date", "DESC"]],
       });
 

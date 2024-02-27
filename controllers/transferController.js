@@ -32,14 +32,22 @@ module.exports = {
   get: async (req, res) => {
     try {
       let { date, adminId } = req.body;
-      console.log(req.body);
+
       //find the bill
       let transfer = await Transfer.findOne({
         where: { date, AdminAdminId: adminId },
       });
 
       //send the bill
-      res.json(transfer);
+      let amount = 0;
+      if (transfer) {
+        amount = transfer.amount;
+        //res
+        res.json(amount);
+      } else {
+        //res
+        res.json(amount);
+      }
     } catch (error) {
       throw error;
     }
