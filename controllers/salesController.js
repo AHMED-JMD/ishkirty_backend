@@ -6,7 +6,7 @@ const BillTrans = db.models.BillTrans;
 const { Op } = require("sequelize");
 
 module.exports = {
-  todaysSales: async (req, res) => {
+  totalSales: async (req, res) => {
     try {
       const { start_date, end_date } = req.body;
 
