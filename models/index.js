@@ -26,6 +26,7 @@ let Transfer = require("./transfer")(sequelize, Sequelize.DataTypes);
 
 //sql relationship here -------------------------------
 Bill.hasMany(BillTrans);
+BillTrans.belongsTo(Bill);
 Spieces.hasMany(BillTrans);
 Client.hasMany(Bill);
 Admin.hasMany(Bill);
