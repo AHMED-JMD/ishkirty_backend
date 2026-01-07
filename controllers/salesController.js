@@ -4,29 +4,43 @@ const Bill = db.models.Bill;
 const Spieces = db.models.Spieces;
 const BillTrans = db.models.BillTrans;
 const { Op } = require("sequelize");
+const { sequelize } = db;
 
 module.exports = {
   totalSales: async (req, res) => {
     try {
       const { start_date, end_date } = req.body;
 
-      let bill = await Bill.findAll({
+      const rows = await Bill.findAll({
+        attributes: [
+          "paymentMethod",
+          "shiftTime",
+          [sequelize.fn("SUM", sequelize.col("amount")), "sumAmount"],
+        ],
         where: {
           date: { [Op.between]: [start_date, end_date] },
           isDeleted: false,
         },
+        group: ["paymentMethod", "shiftTime"],
+        raw: true,
       });
 
-      //morning sales
-      const cashMor = total_sales(bill, "كاش", "صباحية");
-      const bankMor = total_sales(bill, "بنكك", "صباحية");
-      const accountMor = total_sales(bill, "حساب", "صباحية");
+      // turn rows into a lookup
+      const lookup = {};
+      rows.forEach((r) => {
+        const key = `${r.paymentMethod}__${r.shiftTime}`;
+        lookup[key] = Number(r.sumAmount) || 0;
+      });
+
+      // then compute values
+      const cashMor = lookup["كاش__صباحية"] || 0;
+      const bankMor = lookup["بنكك__صباحية"] || 0;
+      const accountMor = lookup["حساب__صباحية"] || 0;
       const totalMor = cashMor + bankMor + accountMor;
 
-      //evening sales
-      const cashEv = total_sales(bill, "كاش", "مسائية");
-      const bankEv = total_sales(bill, "بنكك", "مسائية");
-      const accountEv = total_sales(bill, "حساب", "مسائية");
+      const cashEv = lookup["كاش__مسائية"] || 0;
+      const bankEv = lookup["بنكك__مسائية"] || 0;
+      const accountEv = lookup["حساب__مسائية"] || 0;
       const totalEv = cashEv + bankEv + accountEv;
 
       //send request

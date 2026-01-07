@@ -3,6 +3,10 @@ const Bill = db.models.Bill;
 const Admin = db.models.Admin;
 const BillTrans = db.models.BillTrans;
 const Client = db.models.Client;
+const Spieces = db.models.Spieces;
+const Store = db.models.Store;
+const SpiceStore = db.models.SpiceStore;
+const sequelize = db.sequelize;
 
 const { Op } = require("sequelize");
 
@@ -29,28 +33,73 @@ module.exports = {
       //send the bill to db
       let admin = await Admin.findOne({ where: { admin_id } });
 
-      let newbill = await Bill.create({
-        amount,
-        paymentMethod,
-        date,
-        shiftTime,
-        admin: admin.username,
-        ClientId: clientId,
-        AdminAdminId: admin_id,
-      });
+      // use a transaction so bill + billTrans + store updates succeed or roll back together
+      const t = await sequelize.transaction();
+      try {
+        let newbill = await Bill.create(
+          {
+            amount,
+            paymentMethod,
+            date,
+            shiftTime,
+            admin: admin.username,
+            ClientId: clientId,
+            AdminAdminId: admin_id,
+          },
+          { transaction: t }
+        );
 
-      //add the new bill id to the bill transaction
-      trans.map(async (billtran) => {
-        //creat new bill trans
-        await BillTrans.create({
-          name: billtran.spices,
-          price: billtran.unit_price,
-          quantity: billtran.counter,
-          amount: billtran.total_price,
-          date,
-          BillId: newbill.id,
-        });
-      });
+        // add the new bill id to the bill transactions and adjust store quantities
+        for (const billtran of trans) {
+          // create new bill trans
+          await BillTrans.create(
+            {
+              name: billtran.spices,
+              price: billtran.unit_price,
+              quantity: billtran.counter,
+              amount: billtran.total_price,
+              date,
+              BillId: newbill.id,
+            },
+            { transaction: t }
+          );
+
+          // find the spice by name (front-end sends spice name in billtran.spices)
+          const spice = await Spieces.findOne({
+            where: { name: billtran.spices },
+            transaction: t,
+          });
+          if (!spice) continue;
+
+          // get store items required for this spice (through SpiceStore)
+          const storeItems = await spice.getStores({
+            joinTableAttributes: ["quantityNeeded"],
+            transaction: t,
+          });
+
+          // decrement each related store item by quantityNeeded * sold quantity
+          for (const si of storeItems) {
+            const neededPerUnit =
+              si.SpiceStore && si.SpiceStore.quantityNeeded
+                ? parseFloat(si.SpiceStore.quantityNeeded)
+                : 0;
+            const soldCount = Number(billtran.counter || 0);
+            const totalNeeded = neededPerUnit * soldCount;
+            if (totalNeeded === 0) continue;
+
+            // subtract from store quantity using a literal to avoid race conditions
+            await Store.update(
+              { quantity: sequelize.literal(`quantity - ${totalNeeded}`) },
+              { where: { id: si.id }, transaction: t }
+            );
+          }
+        }
+
+        await t.commit();
+      } catch (err) {
+        await t.rollback();
+        throw err;
+      }
 
       //update client id if it is not null
       let client = await Client.findOne({ where: { id: clientId } });
