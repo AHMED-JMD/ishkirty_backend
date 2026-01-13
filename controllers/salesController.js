@@ -11,6 +11,7 @@ module.exports = {
     try {
       const { start_date, end_date } = req.body;
 
+      //query to get sum of sales grouped by payment method and shift time
       const rows = await Bill.findAll({
         attributes: [
           "paymentMethod",
@@ -157,7 +158,7 @@ module.exports = {
 
       //send response
       res.json({
-        total_searched_sales,
+        total_searched_sales: total_searched_sales.sum,
       });
     } catch (error) {
       throw error;

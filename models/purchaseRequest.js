@@ -1,31 +1,29 @@
 module.exports = (sequelize, DataTypes) => {
-  const Store = sequelize.define(
-    "Store",
+  const PurchaseRequest = sequelize.define(
+    "PurchaseRequest",
     {
-      name: {
+      vendor: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       quantity: {
-        // use DOUBLE to support fractional quantities (e.g., grams)
         type: DataTypes.DOUBLE,
-        defaultValue: 0,
-      },
-      sell_price: {
-        type: DataTypes.BIGINT,
+        allowNull: false,
         defaultValue: 0,
       },
       buy_price: {
         type: DataTypes.BIGINT,
+        allowNull: false,
         defaultValue: 0,
       },
-      isKilo: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+      date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
     },
     { freezeTableName: true }
   );
 
-  return Store;
+  return PurchaseRequest;
 };

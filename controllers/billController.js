@@ -84,7 +84,13 @@ module.exports = {
                 ? parseFloat(si.SpiceStore.quantityNeeded)
                 : 0;
             const soldCount = Number(billtran.counter || 0);
-            const totalNeeded = neededPerUnit * soldCount;
+            let totalNeeded = neededPerUnit * soldCount;
+
+            //check if it's kilos
+            if (si.isKilo) {
+              totalNeeded = totalNeeded / 1000;
+            }
+
             if (totalNeeded === 0) continue;
 
             // subtract from store quantity using a literal to avoid race conditions

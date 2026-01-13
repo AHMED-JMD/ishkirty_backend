@@ -25,6 +25,10 @@ let BillTrans = require("./billTrans")(sequelize, Sequelize.DataTypes);
 let Transfer = require("./transfer")(sequelize, Sequelize.DataTypes);
 let Store = require("./store")(sequelize, Sequelize.DataTypes);
 let SpiceStore = require("./spiceStore")(sequelize, Sequelize.DataTypes);
+let PurchaseRequest = require("./purchaseRequest")(
+  sequelize,
+  Sequelize.DataTypes
+);
 
 //sql relationship here -------------------------------
 Bill.hasMany(BillTrans);
@@ -39,6 +43,14 @@ Admin.hasMany(Transfer);
 Spieces.belongsToMany(Store, { through: SpiceStore });
 Store.belongsToMany(Spieces, { through: SpiceStore });
 
+// allow eager-loading from the through model
+SpiceStore.belongsTo(Store, { foreignKey: "StoreId" });
+SpiceStore.belongsTo(Spieces, { foreignKey: "SpieceId" });
+
+// purchase requests relation
+PurchaseRequest.belongsTo(Store, { foreignKey: "StoreId" });
+Store.hasMany(PurchaseRequest, { foreignKey: "StoreId" });
+
 // //add to db models
 db.models.Admin = Admin;
 db.models.Client = Client;
@@ -48,5 +60,6 @@ db.models.BillTrans = BillTrans;
 db.models.Transfer = Transfer;
 db.models.Store = Store;
 db.models.SpiceStore = SpiceStore;
+db.models.PurchaseRequest = PurchaseRequest;
 
 module.exports = db;
