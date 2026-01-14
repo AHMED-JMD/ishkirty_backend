@@ -4,7 +4,7 @@ const Spieces = db.models.Spieces;
 const SpiceStore = db.models.SpiceStore;
 const sequelize = db.sequelize;
 const PurchaseRequest = db.models.PurchaseRequest;
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 module.exports = {
   addnew: async (req, res) => {
@@ -159,7 +159,7 @@ module.exports = {
           vendor,
           quantity: qty,
           buy_price: usedPrice,
-          date: date ? new Date(date) : new Date(),
+          date: date,
         },
         { transaction: t }
       );
@@ -181,9 +181,33 @@ module.exports = {
   getPurchases: async (req, res) => {
     try {
       const purchases = await PurchaseRequest.findAll({
-        // include: [{ model: Store }],
+        include: [{ model: Store }],
         order: [["date", "DESC"]],
       });
+
+      res.json(purchases);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // get all purchases
+  getPurchasesByDate: async (req, res) => {
+    try {
+      const { startDate, endDate } = req.body;
+      if (!startDate || !endDate)
+        return res.status(400).json("enter startDate and endDate");
+
+      const purchases = await PurchaseRequest.findAll({
+        where: {
+          date: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        include: [{ model: Store }],
+        order: [["date", "DESC"]],
+      });
+
       res.json(purchases);
     } catch (error) {
       throw error;

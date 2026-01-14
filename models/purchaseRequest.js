@@ -17,9 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
       },
       date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
     },
     { freezeTableName: true }

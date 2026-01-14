@@ -11,6 +11,7 @@ const {
   deleteStoreSpice,
   createPurchase,
   getPurchases,
+  getPurchasesByDate,
   deletePurchase,
 } = require("../controllers/storeController");
 
@@ -25,6 +26,7 @@ router.post("/deleteStoreSpice", deleteStoreSpice);
 
 router.post("/purchase", createPurchase);
 router.get("/purchase", getPurchases);
+router.post("/purchase/date", getPurchasesByDate);
 router.post("/purchase/delete", deletePurchase);
 
 module.exports = router;

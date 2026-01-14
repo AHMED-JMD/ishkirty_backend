@@ -132,7 +132,6 @@ module.exports = {
       if (isDeleted === undefined)
         return res.status(400).json("invalid req body");
 
-      console.log(todayDate);
       //finding and paginating bills from db
       let bills = await Bill.findAll({
         where: {
