@@ -4,7 +4,7 @@ const Spieces = db.models.Spieces;
 const SpiceStore = db.models.SpiceStore;
 const sequelize = db.sequelize;
 const PurchaseRequest = db.models.PurchaseRequest;
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 
 module.exports = {
   addnew: async (req, res) => {
@@ -51,8 +51,8 @@ module.exports = {
       throw error;
     }
   },
-  // attach a store item to a spice with the required quantity per spice unit
-  // accepts: { spiceId?, spiceName?, storeId?, storeName?, quantityNeeded }
+  // attach a store item to a spice with the required quantity per spice unit accepts: { spiceId, storeId?, quantityNeeded }
+
   addStoreSpices: async (req, res) => {
     try {
       const { spiceId, storeId, quantityNeeded } = req.body;

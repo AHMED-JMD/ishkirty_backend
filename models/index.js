@@ -29,6 +29,8 @@ let PurchaseRequest = require("./purchaseRequest")(
   sequelize,
   Sequelize.DataTypes
 );
+let Employee = require("./employee")(sequelize, Sequelize.DataTypes);
+let EmpTrans = require("./empTrans")(sequelize, Sequelize.DataTypes);
 
 //sql relationship here -------------------------------
 Bill.hasMany(BillTrans);
@@ -51,6 +53,10 @@ SpiceStore.belongsTo(Spieces, { foreignKey: "SpieceId" });
 PurchaseRequest.belongsTo(Store, { foreignKey: "StoreId" });
 Store.hasMany(PurchaseRequest, { foreignKey: "StoreId" });
 
+// employee relations
+Employee.hasMany(EmpTrans);
+EmpTrans.belongsTo(Employee);
+
 // //add to db models
 db.models.Admin = Admin;
 db.models.Client = Client;
@@ -61,5 +67,7 @@ db.models.Transfer = Transfer;
 db.models.Store = Store;
 db.models.SpiceStore = SpiceStore;
 db.models.PurchaseRequest = PurchaseRequest;
+db.models.Employee = Employee;
+db.models.EmpTrans = EmpTrans;
 
 module.exports = db;

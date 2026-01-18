@@ -6,6 +6,8 @@ const bill = require("./bill");
 const sales = require("./sales");
 const transfer = require("./transfer");
 const store = require("./store");
+const employee = require("./employee");
+
 /**
  * @description register all of your routes here and they will be
  * automatically imported in the app.js and mapped correctly
@@ -20,5 +22,6 @@ router.use("/client", client);
 router.use("/spieces", spieces);
 router.use("/store", store);
 router.use("/transfer", transfer);
+router.use("/employee", employee);
 
 module.exports = router;
