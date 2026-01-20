@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
   {
     host: process.env.DBHOST,
     dialect: process.env.DIALECT,
-  }
+  },
 );
 
 //initializing db object holding db_connection && db_models
@@ -27,10 +27,12 @@ let Store = require("./store")(sequelize, Sequelize.DataTypes);
 let SpiceStore = require("./spiceStore")(sequelize, Sequelize.DataTypes);
 let PurchaseRequest = require("./purchaseRequest")(
   sequelize,
-  Sequelize.DataTypes
+  Sequelize.DataTypes,
 );
 let Employee = require("./employee")(sequelize, Sequelize.DataTypes);
 let EmpTrans = require("./empTrans")(sequelize, Sequelize.DataTypes);
+let Discharges = require("./discharges")(sequelize, Sequelize.DataTypes);
+let Daily = require("./daily")(sequelize, Sequelize.DataTypes);
 
 //sql relationship here -------------------------------
 Bill.hasMany(BillTrans);
@@ -53,6 +55,16 @@ SpiceStore.belongsTo(Spieces, { foreignKey: "SpieceId" });
 PurchaseRequest.belongsTo(Store, { foreignKey: "StoreId" });
 Store.hasMany(PurchaseRequest, { foreignKey: "StoreId" });
 
+// daily relations
+Daily.hasMany(Bill);
+Bill.belongsTo(Daily, { foreignKey: "DailyId" });
+
+Daily.hasMany(PurchaseRequest);
+PurchaseRequest.belongsTo(Daily, { foreignKey: "DailyId" });
+
+Daily.hasMany(Discharges);
+Discharges.belongsTo(Daily, { foreignKey: "DailyId" });
+
 // employee relations
 Employee.hasMany(EmpTrans);
 EmpTrans.belongsTo(Employee);
@@ -69,5 +81,7 @@ db.models.SpiceStore = SpiceStore;
 db.models.PurchaseRequest = PurchaseRequest;
 db.models.Employee = Employee;
 db.models.EmpTrans = EmpTrans;
+db.models.Discharges = Discharges;
+db.models.Daily = Daily;
 
 module.exports = db;

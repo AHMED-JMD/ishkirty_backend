@@ -9,7 +9,7 @@ const { Op } = require("sequelize");
 module.exports = {
   addnew: async (req, res) => {
     try {
-      const { name, quantity, sell_price, buy_price, isKilo } = req.body;
+      const { name, quantity, sell_price, isKilo } = req.body;
 
       if (!name) return res.status(400).json("enter all feilds");
 
@@ -20,8 +20,7 @@ module.exports = {
       await Store.create({
         name,
         quantity: quantity ? Number(quantity) : 0,
-        sell_price: sell_price ? Number(sell_price) : 0,
-        buy_price: buy_price ? Number(buy_price) : 0,
+        price: sell_price ? Number(sell_price) : 0,
         isKilo: isKilo ? Boolean(isKilo) : false,
       });
 
@@ -35,6 +34,89 @@ module.exports = {
     try {
       let items = await Store.findAll({ order: [["quantity", "DESC"]] });
       res.json(items);
+    } catch (error) {
+      throw error;
+    }
+  },
+  update: async (req, res) => {
+    try {
+      const { id, name, quantity, sell_price, isKilo } = req.body;
+
+      if (!id) return res.status(400).json("enter id");
+
+      const item = await Store.findByPk(id);
+      if (!item) return res.status(400).json("store item not found");
+
+      if (name && name !== item.name) {
+        const exists = await Store.findOne({ where: { name } });
+        if (exists) return res.status(400).json("store item exist");
+      }
+
+      const oldPrice = Number(item.price || 0);
+      const oldIsKilo = Boolean(item.isKilo);
+
+      const newPrice = sell_price !== undefined ? Number(sell_price) : oldPrice;
+      const newIsKilo = isKilo !== undefined ? Boolean(isKilo) : oldIsKilo;
+
+      // if price or isKilo interpretation changed, update spice_cost for linked spices
+      if (newPrice !== oldPrice || newIsKilo !== oldIsKilo) {
+        const oldUnit = oldIsKilo ? oldPrice / 1000 : oldPrice;
+        const newUnit = newIsKilo ? newPrice / 1000 : newPrice;
+        const diffUnit = newUnit - oldUnit;
+
+        if (diffUnit !== 0) {
+          //find all SpiceStore associations for this store item
+          const associations = await SpiceStore.findAll({
+            where: { StoreId: item.id },
+          });
+          for (const assoc of associations) {
+            //check quantityNeeded !=0
+            const qtyNeeded = Number(assoc.quantityNeeded || 0);
+            if (qtyNeeded === 0) continue;
+
+            //find the spice
+            const spice = await Spieces.findByPk(assoc.SpieceId);
+            if (!spice) continue;
+
+            const costChange = qtyNeeded * diffUnit;
+            if (costChange !== 0) {
+              await spice.update({
+                spice_cost: Number(spice.spice_cost || 0) + costChange,
+              });
+            }
+          }
+        }
+      }
+
+      // finally update the store item
+      await item.update({
+        name: name !== undefined ? name : item.name,
+        quantity: quantity !== undefined ? Number(quantity) : item.quantity,
+        price: newPrice,
+        isKilo: newIsKilo,
+      });
+
+      res.json("success");
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  deleteStore: async (req, res) => {
+    try {
+      const { id } = req.body;
+
+      if (!id) return res.status(400).json("enter id");
+
+      const item = await Store.findByPk(id);
+      if (!item) return res.status(400).json("store item not found");
+
+      // remove any associations in SpiceStore first
+      await SpiceStore.destroy({ where: { StoreId: item.id } });
+
+      await item.destroy();
+
+      res.json("success");
     } catch (error) {
       throw error;
     }
@@ -74,11 +156,27 @@ module.exports = {
       const existing = await SpiceStore.findOne({
         where: { SpieceId: spice.id, StoreId: store.id },
       });
-      console.log(existing);
 
       if (existing) {
-        //update quantityNeeded
-        await existing.update({ quantityNeeded: Number(quantityNeeded) });
+        // compute difference and update spice_cost accordingly
+        const newQ = Number(quantityNeeded);
+        const oldQ = Number(existing.quantityNeeded || 0);
+        //the amount that quantityNeeded changed
+        const diff = newQ - oldQ;
+        const unitPrice = store.isKilo
+          ? Number(store.price) / 1000
+          : Number(store.price);
+        const costChange = diff * unitPrice;
+
+        if (costChange !== 0) {
+          await spice.update({
+            spice_cost: Number(spice.spice_cost || 0) + costChange,
+          });
+        }
+
+        // update quantityNeeded
+        await existing.update({ quantityNeeded: newQ });
+
         return res.json({
           success: true,
           updated: true,
@@ -87,12 +185,24 @@ module.exports = {
         });
       }
 
-      //create new association
+      // create new association and add cost for the required quantity
+      const q = Number(quantityNeeded);
+      const unitPrice = store.isKilo
+        ? Number(store.price) / 1000
+        : Number(store.price);
+      const addCost = q * unitPrice;
+
       await SpiceStore.create({
         SpieceId: spice.id,
         StoreId: store.id,
-        quantityNeeded: Number(quantityNeeded),
+        quantityNeeded: q,
       });
+
+      if (addCost !== 0) {
+        await spice.update({
+          spice_cost: Number(spice.spice_cost || 0) + addCost,
+        });
+      }
 
       res.json({
         success: true,
@@ -130,6 +240,27 @@ module.exports = {
       throw error;
     }
   },
+  // delete an association between a store item and a spice
+  // accepts: { storeId, spiceId }
+  deleteStoreSpice: async (req, res) => {
+    try {
+      const { storeId, spiceId } = req.body;
+
+      if (!storeId || !spiceId) return res.status(400).json("enter all feilds");
+
+      const association = await SpiceStore.findOne({
+        where: { StoreId: storeId, SpieceId: spiceId },
+      });
+
+      if (!association) return res.status(400).json("association not found");
+
+      await association.destroy();
+
+      res.json({ success: true, storeId, spiceId });
+    } catch (error) {
+      throw error;
+    }
+  },
 
   // Create a purchase request and increase store item quantity
   // accepts: { store_item, vendor, quantity, buy_price?, date? }
@@ -161,12 +292,12 @@ module.exports = {
           buy_price: usedPrice,
           date: date,
         },
-        { transaction: t }
+        { transaction: t },
       );
 
       await store.update(
         { quantity: Number(store.quantity) + qty },
-        { transaction: t }
+        { transaction: t },
       );
 
       await t.commit();
@@ -232,7 +363,7 @@ module.exports = {
         const newQty = Number(store.quantity) - Number(purchase.quantity);
         await store.update(
           { quantity: newQty < 0 ? 0 : newQty },
-          { transaction: t }
+          { transaction: t },
         );
       }
 
@@ -242,76 +373,6 @@ module.exports = {
       res.json({ success: true });
     } catch (error) {
       await t.rollback();
-      throw error;
-    }
-  },
-
-  // delete an association between a store item and a spice
-  // accepts: { storeId, spiceId }
-  deleteStoreSpice: async (req, res) => {
-    try {
-      const { storeId, spiceId } = req.body;
-
-      if (!storeId || !spiceId) return res.status(400).json("enter all feilds");
-
-      const association = await SpiceStore.findOne({
-        where: { StoreId: storeId, SpieceId: spiceId },
-      });
-
-      if (!association) return res.status(400).json("association not found");
-
-      await association.destroy();
-
-      res.json({ success: true, storeId, spiceId });
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  update: async (req, res) => {
-    try {
-      const { id, name, quantity, sell_price, buy_price } = req.body;
-
-      if (!id) return res.status(400).json("enter id");
-
-      const item = await Store.findByPk(id);
-      if (!item) return res.status(400).json("store item not found");
-
-      if (name && name !== item.name) {
-        const exists = await Store.findOne({ where: { name } });
-        if (exists) return res.status(400).json("store item exist");
-      }
-
-      await item.update({
-        name: name !== undefined ? name : item.name,
-        quantity: quantity !== undefined ? Number(quantity) : item.quantity,
-        sell_price:
-          sell_price !== undefined ? Number(sell_price) : item.sell_price,
-        buy_price: buy_price !== undefined ? Number(buy_price) : item.buy_price,
-      });
-
-      res.json("success");
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  deleteStore: async (req, res) => {
-    try {
-      const { id } = req.body;
-
-      if (!id) return res.status(400).json("enter id");
-
-      const item = await Store.findByPk(id);
-      if (!item) return res.status(400).json("store item not found");
-
-      // remove any associations in SpiceStore first
-      await SpiceStore.destroy({ where: { StoreId: item.id } });
-
-      await item.destroy();
-
-      res.json("success");
-    } catch (error) {
       throw error;
     }
   },

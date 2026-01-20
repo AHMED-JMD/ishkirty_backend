@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BIGINT,
         allowNull: false,
       },
+      spice_cost: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+        defaultValue: 0,
+      },
       isFavourites: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
@@ -31,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "",
       },
     },
-    { freezeTableName: true }
+    { freezeTableName: true },
   );
   return spiecies;
 };

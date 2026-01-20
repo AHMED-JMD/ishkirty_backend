@@ -7,6 +7,8 @@ const sales = require("./sales");
 const transfer = require("./transfer");
 const store = require("./store");
 const employee = require("./employee");
+const discharges = require("./discharges");
+const daily = require("./daily");
 
 /**
  * @description register all of your routes here and they will be
@@ -23,5 +25,7 @@ router.use("/spieces", spieces);
 router.use("/store", store);
 router.use("/transfer", transfer);
 router.use("/employee", employee);
+router.use("/discharges", discharges);
+router.use("/daily", daily);
 
 module.exports = router;

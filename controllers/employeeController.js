@@ -1,6 +1,7 @@
 const db = require("../models/index");
 const Employee = db.models.Employee;
 const EmpTrans = db.models.EmpTrans;
+const { Op } = require("sequelize");
 
 module.exports = {
   add: async (req, res) => {
@@ -111,11 +112,14 @@ module.exports = {
 
   getEmpTran: async (req, res) => {
     try {
-      const { emp_id } = req.body;
+      const { emp_id, startDate, endDate } = req.body;
       if (!emp_id) return res.status(400).json("enter emp_id");
 
       const list = await EmpTrans.findAll({
-        where: { EmployeeId: emp_id },
+        where: {
+          date: { [Op.between]: [startDate, endDate] },
+          EmployeeId: emp_id,
+        },
         order: [["date", "DESC"]],
       });
 
@@ -132,10 +136,32 @@ module.exports = {
 
       const tr = await EmpTrans.findByPk(id);
       if (!tr) return res.status(400).json("transaction not found");
+      //find employee
+      const emp = await Employee.findByPk(tr.EmployeeId);
+      if (!emp) return res.status(400).json("employee not found");
 
-      await tr.destroy();
+      //create transaction for safety
+      const tx = await db.sequelize.transaction();
+      try {
+        let newSalary = Number(emp.salary || 0);
+        const amt = Number(tr.amount || 0);
 
-      res.json({ success: true });
+        //check type to update salary
+        if (tr.type === "اضافة") newSalary -= amt;
+        else newSalary += amt;
+        if (newSalary < 0) newSalary = 0;
+
+        //update salary
+        await emp.update({ salary: newSalary }, { transaction: tx });
+        //delete transaction
+        await tr.destroy({ transaction: tx });
+
+        await tx.commit();
+        res.json({ success: true, newSalary });
+      } catch (error) {
+        await tx.rollback();
+        throw error;
+      }
     } catch (error) {
       throw error;
     }

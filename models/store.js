@@ -11,11 +11,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DOUBLE,
         defaultValue: 0,
       },
-      sell_price: {
-        type: DataTypes.BIGINT,
-        defaultValue: 0,
-      },
-      buy_price: {
+      price: {
+        // total price or selling price for the stock item
         type: DataTypes.BIGINT,
         defaultValue: 0,
       },
@@ -24,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false,
       },
     },
-    { freezeTableName: true }
+    { freezeTableName: true },
   );
 
   return Store;

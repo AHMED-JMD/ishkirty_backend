@@ -4,9 +4,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       vendor: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       quantity: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      net_quantity: {
         type: DataTypes.DOUBLE,
         allowNull: false,
         defaultValue: 0,
@@ -21,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     },
-    { freezeTableName: true }
+    { freezeTableName: true },
   );
 
   return PurchaseRequest;

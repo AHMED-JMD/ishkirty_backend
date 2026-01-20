@@ -4,7 +4,7 @@ const app = require("./index");
 
 //connect to database
 (async () => {
-  await db.sequelize.sync({ alter: true });
+  await db.sequelize.sync();
   console.log("Connected to MySQL");
 })();
 
