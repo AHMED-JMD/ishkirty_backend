@@ -119,7 +119,7 @@ module.exports = {
             favBtn: "",
             isControll: false,
           },
-          { where: { id: _feilds.id } }
+          { where: { id: _feilds.id } },
         );
       } else {
         //check if it is normal update
@@ -141,7 +141,7 @@ module.exports = {
             favBtn: favBtn,
             isControll: isCtrl,
           },
-          { where: { id: _feilds.id } }
+          { where: { id: _feilds.id } },
         );
       }
 

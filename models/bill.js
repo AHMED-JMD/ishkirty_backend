@@ -12,6 +12,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
         allowNull: false,
       },
+      isDelivery: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      delivery_cost: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      delivery_address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
       date: { type: DataTypes.DATEONLY, allowNull: false },
       shiftTime: { type: DataTypes.ENUM("صباحية", "مسائية"), allowNull: false },
       admin: {
@@ -22,8 +37,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: "",
       },
+      business_location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "port sudan",
+      },
     },
-    { freezeTablaName: true }
+    { freezeTablaName: true },
   );
   return bill;
 };

@@ -9,8 +9,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 0,
       },
+      business_location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "port sudan",
+      },
     },
-    { freezeTableName: true }
+    { freezeTableName: true },
   );
 
   return SpiceStore;

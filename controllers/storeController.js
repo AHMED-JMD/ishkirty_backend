@@ -269,7 +269,7 @@ module.exports = {
     try {
       const { store_item, vendor, quantity, buy_price, date } = req.body;
 
-      if (!store_item || !vendor || quantity === undefined)
+      if (!store_item || !date || quantity === undefined)
         return res.status(400).json("enter all feilds");
 
       const store = await Store.findByPk(store_item, { transaction: t });
@@ -279,9 +279,7 @@ module.exports = {
       }
 
       const usedPrice =
-        buy_price !== undefined
-          ? Number(buy_price)
-          : Number(store.buy_price || 0);
+        buy_price !== undefined ? Number(buy_price) : Number(store.price || 0);
       const qty = Number(quantity);
 
       const purchase = await PurchaseRequest.create(

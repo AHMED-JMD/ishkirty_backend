@@ -1,3 +1,4 @@
+const { includes } = require("lodash");
 const db = require("../models/index");
 const Employee = db.models.Employee;
 const EmpTrans = db.models.EmpTrans;
@@ -79,6 +80,7 @@ module.exports = {
       throw error;
     }
   },
+
   addEmpTran: async (req, res) => {
     try {
       const { emp_id, type, amount, date } = req.body;
@@ -110,6 +112,30 @@ module.exports = {
     }
   },
 
+  getEmpTranByDate: async (req, res) => {
+    try {
+      const { startDate, endDate } = req.body;
+      if (!startDate || !endDate)
+        return res.status(400).json("enter request data");
+
+      const list = await EmpTrans.findAll({
+        where: {
+          date: { [Op.between]: [startDate, endDate] },
+        },
+        order: [["date", "DESC"]],
+        include: [{ model: Employee, attributes: ["name"] }],
+      });
+
+      // Add employee_name to each result
+      const result = list.map((item) => ({
+        ...item.toJSON(),
+        employee_name: item.Employee ? item.Employee.name : null,
+      }));
+      res.json(result);
+    } catch (error) {
+      throw error;
+    }
+  },
   getEmpTran: async (req, res) => {
     try {
       const { emp_id, startDate, endDate } = req.body;
@@ -121,9 +147,15 @@ module.exports = {
           EmployeeId: emp_id,
         },
         order: [["date", "DESC"]],
+        include: [{ model: Employee, attributes: ["name"] }],
       });
 
-      res.json(list);
+      // Add employee_name to each result
+      const result = list.map((item) => ({
+        ...item.toJSON(),
+        employee_name: item.Employee ? item.Employee.name : null,
+      }));
+      res.json(result);
     } catch (error) {
       throw error;
     }

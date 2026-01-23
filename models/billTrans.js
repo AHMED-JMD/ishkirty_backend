@@ -10,8 +10,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
+      business_location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "port sudan",
+      },
     },
-    { freezeTableName: true }
+    { freezeTableName: true },
   );
 
   return billTrans;

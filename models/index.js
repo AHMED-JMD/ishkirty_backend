@@ -33,14 +33,26 @@ let Employee = require("./employee")(sequelize, Sequelize.DataTypes);
 let EmpTrans = require("./empTrans")(sequelize, Sequelize.DataTypes);
 let Discharges = require("./discharges")(sequelize, Sequelize.DataTypes);
 let Daily = require("./daily")(sequelize, Sequelize.DataTypes);
+let Safe = require("./safe")(sequelize, Sequelize.DataTypes);
+let SafeDailies = require("./safeDailies")(sequelize, Sequelize.DataTypes);
+let SafeTransfers = require("./safeTransfers")(sequelize, Sequelize.DataTypes);
 
 //sql relationship here -------------------------------
 Bill.hasMany(BillTrans);
 BillTrans.belongsTo(Bill);
+
 Spieces.hasMany(BillTrans);
+BillTrans.belongsTo(Spieces);
+
 Client.hasMany(Bill);
+Bill.belongsTo(Client);
+
 Admin.hasMany(Bill);
+Bill.belongsTo(Admin);
+
 Admin.hasMany(Transfer);
+Transfer.belongsTo(Admin);
+
 // //-----------------------------------------------------
 // store associations
 // a Spice can require many Store items and a Store item can be used by many Spieces
@@ -51,6 +63,10 @@ Store.belongsToMany(Spieces, { through: SpiceStore });
 SpiceStore.belongsTo(Store, { foreignKey: "StoreId" });
 SpiceStore.belongsTo(Spieces, { foreignKey: "SpieceId" });
 
+// employee relations
+Employee.hasMany(EmpTrans);
+EmpTrans.belongsTo(Employee);
+
 // purchase requests relation
 PurchaseRequest.belongsTo(Store, { foreignKey: "StoreId" });
 Store.hasMany(PurchaseRequest, { foreignKey: "StoreId" });
@@ -59,15 +75,23 @@ Store.hasMany(PurchaseRequest, { foreignKey: "StoreId" });
 Daily.hasMany(Bill);
 Bill.belongsTo(Daily, { foreignKey: "DailyId" });
 
+Daily.hasMany(EmpTrans);
+EmpTrans.belongsTo(Daily, { foreignKey: "DailyId" });
+
 Daily.hasMany(PurchaseRequest);
 PurchaseRequest.belongsTo(Daily, { foreignKey: "DailyId" });
 
 Daily.hasMany(Discharges);
 Discharges.belongsTo(Daily, { foreignKey: "DailyId" });
 
-// employee relations
-Employee.hasMany(EmpTrans);
-EmpTrans.belongsTo(Employee);
+// Safe relations
+Safe.hasMany(Daily, { foreignKey: "safeId", as: "dailys" });
+Safe.hasMany(Bill, { foreignKey: "safeId", as: "bills" });
+Bill.belongsTo(Safe, { foreignKey: "safeId", as: "safe" });
+Safe.hasMany(SafeDailies, { foreignKey: "SafeId", as: "safeDailies" });
+Safe.hasMany(SafeTransfers, { foreignKey: "SafeId", as: "safeTransfers" });
+SafeDailies.belongsTo(Safe, { foreignKey: "SafeId", as: "safe" });
+SafeTransfers.belongsTo(Safe, { foreignKey: "SafeId", as: "safe" });
 
 // //add to db models
 db.models.Admin = Admin;
@@ -83,5 +107,8 @@ db.models.Employee = Employee;
 db.models.EmpTrans = EmpTrans;
 db.models.Discharges = Discharges;
 db.models.Daily = Daily;
+db.models.Safe = Safe;
+db.models.SafeDailies = SafeDailies;
+db.models.SafeTransfers = SafeTransfers;
 
 module.exports = db;

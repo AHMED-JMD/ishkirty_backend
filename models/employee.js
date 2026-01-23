@@ -7,8 +7,13 @@ module.exports = (sequelize, DataTypes) => {
       shift: { type: DataTypes.STRING },
       fixed_salary: { type: DataTypes.FLOAT, defaultValue: 0 },
       salary: { type: DataTypes.FLOAT, defaultValue: 0 },
+      business_location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "port sudan",
+      },
     },
-    {}
+    {},
   );
 
   return Employee;

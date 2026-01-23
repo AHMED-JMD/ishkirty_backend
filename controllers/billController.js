@@ -21,6 +21,9 @@ module.exports = {
         shiftTime,
         clientId,
         admin_id,
+        isDelivery = false,
+        delivery_cost = 0,
+        delivery_address = "",
       } = req.body;
 
       //check req.body
@@ -32,6 +35,11 @@ module.exports = {
         return res.status(400).json("الرجاء اختيار صنف معين");
       //send the bill to db
       let admin = await Admin.findOne({ where: { admin_id } });
+
+      // If delivery, add delivery_cost to amount
+      if (isDelivery && delivery_cost) {
+        amount = parseFloat(amount) + parseFloat(delivery_cost);
+      }
 
       // use a transaction so bill + billTrans + store updates succeed or roll back together
       const t = await sequelize.transaction();
@@ -45,25 +53,15 @@ module.exports = {
             admin: admin.username,
             ClientId: clientId,
             AdminAdminId: admin_id,
+            isDelivery: !!isDelivery,
+            delivery_cost: delivery_cost || 0,
+            delivery_address: delivery_address || "",
           },
-          { transaction: t }
+          { transaction: t },
         );
 
         // add the new bill id to the bill transactions and adjust store quantities
         for (const billtran of trans) {
-          // create new bill trans
-          await BillTrans.create(
-            {
-              name: billtran.spices,
-              price: billtran.unit_price,
-              quantity: billtran.counter,
-              amount: billtran.total_price,
-              date,
-              BillId: newbill.id,
-            },
-            { transaction: t }
-          );
-
           // find the spice by name (front-end sends spice name in billtran.spices)
           const spice = await Spieces.findOne({
             where: { name: billtran.spices },
@@ -96,9 +94,23 @@ module.exports = {
             // subtract from store quantity using a literal to avoid race conditions
             await Store.update(
               { quantity: sequelize.literal(`quantity - ${totalNeeded}`) },
-              { where: { id: si.id }, transaction: t }
+              { where: { id: si.id }, transaction: t },
             );
           }
+
+          // create new bill trans---------
+          await BillTrans.create(
+            {
+              name: billtran.spices,
+              price: billtran.unit_price,
+              quantity: billtran.counter,
+              amount: billtran.total_price,
+              date,
+              BillId: newbill.id,
+              SpieceId: spice.id,
+            },
+            { transaction: t },
+          );
         }
 
         await t.commit();
@@ -114,7 +126,7 @@ module.exports = {
         //update account
         await Client.update(
           { account: client.account + parseInt(amount) },
-          { where: { id: client.id } }
+          { where: { id: client.id } },
         );
       }
 
@@ -265,7 +277,7 @@ module.exports = {
         {
           where: { id },
           order: [["date", "DESC"]],
-        }
+        },
       );
 
       //send request

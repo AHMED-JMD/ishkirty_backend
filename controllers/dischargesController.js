@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const db = require("../models/index");
 const Discharges = db.models.Discharges;
 const Daily = db.models.Daily;
@@ -5,7 +6,8 @@ const Daily = db.models.Daily;
 module.exports = {
   add: async (req, res) => {
     try {
-      const { name, price, date, dailyId } = req.body;
+      const { name, price, date, isMonthly, dailyId, payment_method } =
+        req.body;
       if (!name || price === undefined || !date)
         return res.status(400).json("enter all feilds");
 
@@ -13,6 +15,8 @@ module.exports = {
         name,
         price: Number(price),
         date,
+        isMonthly,
+        payment_method: payment_method || "كاش",
         DailyId: dailyId !== undefined ? dailyId : null,
       });
 
@@ -24,7 +28,30 @@ module.exports = {
 
   getAll: async (req, res) => {
     try {
-      const discharges = await Discharges.findAll({ include: [Daily], order: [["date", "DESC"]] });
+      const discharges = await Discharges.findAll({
+        include: [Daily],
+        order: [["date", "DESC"]],
+      });
+      res.json(discharges);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  getByDate: async (req, res) => {
+    try {
+      const { startDate, endDate } = req.body;
+
+      const discharges = await Discharges.findAll({
+        where: {
+          date: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        include: [Daily],
+        order: [["date", "DESC"]],
+      });
+
       res.json(discharges);
     } catch (error) {
       throw error;
@@ -33,7 +60,8 @@ module.exports = {
 
   update: async (req, res) => {
     try {
-      const { id, name, price, date, dailyId } = req.body;
+      const { id, name, price, date, isMonthly, dailyId, payment_method } =
+        req.body;
       if (!id) return res.status(400).json("enter id");
 
       const item = await Discharges.findByPk(id);
@@ -43,6 +71,9 @@ module.exports = {
         name: name !== undefined ? name : item.name,
         price: price !== undefined ? Number(price) : item.price,
         date: date !== undefined ? date : item.date,
+        isMonthly: isMonthly !== undefined ? isMonthly : item.isMonthly,
+        payment_method:
+          payment_method !== undefined ? payment_method : item.payment_method,
         DailyId: dailyId !== undefined ? dailyId : item.DailyId,
       });
 

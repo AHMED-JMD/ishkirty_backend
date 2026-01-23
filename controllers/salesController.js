@@ -1,4 +1,4 @@
-const { getSum, total_sales } = require("../middlewares/getSum");
+const { getSum } = require("../middlewares/getSum");
 const db = require("../models/index");
 const Bill = db.models.Bill;
 const Spieces = db.models.Spieces;
@@ -59,6 +59,56 @@ module.exports = {
       throw error;
     }
   },
+
+  totalSalesCosts: async (req, res) => {
+    try {
+      const { startDate, endDate } = req.body;
+
+      // Validate required parameters
+      if (!startDate || !endDate) {
+        return res.status(400).json("startDate and endDate are required");
+      }
+
+      // Query bill transactions within the date range
+      const billTrans = await BillTrans.findAll({
+        where: {
+          date: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        include: [
+          {
+            model: Spieces,
+            attributes: ["id", "name", "spice_cost"], // Include species details
+            required: true, // Only include bill transactions with valid species
+          },
+        ],
+        order: [["createdAt", "ASC"]],
+      });
+
+      // Calculate total costs and format response
+      let totalCosts = 0;
+      billTrans.forEach((bill) => {
+        if (bill.Spiece !== undefined) {
+          totalCosts += bill.Spiece.spice_cost * bill.quantity;
+        }
+      });
+
+      // Calculate grand total across all bill transactions
+      // const grandTotal = results.reduce((sum, bill) => sum + bill.totalCost, 0);
+
+      res.json({ totalCosts });
+    } catch (error) {
+      console.error("Error getting bill transactions:", error);
+      res.status(500).json({
+        error: "Internal server error",
+        message: "Failed to retrieve bill transactions",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
+    }
+  },
+
   spiecesSales: async (req, res) => {
     try {
       const { name, curr_date, week_date, month_date } = req.body;
@@ -131,7 +181,7 @@ module.exports = {
             tot_sales: sales.revenue,
             ImgLink: type.ImgLink,
           };
-        })
+        }),
       );
 
       //send the response

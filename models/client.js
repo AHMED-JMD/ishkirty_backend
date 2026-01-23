@@ -8,8 +8,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       phoneNum: DataTypes.BIGINT,
       account: { type: DataTypes.BIGINT, defaultValue: 0 },
+      business_location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "port sudan",
+      },
     },
-    { freezeTableName: true }
+    { freezeTableName: true },
   );
 
   return client;

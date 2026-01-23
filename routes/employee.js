@@ -7,6 +7,7 @@ const {
   delete: del,
   addEmpTran,
   getEmpTran,
+  getEmpTranByDate,
   deleteEmpTran,
   runNewMonth,
 } = require("../controllers/employeeController");
@@ -18,6 +19,7 @@ router.post("/delete", del);
 
 router.post("/emp_tran", addEmpTran);
 router.post("/get_emp_trans", getEmpTran);
+router.post("/get_emp_trans/date", getEmpTranByDate);
 router.post("/delete_emp_tran", deleteEmpTran);
 
 router.get("/new_month", runNewMonth);

@@ -9,6 +9,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       amount: { type: DataTypes.FLOAT, allowNull: false },
       date: { type: DataTypes.DATEONLY, allowNull: false },
+      payment_method: {
+        type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
+        allowNull: false,
+        defaultValue: "كاش",
+      },
+      business_location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "port sudan",
+      },
     },
     {},
   );

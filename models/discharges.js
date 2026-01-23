@@ -15,6 +15,20 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
+      isMonthly: {
+        type: DataTypes.BOOLEAN,
+        defaulValue: false,
+      },
+      payment_method: {
+        type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
+        allowNull: false,
+        defaultValue: "كاش",
+      },
+      business_location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "port sudan",
+      },
     },
     { freezeTableName: true },
   );

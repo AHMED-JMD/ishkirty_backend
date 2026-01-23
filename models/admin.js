@@ -18,8 +18,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("صباحية", "مسائية", "كامل"),
         defaultValue: "كامل",
       },
+      business_location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "port sudan",
+      },
     },
-    { freezeTableName: true }
+    { freezeTableName: true },
   );
 
   return Admin;
