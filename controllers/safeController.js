@@ -3,6 +3,7 @@ const Safe = db.models.Safe;
 const Client = db.models.Client;
 const Daily = db.models.Daily;
 const SafeTransfers = db.models.SafeTransfers;
+const SafeDailies = db.models.SafeDailies;
 
 const _ = require("lodash");
 
@@ -101,17 +102,16 @@ module.exports = {
         cash_costs,
         bank_costs,
         account_costs,
+        dailyId,
       } = req.body;
 
       if (!date) return res.status(400).json("enter date");
 
-      const SafeDailies = db.models.SafeDailies;
       // Check if SafeDailies exists for this date
       const existing = await SafeDailies.findOne({ where: { date } });
       if (existing) {
         return res.json({
-          message:
-            "SafeDailies already exists for this date. Safe not updated.",
+          message: "Safe Daily already exists for this date. Safe not updated.",
         });
       }
 
@@ -141,6 +141,7 @@ module.exports = {
           total_bank,
           total_dept,
           SafeId: safe.id,
+          DailyId: dailyId,
         });
 
         // Update Daily.isAddedtoSafe to true for this date

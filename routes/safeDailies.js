@@ -1,11 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const controller = require('../controllers/safeDailiesController');
+const {
+  add,
+  getAll,
+  update,
+  deleteSafeDaily,
+  getByDate,
+} = require("../controllers/safeDailiesController");
 
-router.post('/add', controller.add);
-router.get('/all', controller.getAll);
-router.post('/get', controller.getOne);
-router.post('/update', controller.update);
-router.post('/delete', controller.delete);
+router.post("/add", add);
+router.get("/all", getAll);
+router.post("/update", update);
+router.post("/delete", deleteSafeDaily);
+router.post("/by-date", getByDate);
 
 module.exports = router;

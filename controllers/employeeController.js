@@ -211,7 +211,7 @@ module.exports = {
         await EmpTrans.create(
           {
             EmployeeId: emp.id,
-            type: "add",
+            type: "اضافة",
             amount: 0,
             date,
           },

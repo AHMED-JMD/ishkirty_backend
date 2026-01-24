@@ -33,6 +33,23 @@ module.exports = {
 
       if (trans.length === 0)
         return res.status(400).json("الرجاء اختيار صنف معين");
+
+      // // Check store warn_value for each spice in the transaction
+      // for (const billtran of trans) {
+      //   const spice = await Spieces.findOne({
+      //     where: { name: billtran.spices },
+      //   });
+      //   if (!spice) continue;
+      //   const storeItems = await spice.getStores({
+      //     joinTableAttributes: ["quantityNeeded"],
+      //   });
+      //   for (const si of storeItems) {
+      //     if (si.quantity < si.warn_value) {
+      //       return res.status(400).json("المخزن فارغ");
+      //     }
+      //   }
+      // }
+
       //send the bill to db
       let admin = await Admin.findOne({ where: { admin_id } });
 
@@ -90,6 +107,17 @@ module.exports = {
             }
 
             if (totalNeeded === 0) continue;
+
+            if (
+              si.quantity < totalNeeded ||
+              si.warn_value >= si.quantity ||
+              si.warn_value >= si.quantity - totalNeeded
+            ) {
+              await t.rollback();
+              return res
+                .status(400)
+                .json(`كمية ${si.name} في المخزن غير كافية`);
+            }
 
             // subtract from store quantity using a literal to avoid race conditions
             await Store.update(

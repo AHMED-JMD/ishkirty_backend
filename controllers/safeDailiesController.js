@@ -1,11 +1,20 @@
 const db = require("../models/index");
+const { Op } = require("sequelize");
 const SafeDailies = db.models.SafeDailies;
+const Daily = db.models.Daily;
+const Safe = db.models.Safe;
 
 module.exports = {
   add: async (req, res) => {
     try {
       const { date, total_cash, total_bank, total_dept } = req.body;
-      const entry = await SafeDailies.create({ date, total_cash, total_bank, total_dept });
+
+      const entry = await SafeDailies.create({
+        date,
+        total_cash,
+        total_bank,
+        total_dept,
+      });
       res.json(entry);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -19,11 +28,24 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   },
-  getOne: async (req, res) => {
+  getByDate: async (req, res) => {
     try {
-      const { id } = req.body;
-      const entry = await SafeDailies.findByPk(id);
-      res.json(entry);
+      const { startDate, endDate } = req.body;
+      if (!startDate || !endDate) {
+        return res
+          .status(400)
+          .json({ error: "startDate and endDate are required" });
+      }
+      const entries = await SafeDailies.findAll({
+        where: {
+          date: {
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        order: [["date", "DESC"]],
+      });
+
+      res.json(entries);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -31,18 +53,48 @@ module.exports = {
   update: async (req, res) => {
     try {
       const { id, date, total_cash, total_bank, total_dept } = req.body;
+
       const entry = await SafeDailies.findByPk(id);
       if (!entry) return res.status(404).json({ error: "Not found" });
+
       await entry.update({ date, total_cash, total_bank, total_dept });
+
       res.json(entry);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
-  delete: async (req, res) => {
+  deleteSafeDaily: async (req, res) => {
     try {
       const { id } = req.body;
-      await SafeDailies.destroy({ where: { id } });
+      // Find the SafeDaily entry first
+      console.log("Deleting SafeDaily with id:", id);
+      const safeDaily = await SafeDailies.findOne({ where: { DailyId: id } });
+
+      if (!safeDaily) {
+        return res.status(404).json({ error: "SafeDaily not found" });
+      }
+      // Get the associated Safe
+      const safe = await Safe.findByPk(safeDaily.SafeId);
+      if (!safe) {
+        return res.status(404).json({ error: "Associated Safe not found" });
+      }
+      // Deduct the totals from the Safe
+      await safe.update({
+        cash_amount: safe.cash_amount - safeDaily.total_cash,
+        bank_amount: safe.bank_amount - safeDaily.total_bank,
+        dept_amount: safe.dept_amount - safeDaily.total_dept,
+      });
+
+      // Set isAddedtoSafe=false for the related Daily
+      if (safeDaily.DailyId) {
+        const daily = await Daily.findByPk(safeDaily.DailyId);
+        if (daily) {
+          await daily.update({ isAddedtoSafe: false });
+        }
+      }
+      // Delete the SafeDaily entry
+      await safeDaily.destroy();
       res.json({ success: true });
     } catch (error) {
       res.status(500).json({ error: error.message });

@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DOUBLE,
         defaultValue: 0,
       },
+      warn_value: {
+        // use DOUBLE to support fractional quantities (e.g., grams)
+        type: DataTypes.DOUBLE,
+        defaultValue: 0,
+      },
       price: {
         // total price or selling price for the stock item
         type: DataTypes.BIGINT,

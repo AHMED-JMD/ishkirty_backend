@@ -84,13 +84,22 @@ PurchaseRequest.belongsTo(Daily, { foreignKey: "DailyId" });
 Daily.hasMany(Discharges);
 Discharges.belongsTo(Daily, { foreignKey: "DailyId" });
 
-// Safe relations
-Safe.hasMany(Daily, { foreignKey: "safeId", as: "dailys" });
-Safe.hasMany(Bill, { foreignKey: "safeId", as: "bills" });
-Bill.belongsTo(Safe, { foreignKey: "safeId", as: "safe" });
-Safe.hasMany(SafeDailies, { foreignKey: "SafeId", as: "safeDailies" });
+// Safe and Daily many-to-many relation through SafeDailies
+Safe.belongsToMany(Daily, {
+  through: SafeDailies,
+  foreignKey: "SafeId",
+  otherKey: "DailyId",
+  as: "dailys",
+});
+Daily.belongsToMany(Safe, {
+  through: SafeDailies,
+  foreignKey: "DailyId",
+  otherKey: "SafeId",
+  as: "safes",
+});
+
+// SafeTransfers relation
 Safe.hasMany(SafeTransfers, { foreignKey: "SafeId", as: "safeTransfers" });
-SafeDailies.belongsTo(Safe, { foreignKey: "SafeId", as: "safe" });
 SafeTransfers.belongsTo(Safe, { foreignKey: "SafeId", as: "safe" });
 
 // //add to db models

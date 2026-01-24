@@ -1,11 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const controller = require('../controllers/safeTransfersController');
+const {
+  add,
+  getAll,
+  getByDate,
+  update,
+  deleteTransfer,
+} = require("../controllers/safeTransfersController");
 
-router.post('/add', controller.add);
-router.get('/all', controller.getAll);
-router.post('/get', controller.getOne);
-router.post('/update', controller.update);
-router.post('/delete', controller.delete);
+router.post("/add", add);
+router.get("/all", getAll);
+router.post("/update", update);
+router.post("/by-date", getByDate);
+router.post("/delete", deleteTransfer);
 
 module.exports = router;

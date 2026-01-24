@@ -9,7 +9,7 @@ const { Op } = require("sequelize");
 module.exports = {
   addnew: async (req, res) => {
     try {
-      const { name, quantity, sell_price, isKilo } = req.body;
+      const { name, quantity, sell_price, warn_value, isKilo } = req.body;
 
       if (!name) return res.status(400).json("enter all feilds");
 
@@ -20,6 +20,7 @@ module.exports = {
       await Store.create({
         name,
         quantity: quantity ? Number(quantity) : 0,
+        warn_value: warn_value ? Number(warn_value) : 0,
         price: sell_price ? Number(sell_price) : 0,
         isKilo: isKilo ? Boolean(isKilo) : false,
       });
@@ -40,7 +41,7 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      const { id, name, quantity, sell_price, isKilo } = req.body;
+      const { id, name, quantity, sell_price, warn_value, isKilo } = req.body;
 
       if (!id) return res.status(400).json("enter id");
 
@@ -92,6 +93,8 @@ module.exports = {
       await item.update({
         name: name !== undefined ? name : item.name,
         quantity: quantity !== undefined ? Number(quantity) : item.quantity,
+        warn_value:
+          warn_value !== undefined ? Number(warn_value) : item.warn_value,
         price: newPrice,
         isKilo: newIsKilo,
       });
@@ -267,9 +270,22 @@ module.exports = {
   createPurchase: async (req, res) => {
     const t = await sequelize.transaction();
     try {
-      const { store_item, vendor, quantity, buy_price, date } = req.body;
+      const {
+        store_item,
+        vendor,
+        quantity,
+        net_quantity,
+        payment_method,
+        date,
+      } = req.body;
 
-      if (!store_item || !date || quantity === undefined)
+      if (
+        !store_item ||
+        !date ||
+        quantity === undefined ||
+        !net_quantity ||
+        !payment_method
+      )
         return res.status(400).json("enter all feilds");
 
       const store = await Store.findByPk(store_item, { transaction: t });
@@ -278,8 +294,7 @@ module.exports = {
         return res.status(400).json("store item not found");
       }
 
-      const usedPrice =
-        buy_price !== undefined ? Number(buy_price) : Number(store.price || 0);
+      const usedPrice = Number(store.price || 0);
       const qty = Number(quantity);
 
       const purchase = await PurchaseRequest.create(
@@ -287,6 +302,8 @@ module.exports = {
           StoreId: store.id,
           vendor,
           quantity: qty,
+          net_quantity: Number(net_quantity),
+          payment_method: payment_method,
           buy_price: usedPrice,
           date: date,
         },
@@ -294,7 +311,7 @@ module.exports = {
       );
 
       await store.update(
-        { quantity: Number(store.quantity) + qty },
+        { quantity: Number(store.quantity) + Number(net_quantity) },
         { transaction: t },
       );
 
