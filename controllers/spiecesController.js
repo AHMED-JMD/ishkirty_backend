@@ -7,7 +7,7 @@ const deleteFile = require("../middlewares/deleteImage");
 module.exports = {
   getAll: async (req, res) => {
     try {
-      let spieces = await Spieces.findAll({ order: [["price", "DESC"]] });
+      let spieces = await Spieces.findAll({ order: [["createdAt", "DESC"]] });
 
       res.json(spieces);
     } catch (error) {

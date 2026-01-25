@@ -175,10 +175,19 @@ module.exports = {
           //get total sales of the spice
           const sales = getSum(bills);
 
+          // calculate total costs for this spice using spice_cost from the Spieces model
+          const tot_costs = bills.reduce((acc, b) => {
+            const qty = Number(b.quantity) || 0;
+            const cost = Number(type.spice_cost) || 0;
+            return acc + qty * cost;
+          }, 0);
+
           return {
+            id: type.id,
             name: type.name,
             category: type.category,
             tot_sales: sales.revenue,
+            tot_costs,
             ImgLink: type.ImgLink,
           };
         }),
