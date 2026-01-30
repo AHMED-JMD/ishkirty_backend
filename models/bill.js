@@ -2,6 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   let bill = sequelize.define(
     "Bill",
     {
+      bill_counter: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
       amount: { type: DataTypes.BIGINT, allowNull: false },
       isDeleted: {
         type: DataTypes.BOOLEAN,
@@ -11,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       paymentMethod: {
         type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
         allowNull: false,
+      },
+      type: {
+        type: DataTypes.ENUM("محلي", "سفري", "استلام", "توصيل"),
+        allowNull: false,
+        defaultValue: "سفري",
       },
       isDelivery: {
         type: DataTypes.BOOLEAN,
@@ -28,7 +38,10 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "",
       },
       date: { type: DataTypes.DATEONLY, allowNull: false },
-      shiftTime: { type: DataTypes.ENUM("صباحية", "مسائية"), allowNull: false },
+      shiftTime: {
+        type: DataTypes.ENUM("صباحية", "مسائية", "كاملة"),
+        allowNull: false,
+      },
       admin: {
         type: DataTypes.STRING,
       },
@@ -43,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "port sudan",
       },
     },
-    { freezeTablaName: true },
+    { freezeTableName: true },
   );
   return bill;
 };

@@ -1,5 +1,7 @@
 require("dotenv").config();
 const Sequelize = require("sequelize");
+const { connect } = require("..");
+const fs = require("fs");
 
 //connecting to mysql
 const sequelize = new Sequelize(
@@ -9,6 +11,25 @@ const sequelize = new Sequelize(
   {
     host: process.env.DBHOST,
     dialect: process.env.DIALECT,
+    dialectOptions: {
+      connectTimeout: 60000,
+      // ssl: {
+      //   // Only need CA certificate for Aiven
+      //   ca: process.env.AIVEN_DB_SSL_CA
+      //     ? fs.readFileSync(process.env.AIVEN_DB_SSL_CA)
+      //     : undefined,
+      //   rejectUnauthorized: true, // This is important for Aiven
+      // },
+    },
+    logging: console.log, // Enable query logging
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
+    timezone: "+00:00",
+    retry: { max: 3 },
   },
 );
 
@@ -20,6 +41,7 @@ db.models = {};
 let Admin = require("./admin")(sequelize, Sequelize.DataTypes);
 let Client = require("./client")(sequelize, Sequelize.DataTypes);
 let Spieces = require("./spieces")(sequelize, Sequelize.DataTypes);
+let Category = require("./categories")(sequelize, Sequelize.DataTypes);
 let Bill = require("./bill")(sequelize, Sequelize.DataTypes);
 let BillTrans = require("./billTrans")(sequelize, Sequelize.DataTypes);
 let Transfer = require("./transfer")(sequelize, Sequelize.DataTypes);
@@ -43,6 +65,10 @@ BillTrans.belongsTo(Bill);
 
 Spieces.hasMany(BillTrans);
 BillTrans.belongsTo(Spieces);
+
+// categories relation
+Category.hasMany(Spieces, { foreignKey: "categoryId" });
+Spieces.belongsTo(Category, { foreignKey: "categoryId" });
 
 Client.hasMany(Bill);
 Bill.belongsTo(Client);
@@ -106,6 +132,7 @@ SafeTransfers.belongsTo(Safe, { foreignKey: "SafeId", as: "safe" });
 db.models.Admin = Admin;
 db.models.Client = Client;
 db.models.Spieces = Spieces;
+db.models.Category = Category;
 db.models.Bill = Bill;
 db.models.BillTrans = BillTrans;
 db.models.Transfer = Transfer;

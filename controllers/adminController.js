@@ -75,7 +75,7 @@ let admin = {
                     role: user.role,
                   },
                 });
-              }
+              },
             );
           }
         });
@@ -102,9 +102,11 @@ let admin = {
         res.json({
           statusCode: 200,
           message: "Success",
-          data: {
-            username: user.username,
+          user: {
+            id: user.admin_id,
             phoneNum: user.phoneNum,
+            username: user.username,
+            role: user.role,
           },
         });
       })

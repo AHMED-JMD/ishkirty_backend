@@ -7,11 +7,13 @@ const {
   getByDate,
   update,
   delete: del,
+  SyncDB,
 } = require("../controllers/dailyController");
 
 router.post("/", add);
 router.get("/", getAll);
 router.get("/get-one", getOne);
+router.post("/sync", SyncDB);
 
 router.post("/date", getByDate);
 router.post("/update", update);

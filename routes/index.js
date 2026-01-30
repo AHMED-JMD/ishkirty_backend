@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const admin = require("./admin");
 const spieces = require("./spieces");
+const categories = require("./categories");
 const client = require("./client");
 const bill = require("./bill");
 const sales = require("./sales");
@@ -23,6 +24,7 @@ router.use("/bill", bill);
 router.use("/sales", sales);
 router.use("/client", client);
 router.use("/spieces", spieces);
+router.use("/categories", categories);
 router.use("/store", store);
 router.use("/transfer", transfer);
 router.use("/employee", employee);

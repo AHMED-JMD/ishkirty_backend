@@ -251,8 +251,31 @@ module.exports = {
           host: ONLINE_DBHOST,
           dialect: ONLINE_DIALECT,
           logging: false,
+          pool: { max: 10, min: 0, acquire: 60000, idle: 10000 },
+          dialectOptions: { connectTimeout: 60000 },
+          retry: { max: 3 },
         },
       );
+
+      // helper: authenticate with retries + exponential backoff
+      async function connectWithRetry(sequelize, retries = 3) {
+        let attempt = 0;
+        while (attempt <= retries) {
+          try {
+            await sequelize.authenticate();
+            return;
+          } catch (err) {
+            attempt++;
+            if (attempt > retries) throw err;
+            await new Promise((r) =>
+              setTimeout(r, 1000 * Math.pow(2, attempt)),
+            );
+          }
+        }
+      }
+
+      // attempt connection to remote DB before proceeding
+      await connectWithRetry(remoteSequelize, 3);
 
       // initialize remote models (same as models/index.js)
       const RemoteAdmin = require("../models/admin")(
@@ -307,6 +330,18 @@ module.exports = {
         remoteSequelize,
         Sequelize.DataTypes,
       );
+      const RemoteSafe = require("../models/safe")(
+        remoteSequelize,
+        Sequelize.DataTypes,
+      );
+      const RemoteSafeDailies = require("../models/safeDailies")(
+        remoteSequelize,
+        Sequelize.DataTypes,
+      );
+      const RemoteSafeTransfers = require("../models/safeTransfers")(
+        remoteSequelize,
+        Sequelize.DataTypes,
+      );
 
       // remote relations (minimal for FK compatibility)
       RemoteBill.hasMany(RemoteBillTrans);
@@ -336,6 +371,30 @@ module.exports = {
       RemoteEmployee.hasMany(RemoteEmpTrans);
       RemoteEmpTrans.belongsTo(RemoteEmployee);
 
+      // Safe and Daily many-to-many relation through SafeDailies
+      RemoteSafe.belongsToMany(RemoteDaily, {
+        through: RemoteSafeDailies,
+        foreignKey: "SafeId",
+        otherKey: "DailyId",
+        as: "dailys",
+      });
+      RemoteDaily.belongsToMany(RemoteSafe, {
+        through: RemoteSafeDailies,
+        foreignKey: "DailyId",
+        otherKey: "SafeId",
+        as: "safes",
+      });
+
+      // SafeTransfers relation
+      RemoteSafe.hasMany(RemoteSafeTransfers, {
+        foreignKey: "SafeId",
+        as: "safeTransfers",
+      });
+      RemoteSafeTransfers.belongsTo(RemoteSafe, {
+        foreignKey: "SafeId",
+        as: "safe",
+      });
+
       // sync remote structure (create tables if missing)
       await remoteSequelize.sync();
 
@@ -354,6 +413,9 @@ module.exports = {
         { local: db.models.PurchaseRequest, remote: RemotePurchaseRequest },
         { local: db.models.EmpTrans, remote: RemoteEmpTrans },
         { local: db.models.Discharges, remote: RemoteDischarges },
+        { local: db.models.Safe, remote: RemoteSafe },
+        { local: db.models.SafeDailies, remote: RemoteSafeDailies },
+        { local: db.models.SafeTransfers, remote: RemoteSafeTransfers },
       ];
 
       // run sync in a remote transaction

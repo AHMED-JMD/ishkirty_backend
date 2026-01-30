@@ -14,11 +14,13 @@ module.exports = {
   add: async (req, res) => {
     try {
       let {
+        bill_counter,
         date,
         amount,
         trans,
         paymentMethod,
         shiftTime,
+        type,
         clientId,
         admin_id,
         isDelivery = false,
@@ -26,8 +28,20 @@ module.exports = {
         delivery_address = "",
       } = req.body;
 
+      console.log(req.body);
       //check req.body
-      if (!(date && amount && trans && paymentMethod && shiftTime)) {
+      if (
+        !(
+          bill_counter &&
+          date &&
+          amount &&
+          trans &&
+          paymentMethod &&
+          shiftTime &&
+          type &&
+          admin_id
+        )
+      ) {
         return res.status(400).json("الرجاء ادخال جميع الحقول");
       }
 
@@ -51,6 +65,8 @@ module.exports = {
       // }
 
       //send the bill to db
+      console.log(admin_id);
+
       let admin = await Admin.findOne({ where: { admin_id } });
 
       // If delivery, add delivery_cost to amount
@@ -61,10 +77,19 @@ module.exports = {
       // use a transaction so bill + billTrans + store updates succeed or roll back together
       const t = await sequelize.transaction();
       try {
+        // validate type value
+        const allowedTypes = ["محلي", "سفري", "استلام", "توصيل"];
+        if (type && !allowedTypes.includes(type)) {
+          await t.rollback();
+          return res.status(400).json("نوع الفاتورة غير صالح");
+        }
+
         let newbill = await Bill.create(
           {
+            bill_counter,
             amount,
             paymentMethod,
+            type,
             date,
             shiftTime,
             admin: admin.username,
@@ -108,16 +133,17 @@ module.exports = {
 
             if (totalNeeded === 0) continue;
 
-            if (
-              si.quantity < totalNeeded ||
-              si.warn_value >= si.quantity ||
-              si.warn_value >= si.quantity - totalNeeded
-            ) {
-              await t.rollback();
-              return res
-                .status(400)
-                .json(`كمية ${si.name} في المخزن غير كافية`);
-            }
+            //-----------------for safe store valueing -------------
+            // if (
+            //   si.quantity < totalNeeded ||
+            //   si.warn_value >= si.quantity ||
+            //   si.warn_value >= si.quantity - totalNeeded
+            // ) {
+            //   await t.rollback();
+            //   return res
+            //     .status(400)
+            //     .json(`كمية ${si.name} في المخزن غير كافية`);
+            // }
 
             // subtract from store quantity using a literal to avoid race conditions
             await Store.update(
@@ -178,7 +204,7 @@ module.exports = {
           isDeleted,
           [Op.or]: [{ date: todayDate }, { updatedAt: todayDate }],
         },
-        order: [["date", "DESC"]],
+        order: [["id", "DESC"]],
       });
 
       //send response
@@ -193,7 +219,7 @@ module.exports = {
 
       //find the bill
       let bill = await Bill.findOne({
-        where: { bill_id },
+        where: { id: bill_id },
         include: BillTrans,
       });
 
@@ -211,7 +237,7 @@ module.exports = {
 
       let bills = await Bill.findAll({
         where: { ClientId: clientId },
-        order: [["date", "DESC"]],
+        order: [["id", "DESC"]],
       });
 
       //send request
@@ -230,7 +256,7 @@ module.exports = {
       //get data from db
       let bills = await Bill.findAll({
         where: { AdminAdminId: admin_id, date: currentDate },
-        order: [["date", "DESC"]],
+        order: [["id", "DESC"]],
       });
 
       //send request
@@ -270,13 +296,13 @@ module.exports = {
             isDeleted,
             AdminAdminId: admin_id,
           },
-          order: [["date", "DESC"]],
+          order: [["id", "DESC"]],
         });
       } else {
         //without admin
         bills = await Bill.findAll({
           where: { date: { [Op.between]: [start_date, end_date] }, isDeleted },
-          order: [["date", "DESC"]],
+          order: [["id", "DESC"]],
         });
       }
 
@@ -304,7 +330,7 @@ module.exports = {
         },
         {
           where: { id },
-          order: [["date", "DESC"]],
+          order: [["id", "DESC"]],
         },
       );
 

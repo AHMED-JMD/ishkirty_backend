@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaulValue: false,
       },
+      admin: { type: DataTypes.STRING, allowNull: false, defaultValue: "" },
+
       payment_method: {
         type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
         allowNull: false,

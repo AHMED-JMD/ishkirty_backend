@@ -1,7 +1,8 @@
-const { includes } = require("lodash");
 const db = require("../models/index");
 const Employee = db.models.Employee;
 const EmpTrans = db.models.EmpTrans;
+const Admin = db.models.Admin;
+
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -83,16 +84,21 @@ module.exports = {
 
   addEmpTran: async (req, res) => {
     try {
-      const { emp_id, type, amount, date } = req.body;
+      const { emp_id, admin_id, type, amount, date } = req.body;
       if (!emp_id || !type || amount === undefined || !date)
         return res.status(400).json("enter all feilds");
+
       const emp = await Employee.findByPk(emp_id);
       if (!emp) return res.status(400).json("employee not found");
+
+      // const admin = await Admin.findByPk(admin_id);
+      // if (!admin) return res.status(400).json("admin not found");
 
       const amt = Number(amount);
 
       const tr = await EmpTrans.create({
         EmployeeId: emp.id,
+        // admin: admin !== undefined ? admin.username : "",
         type,
         amount: amt,
         date,
