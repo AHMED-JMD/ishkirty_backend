@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       category: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: "",
       },
       categoryId: {
         type: DataTypes.INTEGER,

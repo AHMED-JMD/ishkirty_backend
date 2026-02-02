@@ -59,45 +59,65 @@ let Safe = require("./safe")(sequelize, Sequelize.DataTypes);
 let SafeDailies = require("./safeDailies")(sequelize, Sequelize.DataTypes);
 let SafeTransfers = require("./safeTransfers")(sequelize, Sequelize.DataTypes);
 
-//sql relationship here -------------------------------
+//------------------------- SQL RELATIONS HERE -------------------------------
 Bill.hasMany(BillTrans);
 BillTrans.belongsTo(Bill);
 
+Client.hasMany(Bill);
+Bill.belongsTo(Client);
+//----------------------------------------------
+
+// spieces and category relation -------------------------------
 Spieces.hasMany(BillTrans);
 BillTrans.belongsTo(Spieces);
 
-// categories relation
 Category.hasMany(Spieces, { foreignKey: "categoryId" });
 Spieces.belongsTo(Category, { foreignKey: "categoryId" });
+//---------------------------
 
-Client.hasMany(Bill);
-Bill.belongsTo(Client);
+//----admin relations ---------------------------
+Admin.hasMany(Daily);
+Daily.belongsTo(Admin);
+
+Admin.hasMany(SafeDailies);
+SafeDailies.belongsTo(Admin);
+
+Admin.hasMany(SafeTransfers);
+SafeTransfers.belongsTo(Admin);
 
 Admin.hasMany(Bill);
 Bill.belongsTo(Admin);
 
+Admin.hasMany(EmpTrans);
+EmpTrans.belongsTo(Admin);
+
+Admin.hasMany(PurchaseRequest);
+PurchaseRequest.belongsTo(Admin);
+
+Admin.hasMany(Discharges);
+Discharges.belongsTo(Admin);
+
 Admin.hasMany(Transfer);
 Transfer.belongsTo(Admin);
+//-----------------------------------------------------
 
-// //-----------------------------------------------------
-// store associations
-// a Spice can require many Store items and a Store item can be used by many Spieces
+//store associations----------------------------------------------------
 Spieces.belongsToMany(Store, { through: SpiceStore });
 Store.belongsToMany(Spieces, { through: SpiceStore });
 
-// allow eager-loading from the through model
 SpiceStore.belongsTo(Store, { foreignKey: "StoreId" });
 SpiceStore.belongsTo(Spieces, { foreignKey: "SpieceId" });
 
+Store.hasMany(PurchaseRequest, { foreignKey: "StoreId" });
+PurchaseRequest.belongsTo(Store, { foreignKey: "StoreId" });
+//-----------------------------------------------------------------------
 // employee relations
 Employee.hasMany(EmpTrans);
 EmpTrans.belongsTo(Employee);
 
 // purchase requests relation
-PurchaseRequest.belongsTo(Store, { foreignKey: "StoreId" });
-Store.hasMany(PurchaseRequest, { foreignKey: "StoreId" });
 
-// daily relations
+// daily relations -----------------------------
 Daily.hasMany(Bill);
 Bill.belongsTo(Daily, { foreignKey: "DailyId" });
 
@@ -109,8 +129,9 @@ PurchaseRequest.belongsTo(Daily, { foreignKey: "DailyId" });
 
 Daily.hasMany(Discharges);
 Discharges.belongsTo(Daily, { foreignKey: "DailyId" });
+//---------------------------------------------
 
-// Safe and Daily many-to-many relation through SafeDailies
+// Safe relations ------------------------------
 Safe.belongsToMany(Daily, {
   through: SafeDailies,
   foreignKey: "SafeId",
@@ -124,9 +145,9 @@ Daily.belongsToMany(Safe, {
   as: "safes",
 });
 
-// SafeTransfers relation
 Safe.hasMany(SafeTransfers, { foreignKey: "SafeId", as: "safeTransfers" });
 SafeTransfers.belongsTo(Safe, { foreignKey: "SafeId", as: "safe" });
+//-----------------------END OF RELATIONS --------------------------------
 
 // //add to db models
 db.models.Admin = Admin;

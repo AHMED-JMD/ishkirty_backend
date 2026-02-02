@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BIGINT,
         defaultValue: 0,
       },
+      type: {
+        type: DataTypes.ENUM("بيع", "تصنيع"),
+        allowNull: false,
+        defaultValue: "بيع",
+      },
       isKilo: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,

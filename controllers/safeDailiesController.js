@@ -3,17 +3,25 @@ const { Op } = require("sequelize");
 const SafeDailies = db.models.SafeDailies;
 const Daily = db.models.Daily;
 const Safe = db.models.Safe;
+const Admin = db.models.Admin;
 
 module.exports = {
   add: async (req, res) => {
     try {
-      const { date, total_cash, total_bank, total_dept } = req.body;
+      const { date, total_cash, total_bank, total_dept, admin_id } = req.body;
+
+      //check admin
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin && admin_id) {
+        return res.status(400).json({ error: "Invalid admin_id" });
+      }
 
       const entry = await SafeDailies.create({
         date,
         total_cash,
         total_bank,
         total_dept,
+        AdminAdminId: admin_id || null,
       });
       res.json(entry);
     } catch (error) {
@@ -68,7 +76,7 @@ module.exports = {
     try {
       const { id } = req.body;
       // Find the SafeDaily entry first
-      console.log("Deleting SafeDaily with id:", id);
+
       const safeDaily = await SafeDailies.findOne({ where: { DailyId: id } });
 
       if (!safeDaily) {
@@ -90,7 +98,7 @@ module.exports = {
       if (safeDaily.DailyId) {
         const daily = await Daily.findByPk(safeDaily.DailyId);
         if (daily) {
-          await daily.update({ isAddedtoSafe: false });
+          await daily.update({ isAddedtoSafe: false, isCreated: false });
         }
       }
       // Delete the SafeDaily entry

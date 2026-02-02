@@ -1,4 +1,6 @@
+const admin = require("../models/admin");
 const db = require("../models/index");
+const Admin = db.models.Admin;
 const Store = db.models.Store;
 const Spieces = db.models.Spieces;
 const SpiceStore = db.models.SpiceStore;
@@ -9,9 +11,16 @@ const { Op } = require("sequelize");
 module.exports = {
   addnew: async (req, res) => {
     try {
-      const { name, quantity, sell_price, warn_value, isKilo } = req.body;
+      const { name, quantity, sell_price, warn_value, type, isKilo, admin_id } =
+        req.body;
 
-      if (!name) return res.status(400).json("enter all feilds");
+      if (!name || !type || !admin_id)
+        return res.status(400).json("enter all feilds");
+
+      //check admin
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
 
       // check if store item exists
       let item = await Store.findOne({ where: { name } });
@@ -22,6 +31,7 @@ module.exports = {
         quantity: quantity ? Number(quantity) : 0,
         warn_value: warn_value ? Number(warn_value) : 0,
         price: sell_price ? Number(sell_price) : 0,
+        type: type !== undefined ? type : "بيع",
         isKilo: isKilo ? Boolean(isKilo) : false,
       });
 
@@ -33,7 +43,14 @@ module.exports = {
 
   getall: async (req, res) => {
     try {
-      let items = await Store.findAll({ order: [["quantity", "DESC"]] });
+      const { type } = req.body;
+      if (!type) return res.status(400).json("الرجاء اختيار نوع المخزن");
+
+      let items = await Store.findAll({
+        where: { type },
+        order: [["quantity", "DESC"]],
+      });
+
       res.json(items);
     } catch (error) {
       throw error;
@@ -41,9 +58,15 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      const { id, name, quantity, sell_price, warn_value, isKilo } = req.body;
+      const { id, name, quantity, sell_price, warn_value, isKilo, admin_id } =
+        req.body;
 
-      if (!id) return res.status(400).json("enter id");
+      if (!id || !admin_id) return res.status(400).json("enter ids");
+
+      //check admin---
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
 
       const item = await Store.findByPk(id);
       if (!item) return res.status(400).json("store item not found");
@@ -59,7 +82,7 @@ module.exports = {
       const newPrice = sell_price !== undefined ? Number(sell_price) : oldPrice;
       const newIsKilo = isKilo !== undefined ? Boolean(isKilo) : oldIsKilo;
 
-      // if price or isKilo interpretation changed, update spice_cost for linked spices
+      // if price, isKilo interpretation, or type changed, update spice_cost for linked spices
       if (newPrice !== oldPrice || newIsKilo !== oldIsKilo) {
         const oldUnit = oldIsKilo ? oldPrice / 1000 : oldPrice;
         const newUnit = newIsKilo ? newPrice / 1000 : newPrice;
@@ -107,16 +130,46 @@ module.exports = {
 
   deleteStore: async (req, res) => {
     try {
-      const { id } = req.body;
+      const { id, admin_id } = req.body;
 
-      if (!id) return res.status(400).json("enter id");
+      if (!id || !admin_id) return res.status(400).json("enter ids");
+
+      //check admin---
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
 
       const item = await Store.findByPk(id);
       if (!item) return res.status(400).json("store item not found");
 
+      //updating Spice cost
+      const associations = await SpiceStore.findAll({
+        where: { StoreId: item.id },
+      });
+      //getting association
+      if (associations.length !== 0) {
+        for (const assoc of associations) {
+          //check quantityNeeded !=0
+          const qtyNeeded = Number(assoc.quantityNeeded || 0);
+          if (qtyNeeded === 0) continue;
+
+          //find the spice
+          const spice = await Spieces.findByPk(assoc.SpieceId);
+          if (!spice) continue;
+
+          const costChange = qtyNeeded * item.price;
+          if (costChange !== 0) {
+            await spice.update({
+              spice_cost: Number(spice.spice_cost || 0) + costChange,
+            });
+          }
+        }
+      }
+
       // remove any associations in SpiceStore first
       await SpiceStore.destroy({ where: { StoreId: item.id } });
 
+      //remove item
       await item.destroy();
 
       res.json("success");
@@ -277,6 +330,8 @@ module.exports = {
         net_quantity,
         payment_method,
         date,
+        type,
+        admin_id,
       } = req.body;
 
       if (
@@ -284,9 +339,14 @@ module.exports = {
         !date ||
         quantity === undefined ||
         !net_quantity ||
-        !payment_method
+        !payment_method ||
+        !admin_id
       )
         return res.status(400).json("enter all feilds");
+
+      //check admin
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("admin not found");
 
       const store = await Store.findByPk(store_item, { transaction: t });
       if (!store) {
@@ -306,6 +366,9 @@ module.exports = {
           payment_method: payment_method,
           buy_price: usedPrice,
           date: date,
+          type: type !== undefined ? type : "بيع",
+          admin: admin.username,
+          AdminAdminId: admin_id,
         },
         { transaction: t },
       );
@@ -340,15 +403,16 @@ module.exports = {
   // get all purchases
   getPurchasesByDate: async (req, res) => {
     try {
-      const { startDate, endDate } = req.body;
-      if (!startDate || !endDate)
-        return res.status(400).json("enter startDate and endDate");
+      const { startDate, endDate, type } = req.body;
+      if (!startDate || !endDate || !type)
+        return res.status(400).json("enter startDate and endDate and type");
 
       const purchases = await PurchaseRequest.findAll({
         where: {
           date: {
             [Op.between]: [startDate, endDate],
           },
+          type: type !== undefined ? type : "بيع",
         },
         include: [{ model: Store }],
         order: [["date", "DESC"]],
@@ -364,8 +428,14 @@ module.exports = {
   deletePurchase: async (req, res) => {
     const t = await sequelize.transaction();
     try {
-      const { id } = req.body;
-      if (!id) return res.status(400).json("enter id");
+      const { id, admin_id } = req.body;
+      if (!id || !admin_id)
+        return res.status(400).json("enter id and admin_id");
+
+      //check admin---
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
 
       const purchase = await PurchaseRequest.findByPk(id, { transaction: t });
       if (!purchase) {
@@ -375,7 +445,8 @@ module.exports = {
 
       const store = await Store.findByPk(purchase.StoreId, { transaction: t });
       if (store) {
-        const newQty = Number(store.quantity) - Number(purchase.quantity);
+        const newQty = Number(store.quantity) - Number(purchase.net_quantity);
+        console.log("newQty", newQty);
         await store.update(
           { quantity: newQty < 0 ? 0 : newQty },
           { transaction: t },

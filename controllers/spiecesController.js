@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const Spieces = db.models.Spieces;
+const Category = db.models.Category;
 const _ = require("lodash");
 const path = require("path");
 const deleteFile = require("../middlewares/deleteImage");
@@ -57,28 +58,37 @@ module.exports = {
   },
   add: async (req, res) => {
     try {
-      const _feilds = _.pick(req.body, ["name", "category", "price"]);
+      const _feilds = _.pick(req.body, ["name", "categoryid", "price"]);
 
       let { filename } = req.file;
       //make sure image is sent
       if (!filename) return res.status(400).json("enter the image");
       //make sure feilds are completed
-      if (_feilds.length < 2) return res.status(400).json("enter all feilds");
+      if (Object.keys(_feilds).length < 2)
+        return res.status(400).json("enter all feilds");
 
       //check if spieces exist
+      // find category by id and set category values
+      const category = await Category.findOne({
+        where: { id: _feilds.categoryid },
+      });
+      if (!category) return res.status(400).json("category not found");
+
       let spieces = await Spieces.findOne({
         where: {
           name: _feilds.name,
-          category: _feilds.category,
+          category: category.name,
           price: _feilds.price,
+          categoryId: category.id,
         },
       });
       if (spieces) return res.status(400).json("spices exist");
 
-      //add new clients
+      //add new spice with category name and categoryId
       await Spieces.create({
         name: _feilds.name,
-        category: _feilds.category,
+        category: category.name,
+        categoryId: category.id,
         ImgLink: filename,
         price: _feilds.price,
       });
@@ -94,7 +104,7 @@ module.exports = {
         "id",
         "name",
         "price",
-        "category",
+        "categoryId",
         "isFavourites",
         "favBtn",
         "isControll",
@@ -108,12 +118,19 @@ module.exports = {
       });
       if (spieces) return res.status(400).json("تم اختيار الزر في صنف مسبقا");
 
+      //resolve category name by categoryId provided
+      const category = await Category.findOne({
+        where: { id: _feilds.categoryId },
+      });
+      if (!category) return res.status(400).json("category not found");
+
       //update clients
       if (_feilds.cancel === true) {
         await Spieces.update(
           {
             name: _feilds.name,
-            category: _feilds.category,
+            category: category.name,
+            categoryId: _feilds.categoryId,
             price: _feilds.price,
             isFavourites: false,
             favBtn: "",
@@ -135,7 +152,8 @@ module.exports = {
         await Spieces.update(
           {
             name: _feilds.name,
-            category: _feilds.category,
+            category: category.name,
+            categoryId: _feilds.categoryId,
             price: _feilds.price,
             isFavourites: isFav,
             favBtn: favBtn,

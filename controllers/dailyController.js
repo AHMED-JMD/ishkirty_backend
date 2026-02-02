@@ -7,7 +7,7 @@ const Bill = db.models.Bill;
 const EmpTrans = db.models.EmpTrans;
 const PurchaseRequest = db.models.PurchaseRequest;
 const Discharges = db.models.Discharges;
-const Safe = db.models.Safe;
+const Admin = db.models.Admin;
 
 module.exports = {
   add: async (req, res) => {
@@ -21,8 +21,10 @@ module.exports = {
         cash_costs,
         bank_costs,
         account_costs,
+        admin_id,
       } = req.body;
-      if (!date) return res.status(400).json("enter date");
+
+      if (!date || !admin_id) return res.status(400).json("enter all fields");
 
       //find daily
       let daily = await Daily.findOne({ where: { date } });
@@ -40,6 +42,8 @@ module.exports = {
             bank_costs: bank_costs !== undefined ? Number(bank_costs) : 0.0,
             account_costs:
               account_costs !== undefined ? Number(account_costs) : 0.0,
+            AdminAdminId: admin_id,
+            isCreated: true,
           },
           { where: { date } },
         );
@@ -79,6 +83,7 @@ module.exports = {
         res.json("تم تعديل اليومية بنجاح");
       } else {
         //create new one
+
         let newDaily = await Daily.create({
           date,
           cash_sales: cash_sales !== undefined ? Number(cash_sales) : 0.0,
@@ -90,6 +95,8 @@ module.exports = {
           bank_costs: bank_costs !== undefined ? Number(bank_costs) : 0.0,
           account_costs:
             account_costs !== undefined ? Number(account_costs) : 0.0,
+          AdminAdminId: admin_id,
+          isCreated: true,
         });
 
         //update bills
@@ -152,6 +159,7 @@ module.exports = {
           date: {
             [Op.between]: [startDate, endDate],
           },
+          isCreated: true,
         },
         order: [["date", "DESC"]],
       });
@@ -164,15 +172,31 @@ module.exports = {
 
   getOne: async (req, res) => {
     try {
-      const { date } = req.body;
+      const { date, admin_id } = req.body;
+      if (!date || !admin_id) return res.status(400).json("enter all fields");
 
-      const dailies = await Daily.findAll({
-        where: {
-          date,
-        },
-        include: [PurchaseRequest, EmpTrans, Discharges],
-        order: [["date", "DESC"]],
-      });
+      //check admin exists
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("admin not found");
+
+      let dailies;
+      if (admin.role !== "admin") {
+        dailies = await Daily.findOne({
+          where: {
+            date,
+            AdminAdminId: admin_id,
+          },
+          order: [["date", "DESC"]],
+        });
+      } else {
+        dailies = await Daily.findOne({
+          where: {
+            date,
+          },
+          include: [EmpTrans, PurchaseRequest, Discharges],
+          order: [["date", "DESC"]],
+        });
+      }
 
       res.json(dailies);
     } catch (error) {

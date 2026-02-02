@@ -15,8 +15,8 @@ const {
   deletePurchase,
 } = require("../controllers/storeController");
 
-router.get("/", getall);
-router.post("/", addnew);
+router.post("/", getall);
+router.post("/add", addnew);
 router.post("/update", update);
 router.post("/search", searched);
 router.post("/delete", deleteStore);

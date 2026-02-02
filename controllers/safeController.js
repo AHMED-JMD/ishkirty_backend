@@ -4,6 +4,7 @@ const Client = db.models.Client;
 const Daily = db.models.Daily;
 const SafeTransfers = db.models.SafeTransfers;
 const SafeDailies = db.models.SafeDailies;
+const Admin = db.models.Admin;
 
 const _ = require("lodash");
 
@@ -32,10 +33,11 @@ module.exports = {
     }
   },
   transfer: async (req, res) => {
-    const { id, from, to, amount, clientId } = req.body;
+    const { id, from, to, amount, clientId, admin_id } = req.body;
     if (
       !["cash_amount", "bank_amount", "dept_amount"].includes(from) ||
-      !["cash_amount", "bank_amount", "dept_amount"].includes(to)
+      !["cash_amount", "bank_amount", "dept_amount"].includes(to) ||
+      !admin_id
     ) {
       return res.status(400).json({ error: "Invalid transfer fields" });
     }
@@ -45,6 +47,12 @@ module.exports = {
         .json({ error: "Cannot transfer to the same field" });
     }
     try {
+      //check admin
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin) {
+        return res.status(400).json({ error: "Invalid admin_id" });
+      }
+
       const safe = await Safe.findByPk(id);
       if (!safe) return res.status(404).json({ error: "Safe not found" });
 
@@ -85,6 +93,7 @@ module.exports = {
         amount,
         clientId: clientId || null,
         SafeId: safe.id,
+        AdminAdminId: admin_id,
       });
 
       res.json(safe);
@@ -103,9 +112,10 @@ module.exports = {
         bank_costs,
         account_costs,
         dailyId,
+        admin_id,
       } = req.body;
 
-      if (!date) return res.status(400).json("enter date");
+      if (!date || !admin_id) return res.status(400).json("enter date");
 
       // Check if SafeDailies exists for this date
       const existing = await SafeDailies.findOne({ where: { date } });
@@ -113,6 +123,12 @@ module.exports = {
         return res.json({
           message: "Safe Daily already exists for this date. Safe not updated.",
         });
+      }
+
+      //check admin
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin) {
+        return res.status(400).json({ error: "Invalid admin_id" });
       }
 
       // Update Safe with id=1
@@ -141,6 +157,7 @@ module.exports = {
           total_bank,
           total_dept,
           SafeId: safe.id,
+          AdminAdminId: admin_id,
           DailyId: dailyId,
         });
 

@@ -12,7 +12,7 @@ const {
 
 router.post("/", add);
 router.get("/", getAll);
-router.get("/get-one", getOne);
+router.post("/get-one", getOne);
 router.post("/sync", SyncDB);
 
 router.post("/date", getByDate);

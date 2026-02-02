@@ -6,13 +6,25 @@ const Safe = db.models.Safe;
 module.exports = {
   add: async (req, res) => {
     try {
-      const { date, from, to, amount, clientId } = req.body;
+      const { date, from, to, amount, clientId, admin_id } = req.body;
+
+      //check admin
+      if (admin_id) {
+        return res.status(400).json({ error: "no admin_id" });
+      }
+      let admin = await db.models.Admin.findByPk(admin_id);
+      if (!admin) {
+        return res.status(400).json({ error: "Invalid admin_id" });
+      }
+
       const entry = await SafeTransfers.create({
         date,
         from,
         to,
         amount,
         clientId,
+        admin: admin.username,
+        AdminAdminId: admin_id,
       });
       res.json(entry);
     } catch (error) {

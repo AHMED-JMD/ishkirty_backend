@@ -37,23 +37,18 @@ module.exports = {
       const cashMor = lookup["كاش__صباحية"] || 0;
       const bankMor = lookup["بنكك__صباحية"] || 0;
       const accountMor = lookup["حساب__صباحية"] || 0;
-      const totalMor = cashMor + bankMor + accountMor;
+      // const totalMor = cashMor + bankMor + accountMor;
 
       const cashEv = lookup["كاش__مسائية"] || 0;
       const bankEv = lookup["بنكك__مسائية"] || 0;
       const accountEv = lookup["حساب__مسائية"] || 0;
-      const totalEv = cashEv + bankEv + accountEv;
+      // const totalEv = cashEv + bankEv + accountEv;
 
       //send request
       res.json({
-        cashMor,
-        bankMor,
-        accountMor,
-        totalMor,
-        cashEv,
-        bankEv,
-        accountEv,
-        totalEv,
+        totalCash: cashMor + cashEv,
+        totalBank: bankMor + bankEv,
+        totalAcc: accountMor + accountEv,
       });
     } catch (error) {
       throw error;

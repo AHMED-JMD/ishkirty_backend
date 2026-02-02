@@ -22,6 +22,6 @@ router.post("/get_emp_trans", getEmpTran);
 router.post("/get_emp_trans/date", getEmpTranByDate);
 router.post("/delete_emp_tran", deleteEmpTran);
 
-router.get("/new_month", runNewMonth);
+router.post("/new_month", runNewMonth);
 
 module.exports = router;

@@ -2,14 +2,27 @@ const { Op } = require("sequelize");
 const db = require("../models/index");
 const Discharges = db.models.Discharges;
 const Daily = db.models.Daily;
+const Admin = db.models.Admin;
 
 module.exports = {
   add: async (req, res) => {
     try {
-      const { name, price, date, isMonthly, dailyId, payment_method } =
-        req.body;
-      if (!name || price === undefined || !date)
+      const {
+        name,
+        price,
+        date,
+        isMonthly,
+        dailyId,
+        payment_method,
+        admin_id,
+      } = req.body;
+
+      if (!name || price === undefined || !date || !admin_id)
         return res.status(400).json("enter all feilds");
+
+      //check admin
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("not authorized");
 
       const discharge = await Discharges.create({
         name,
@@ -18,6 +31,8 @@ module.exports = {
         isMonthly,
         payment_method: payment_method || "كاش",
         DailyId: dailyId !== undefined ? dailyId : null,
+        admin: admin.username,
+        AdminAdminId: admin_id,
       });
 
       res.json({ success: true, discharge });
@@ -85,7 +100,15 @@ module.exports = {
 
   delete: async (req, res) => {
     try {
-      const { id } = req.body;
+      const { id, admin_id: body_admin_id } = req.body;
+      const admin_id = body_admin_id || (req.user && req.user.id);
+
+      //check admin
+      if (!admin_id) return res.status(400).json("not authorized");
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
+
       if (!id) return res.status(400).json("enter id");
 
       await Discharges.destroy({ where: { id } });

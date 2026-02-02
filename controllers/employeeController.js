@@ -8,7 +8,14 @@ const { Op } = require("sequelize");
 module.exports = {
   add: async (req, res) => {
     try {
-      const { name, jobTitle, shift, salary } = req.body;
+      const { name, jobTitle, shift, salary, admin_id } = req.body;
+
+      //check admin
+      if (!admin_id) return res.status(400).json("not authorized");
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
+
       if (!name) return res.status(400).json("enter all feilds");
 
       const existing = await Employee.findOne({ where: { name } });
@@ -39,7 +46,14 @@ module.exports = {
 
   update: async (req, res) => {
     try {
-      const { id, name, jobTitle, shift, salary } = req.body;
+      const { id, name, jobTitle, shift, salary, admin_id } = req.body;
+
+      //check admin
+      if (!admin_id) return res.status(400).json("not authorized");
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
+
       if (!id) return res.status(400).json("enter id");
 
       const emp = await Employee.findByPk(id);
@@ -65,7 +79,14 @@ module.exports = {
 
   delete: async (req, res) => {
     try {
-      const { id } = req.body;
+      const { id, admin_id } = req.body;
+
+      //check admin
+      if (!admin_id) return res.status(400).json("not authorized");
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
+
       if (!id) return res.status(400).json("enter id");
 
       const emp = await Employee.findByPk(id);
@@ -85,20 +106,24 @@ module.exports = {
   addEmpTran: async (req, res) => {
     try {
       const { emp_id, admin_id, type, amount, date } = req.body;
-      if (!emp_id || !type || amount === undefined || !date)
+
+      if (!emp_id || !type || amount === undefined || !date || !admin_id)
         return res.status(400).json("enter all feilds");
 
       const emp = await Employee.findByPk(emp_id);
       if (!emp) return res.status(400).json("employee not found");
 
-      // const admin = await Admin.findByPk(admin_id);
-      // if (!admin) return res.status(400).json("admin not found");
+      // resolve admin
+      console.log("admin_id:", admin_id);
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("admin not found");
 
       const amt = Number(amount);
 
       const tr = await EmpTrans.create({
         EmployeeId: emp.id,
-        // admin: admin !== undefined ? admin.username : "",
+        admin: admin.username,
+        AdminAdminId: admin_id,
         type,
         amount: amt,
         date,
@@ -169,7 +194,14 @@ module.exports = {
 
   deleteEmpTran: async (req, res) => {
     try {
-      const { id } = req.body;
+      const { id, admin_id } = req.body;
+
+      //check admin
+      if (!admin_id) return res.status(400).json("not authorized");
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
+
       if (!id) return res.status(400).json("enter id");
 
       const tr = await EmpTrans.findByPk(id);
@@ -205,36 +237,50 @@ module.exports = {
     }
   },
   runNewMonth: async (req, res) => {
-    const t = await db.sequelize.transaction();
     try {
-      // set date for new month entry
-      const date = req.body.date || new Date().toISOString().slice(0, 10);
+      const { admin_id } = req.body;
 
-      const employees = await Employee.findAll({ transaction: t });
+      //check admin
+      if (!admin_id) return res.status(400).json("not authorized");
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin || admin.role !== "admin")
+        return res.status(400).json("not authorized");
 
-      for (const emp of employees) {
-        // create an empTrans of type add with amount 0
-        await EmpTrans.create(
-          {
-            EmployeeId: emp.id,
-            type: "اضافة",
-            amount: 0,
-            date,
-          },
-          { transaction: t },
-        );
+      const t = await db.sequelize.transaction();
+      try {
+        // set date for new month entry
+        const date = req.body.date || new Date().toISOString().slice(0, 10);
 
-        // reset employee salary to fixed_salary
-        await emp.update(
-          { salary: Number(emp.fixed_salary || 0) },
-          { transaction: t },
-        );
+        const employees = await Employee.findAll({ transaction: t });
+
+        for (const emp of employees) {
+          // create an empTrans of type add with amount 0
+          await EmpTrans.create(
+            {
+              EmployeeId: emp.id,
+              admin: admin ? admin.username : "",
+              AdminAdminId: admin_id || null,
+              type: "اضافة",
+              amount: 0,
+              date,
+            },
+            { transaction: t },
+          );
+
+          // reset employee salary to fixed_salary
+          await emp.update(
+            { salary: Number(emp.fixed_salary || 0) },
+            { transaction: t },
+          );
+        }
+
+        await t.commit();
+        res.json({ success: true, updated: employees.length });
+      } catch (error) {
+        await t.rollback();
+        throw error;
       }
-
-      await t.commit();
-      res.json({ success: true, updated: employees.length });
     } catch (error) {
-      await t.rollback();
       throw error;
     }
   },

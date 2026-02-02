@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DOUBLE,
         defaultValue: 0,
       },
+      isCreated: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       isAddedtoSafe: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,

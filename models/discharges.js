@@ -17,10 +17,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       isMonthly: {
         type: DataTypes.BOOLEAN,
-        defaulValue: false,
+        defaultValue: false,
       },
-      admin: { type: DataTypes.STRING, allowNull: false, defaultValue: "" },
-
+      admin: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
       payment_method: {
         type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
         allowNull: false,
