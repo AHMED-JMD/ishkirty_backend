@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DOUBLE,
         defaultValue: 0,
       },
+      fawry_sales: {
+        type: DataTypes.DOUBLE,
+        defaultValue: 0,
+      },
       account_sales: {
         type: DataTypes.DOUBLE,
         defaultValue: 0,
@@ -27,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
       },
       bank_costs: {
+        type: DataTypes.DOUBLE,
+        defaultValue: 0,
+      },
+      fawry_costs: {
         type: DataTypes.DOUBLE,
         defaultValue: 0,
       },

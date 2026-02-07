@@ -1,6 +1,7 @@
 const db = require("../models/index");
 const { Op } = require("sequelize");
 const Sequelize = require("sequelize");
+const admin = require("../models/admin");
 
 const Daily = db.models.Daily;
 const Bill = db.models.Bill;
@@ -16,33 +17,45 @@ module.exports = {
         date,
         cash_sales,
         bank_sales,
+        fawry_sales,
         account_sales,
         today_costs,
         cash_costs,
         bank_costs,
+        fawry_costs,
         account_costs,
         admin_id,
       } = req.body;
 
       if (!date || !admin_id) return res.status(400).json("enter all fields");
 
+      //check admin exists
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("admin not found");
+
       //find daily
       let daily = await Daily.findOne({ where: { date } });
 
       if (daily) {
+        if (admin.role !== "admin" && daily.AdminAdminId !== admin.admin_id) {
+          return res.status(403).json("ليس لديك صلاحية تعديل هذه اليومية");
+        }
+        //update existing one
         await Daily.update(
           {
             date,
             cash_sales: cash_sales !== undefined ? Number(cash_sales) : 0.0,
             bank_sales: bank_sales !== undefined ? Number(bank_sales) : 0.0,
+            fawry_sales: fawry_sales !== undefined ? Number(fawry_sales) : 0.0,
             account_sales:
               account_sales !== undefined ? Number(account_sales) : 0.0,
             spices_costs: today_costs !== undefined ? Number(today_costs) : 0.0,
             cash_costs: cash_costs !== undefined ? Number(cash_costs) : 0.0,
             bank_costs: bank_costs !== undefined ? Number(bank_costs) : 0.0,
+            fawry_costs: fawry_costs !== undefined ? Number(fawry_costs) : 0.0,
             account_costs:
               account_costs !== undefined ? Number(account_costs) : 0.0,
-            AdminAdminId: admin_id,
+            AdminAdminId: admin.admin_id,
             isCreated: true,
           },
           { where: { date } },
@@ -88,14 +101,16 @@ module.exports = {
           date,
           cash_sales: cash_sales !== undefined ? Number(cash_sales) : 0.0,
           bank_sales: bank_sales !== undefined ? Number(bank_sales) : 0.0,
+          fawry_sales: fawry_sales !== undefined ? Number(fawry_sales) : 0.0,
           account_sales:
             account_sales !== undefined ? Number(account_sales) : 0.0,
           spices_costs: today_costs !== undefined ? Number(today_costs) : 0.0,
           cash_costs: cash_costs !== undefined ? Number(cash_costs) : 0.0,
           bank_costs: bank_costs !== undefined ? Number(bank_costs) : 0.0,
+          fawry_costs: fawry_costs !== undefined ? Number(fawry_costs) : 0.0,
           account_costs:
             account_costs !== undefined ? Number(account_costs) : 0.0,
-          AdminAdminId: admin_id,
+          AdminAdminId: admin.admin_id,
           isCreated: true,
         });
 
@@ -152,17 +167,40 @@ module.exports = {
 
   getByDate: async (req, res) => {
     try {
-      const { startDate, endDate } = req.body;
+      const { startDate, endDate, admin_id } = req.body;
 
-      const dailies = await Daily.findAll({
-        where: {
-          date: {
-            [Op.between]: [startDate, endDate],
+      if (!admin_id) return res.status(400).json("enter admin_id");
+
+      //check admin exists
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("admin not found");
+
+      let dailies;
+      const adminInclude = { model: Admin, attributes: ["username"] };
+      if (admin.role !== "admin") {
+        // only created dailies for non-admins
+        dailies = await Daily.findAll({
+          where: {
+            date: {
+              [Op.between]: [startDate, endDate],
+            },
+            isCreated: true,
           },
-          isCreated: true,
-        },
-        order: [["date", "DESC"]],
-      });
+          include: [adminInclude],
+          order: [["date", "DESC"]],
+        });
+      } else {
+        //all dailies for admins
+        dailies = await Daily.findAll({
+          where: {
+            date: {
+              [Op.between]: [startDate, endDate],
+            },
+          },
+          include: [adminInclude],
+          order: [["date", "DESC"]],
+        });
+      }
 
       res.json(dailies);
     } catch (error) {
@@ -228,10 +266,77 @@ module.exports = {
 
   delete: async (req, res) => {
     try {
-      const { id } = req.body;
-      if (!id) return res.status(400).json("enter id");
+      const { id, date } = req.body;
+      if (!id || !date) return res.status(400).json("enter id and date");
 
-      await Daily.destroy({ where: { id } });
+      const t = await db.sequelize.transaction();
+      try {
+        // revert emp transactions (update employee salary and delete transactions)
+        const empTransList = await EmpTrans.findAll({
+          where: { [Op.or]: [{ date }, { DailyId: id }] },
+        });
+
+        for (const tr of empTransList) {
+          const emp = await db.models.Employee.findByPk(tr.EmployeeId, {
+            transaction: t,
+          });
+          if (emp) {
+            const amt = Number(tr.amount || 0);
+            let newSalary = Number(emp.salary || 0);
+            if (tr.type === "اضافة") newSalary -= amt;
+            else newSalary += amt;
+            if (newSalary < 0) newSalary = 0;
+            await emp.update({ salary: newSalary }, { transaction: t });
+          }
+          await tr.destroy({ transaction: t });
+        }
+
+        // revert purchases (reduce store quantity) and delete purchases
+        const purchases = await PurchaseRequest.findAll({
+          where: { [Op.or]: [{ date }, { DailyId: id }] },
+        });
+
+        for (const p of purchases) {
+          const store = await db.models.Store.findByPk(p.StoreId, {
+            transaction: t,
+          });
+          if (store) {
+            const newQty = Number(store.quantity) - Number(p.net_quantity || 0);
+            await store.update(
+              { quantity: newQty < 0 ? 0 : newQty },
+              { transaction: t },
+            );
+          }
+          await p.destroy({ transaction: t });
+        }
+
+        // delete discharges related to this daily
+        await Discharges.destroy({
+          where: { [Op.or]: [{ date }, { DailyId: id }] },
+          transaction: t,
+        });
+
+        // finally delete the daily
+        await Daily.destroy({ where: { id, date }, transaction: t });
+
+        await t.commit();
+        res.json({ success: true });
+      } catch (err) {
+        await t.rollback();
+        throw err;
+      }
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  unlockDaily: async (req, res) => {
+    try {
+      const { id, date } = req.body;
+      if (!id || !date) return res.status(400).json("enter id and date");
+
+      await Daily.update({ isCreated: false }, { where: { id, date } });
+
       res.json("success");
     } catch (error) {
       throw error;

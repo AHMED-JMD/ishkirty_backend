@@ -91,6 +91,7 @@ module.exports = {
       await safe.update({
         cash_amount: safe.cash_amount - safeDaily.total_cash,
         bank_amount: safe.bank_amount - safeDaily.total_bank,
+        fawry_amount: safe.fawry_amount - safeDaily.total_fawry,
         dept_amount: safe.dept_amount - safeDaily.total_dept,
       });
 

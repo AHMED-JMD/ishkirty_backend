@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 0,
       },
+      store_type: {
+        type: DataTypes.ENUM("بيع", "تصنيع"),
+        allowNull: false,
+        defaultValue: "بيع",
+      },
       business_location: {
         type: DataTypes.STRING,
         allowNull: false,

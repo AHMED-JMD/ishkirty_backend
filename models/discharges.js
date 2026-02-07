@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "",
       },
       payment_method: {
-        type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
+        type: DataTypes.ENUM("بنكك", "كاش", "حساب", "فوري"),
         allowNull: false,
         defaultValue: "كاش",
       },

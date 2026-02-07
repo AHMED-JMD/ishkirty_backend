@@ -14,8 +14,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       paymentMethod: {
-        type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
-        allowNull: false,
+        type: DataTypes.ENUM("بنكك", "كاش", "حساب", "فوري"),
+        allowNull: true,
+      },
+      paymentMethods: {
+        // when multiple payment parts are used, store as [{ method: 'كاش', amount: 100 }, ...]
+        type: DataTypes.JSON,
+        allowNull: true,
       },
       type: {
         type: DataTypes.ENUM("محلي", "سفري", "استلام", "توصيل"),

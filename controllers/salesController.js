@@ -11,43 +11,53 @@ module.exports = {
     try {
       const { start_date, end_date } = req.body;
 
-      //query to get sum of sales grouped by payment method and shift time
-      const rows = await Bill.findAll({
-        attributes: [
-          "paymentMethod",
-          "shiftTime",
-          [sequelize.fn("SUM", sequelize.col("amount")), "sumAmount"],
-        ],
+      // fetch bills and aggregate payment amounts by method + shiftTime
+      const bills = await Bill.findAll({
         where: {
           date: { [Op.between]: [start_date, end_date] },
           isDeleted: false,
         },
-        group: ["paymentMethod", "shiftTime"],
-        raw: true,
       });
 
-      // turn rows into a lookup
-      const lookup = {};
-      rows.forEach((r) => {
-        const key = `${r.paymentMethod}__${r.shiftTime}`;
-        lookup[key] = Number(r.sumAmount) || 0;
-      });
+      const lookup = {}; // key: method__shift -> sum
 
-      // then compute values
+      for (const b of bills) {
+        const shift = b.shiftTime;
+
+        if (b.paymentMethods) {
+          //convert stringified JSON to object
+          convertdPM = JSON.parse(b.paymentMethods);
+
+          for (const pm of convertdPM) {
+            const method = pm["method"];
+            const amt = parseFloat(pm["amount"]) || 0;
+            const key = `${method}__${shift}`;
+            lookup[key] = (lookup[key] || 0) + amt;
+          }
+        } else {
+          const method = b.paymentMethod;
+          const amt = parseFloat(b.amount) || 0;
+          const key = `${method}__${shift}`;
+          lookup[key] = (lookup[key] || 0) + amt;
+        }
+      }
+
+      // then compute values (include فوري)
       const cashMor = lookup["كاش__صباحية"] || 0;
       const bankMor = lookup["بنكك__صباحية"] || 0;
       const accountMor = lookup["حساب__صباحية"] || 0;
-      // const totalMor = cashMor + bankMor + accountMor;
+      const fawryMor = lookup["فوري__صباحية"] || 0;
 
       const cashEv = lookup["كاش__مسائية"] || 0;
       const bankEv = lookup["بنكك__مسائية"] || 0;
       const accountEv = lookup["حساب__مسائية"] || 0;
-      // const totalEv = cashEv + bankEv + accountEv;
+      const fawryEv = lookup["فوري__مسائية"] || 0;
 
       //send request
       res.json({
         totalCash: cashMor + cashEv,
         totalBank: bankMor + bankEv,
+        totalFawry: fawryMor + fawryEv,
         totalAcc: accountMor + accountEv,
       });
     } catch (error) {
@@ -151,11 +161,11 @@ module.exports = {
 
       //get the sum of each spice sales
       const modSpieces = await Promise.all(
-        spieces.map(async (type) => {
+        spieces.map(async (spice) => {
           //get all bill trans of a spice
           const bills = await BillTrans.findAll({
             where: {
-              name: type.name,
+              name: spice.name,
               date: { [Op.between]: [start_date, end_date] },
             },
             include: [
@@ -173,17 +183,20 @@ module.exports = {
           // calculate total costs for this spice using spice_cost from the Spieces model
           const tot_costs = bills.reduce((acc, b) => {
             const qty = Number(b.quantity) || 0;
-            const cost = Number(type.spice_cost) || 0;
+            const cost = Number(spice.spice_cost) || 0;
             return acc + qty * cost;
           }, 0);
 
           return {
-            id: type.id,
-            name: type.name,
-            category: type.category,
+            id: spice.id,
+            name: spice.name,
+            category: spice.category,
             tot_sales: sales.revenue,
-            tot_costs,
-            ImgLink: type.ImgLink,
+            sum_quantity: sales.sum,
+            price: spice.price,
+            spice_cost: spice.spice_cost,
+            tot_costs: tot_costs,
+            ImgLink: spice.ImgLink,
           };
         }),
       );

@@ -189,13 +189,13 @@ module.exports = {
       throw error;
     }
   },
-  // attach a store item to a spice with the required quantity per spice unit accepts: { spiceId, storeId?, quantityNeeded }
 
+  // attach a store item to a spice with the required quantity per spice unit accepts: { spiceId, storeId?, quantityNeeded }
   addStoreSpices: async (req, res) => {
     try {
-      const { spiceId, storeId, quantityNeeded } = req.body;
+      const { spiceId, storeId, quantityNeeded, store_type } = req.body;
 
-      if (!spiceId || !storeId || quantityNeeded === undefined)
+      if (!spiceId || !storeId || quantityNeeded === undefined || !store_type)
         return res.status(400).json("enter all feilds");
 
       // resolve spice
@@ -207,6 +207,9 @@ module.exports = {
       let store = await Store.findByPk(storeId);
 
       if (!store) return res.status(400).json("store item not found");
+      //check store type
+      if (store.type !== store_type)
+        return res.status(400).json("store type mismatch");
 
       // create or update association: if exists update quantityNeeded, else create
       const existing = await SpiceStore.findOne({
@@ -215,23 +218,27 @@ module.exports = {
 
       if (existing) {
         // compute difference and update spice_cost accordingly
-        const newQ = Number(quantityNeeded);
-        const oldQ = Number(existing.quantityNeeded || 0);
-        //the amount that quantityNeeded changed
-        const diff = newQ - oldQ;
-        const unitPrice = store.isKilo
-          ? Number(store.price) / 1000
-          : Number(store.price);
-        const costChange = diff * unitPrice;
+        if (store_type === "تصنيع") {
+          const newQ = Number(quantityNeeded);
+          const oldQ = Number(existing.quantityNeeded || 0);
 
-        if (costChange !== 0) {
-          await spice.update({
-            spice_cost: Number(spice.spice_cost || 0) + costChange,
-          });
+          //the amount that quantityNeeded changed
+          const diff = newQ - oldQ;
+          const unitPrice = store.isKilo
+            ? Number(store.price) / 1000
+            : Number(store.price);
+          const costChange = diff * unitPrice;
+
+          //update spice cost
+          if (costChange !== 0) {
+            await spice.update({
+              spice_cost: Number(spice.spice_cost || 0) + costChange,
+            });
+          }
         }
 
         // update quantityNeeded
-        await existing.update({ quantityNeeded: newQ });
+        await existing.update({ quantityNeeded, store_type });
 
         return res.json({
           success: true,
@@ -242,23 +249,27 @@ module.exports = {
       }
 
       // create new association and add cost for the required quantity
-      const q = Number(quantityNeeded);
-      const unitPrice = store.isKilo
-        ? Number(store.price) / 1000
-        : Number(store.price);
-      const addCost = q * unitPrice;
+      if (store_type === "تصنيع") {
+        const q = Number(quantityNeeded);
+        const unitPrice = store.isKilo
+          ? Number(store.price) / 1000
+          : Number(store.price);
+        const addCost = q * unitPrice;
+
+        //update spice cost
+        if (addCost !== 0) {
+          await spice.update({
+            spice_cost: Number(spice.spice_cost || 0) + addCost,
+          });
+        }
+      }
 
       await SpiceStore.create({
         SpieceId: spice.id,
         StoreId: store.id,
-        quantityNeeded: q,
+        quantityNeeded,
+        store_type,
       });
-
-      if (addCost !== 0) {
-        await spice.update({
-          spice_cost: Number(spice.spice_cost || 0) + addCost,
-        });
-      }
 
       res.json({
         success: true,
@@ -331,6 +342,7 @@ module.exports = {
         payment_method,
         date,
         type,
+        tran_type,
         admin_id,
       } = req.body;
 
@@ -340,7 +352,8 @@ module.exports = {
         quantity === undefined ||
         !net_quantity ||
         !payment_method ||
-        !admin_id
+        !admin_id ||
+        !tran_type
       )
         return res.status(400).json("enter all feilds");
 
@@ -366,17 +379,27 @@ module.exports = {
           payment_method: payment_method,
           buy_price: usedPrice,
           date: date,
-          type: type !== undefined ? type : "بيع",
+          store_type: type !== undefined ? type : "بيع",
+          type: tran_type !== undefined ? tran_type : "اضافة",
           admin: admin.username,
           AdminAdminId: admin_id,
         },
         { transaction: t },
       );
 
-      await store.update(
-        { quantity: Number(store.quantity) + Number(net_quantity) },
-        { transaction: t },
-      );
+      //update store quantity based on purchase type
+      if (purchase.type === "اضافة") {
+        await store.update(
+          { quantity: Number(store.quantity) + Number(net_quantity) },
+          { transaction: t },
+        );
+      } else if (purchase.type === "خصم") {
+        const newQty = Number(store.quantity) - Number(net_quantity);
+        await store.update(
+          { quantity: newQty < 0 ? 0 : newQty },
+          { transaction: t },
+        );
+      }
 
       await t.commit();
       res.json({ success: true, purchase });
@@ -401,22 +424,46 @@ module.exports = {
   },
 
   // get all purchases
+  //TODO: GET BY ADMIN ID
   getPurchasesByDate: async (req, res) => {
     try {
-      const { startDate, endDate, type } = req.body;
+      const { startDate, endDate, type, admin_id } = req.body;
       if (!startDate || !endDate || !type)
         return res.status(400).json("enter startDate and endDate and type");
 
-      const purchases = await PurchaseRequest.findAll({
-        where: {
-          date: {
-            [Op.between]: [startDate, endDate],
+      let purchases;
+
+      //if admin_id provided,
+      //  filter by admin_id,
+      //  else return for all admins
+      if (admin_id) {
+        //check admin
+        let admin = await Admin.findByPk(admin_id);
+        if (!admin) return res.status(400).json("admin not found");
+
+        purchases = await PurchaseRequest.findAll({
+          where: {
+            date: {
+              [Op.between]: [startDate, endDate],
+            },
+            store_type: type !== undefined ? type : "بيع",
+            AdminAdminId: admin.role !== "admin" ? admin_id : { [Op.ne]: null },
           },
-          type: type !== undefined ? type : "بيع",
-        },
-        include: [{ model: Store }],
-        order: [["date", "DESC"]],
-      });
+          include: [{ model: Store }],
+          order: [["date", "DESC"]],
+        });
+      } else {
+        purchases = await PurchaseRequest.findAll({
+          where: {
+            date: {
+              [Op.between]: [startDate, endDate],
+            },
+            store_type: type !== undefined ? type : "بيع",
+          },
+          include: [{ model: Store }],
+          order: [["date", "DESC"]],
+        });
+      }
 
       res.json(purchases);
     } catch (error) {
@@ -443,16 +490,18 @@ module.exports = {
         return res.status(400).json("purchase not found");
       }
 
+      //update store value
       const store = await Store.findByPk(purchase.StoreId, { transaction: t });
       if (store) {
         const newQty = Number(store.quantity) - Number(purchase.net_quantity);
-        console.log("newQty", newQty);
+
         await store.update(
           { quantity: newQty < 0 ? 0 : newQty },
           { transaction: t },
         );
       }
 
+      //delete purchase
       await purchase.destroy({ transaction: t });
       await t.commit();
 

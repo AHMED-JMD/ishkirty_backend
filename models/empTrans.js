@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       date: { type: DataTypes.DATEONLY, allowNull: false },
       admin: { type: DataTypes.STRING, allowNull: false, defaultValue: "" },
       payment_method: {
-        type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
+        type: DataTypes.ENUM("بنكك", "كاش", "حساب", "فوري"),
         allowNull: false,
         defaultValue: "كاش",
       },

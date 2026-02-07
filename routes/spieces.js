@@ -10,6 +10,7 @@ const {
   add,
   update,
   deleteSpieces,
+  updateCategoryIds,
 } = require("../controllers/spiecesController");
 
 //routes here
@@ -20,5 +21,6 @@ router.post("/type", getByType);
 router.post("/find_one", findOne);
 router.post("/update", update);
 router.post("/delete", deleteSpieces);
+router.post("/syncCategories", updateCategoryIds);
 
 module.exports = router;

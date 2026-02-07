@@ -19,6 +19,7 @@ module.exports = {
         amount,
         trans,
         paymentMethod,
+        paymentMethods,
         shiftTime,
         type,
         clientId,
@@ -30,16 +31,16 @@ module.exports = {
 
       console.log(req.body);
       //check req.body
+      // require either a single paymentMethod or paymentMethods array; amount is optional
       if (
         !(
           bill_counter &&
           date &&
-          amount &&
           trans &&
-          paymentMethod &&
           shiftTime &&
           type &&
-          admin_id
+          admin_id &&
+          (paymentMethod || (paymentMethods && Array.isArray(paymentMethods)))
         )
       ) {
         return res.status(400).json("الرجاء ادخال جميع الحقول");
@@ -48,30 +49,28 @@ module.exports = {
       if (trans.length === 0)
         return res.status(400).json("الرجاء اختيار صنف معين");
 
-      // // Check store warn_value for each spice in the transaction
-      // for (const billtran of trans) {
-      //   const spice = await Spieces.findOne({
-      //     where: { name: billtran.spices },
-      //   });
-      //   if (!spice) continue;
-      //   const storeItems = await spice.getStores({
-      //     joinTableAttributes: ["quantityNeeded"],
-      //   });
-      //   for (const si of storeItems) {
-      //     if (si.quantity < si.warn_value) {
-      //       return res.status(400).json("المخزن فارغ");
-      //     }
-      //   }
-      // }
-
-      //send the bill to db
-      console.log(admin_id);
-
+      //check admin exist or not
       let admin = await Admin.findOne({ where: { admin_id } });
+      if (!admin) {
+        return res.status(400).json("المسؤول غير موجود");
+      }
+
+      // If multiple paymentMethods provided, compute total amount from it
+      if (
+        paymentMethods &&
+        Array.isArray(paymentMethods) &&
+        paymentMethods.length > 0
+      ) {
+        const totalFromMethods = paymentMethods.reduce(
+          (sum, p) => sum + (parseFloat(p.amount) || 0),
+          0,
+        );
+        amount = parseFloat(totalFromMethods || amount || 0);
+      }
 
       // If delivery, add delivery_cost to amount
       if (isDelivery && delivery_cost) {
-        amount = parseFloat(amount) + parseFloat(delivery_cost);
+        amount = parseFloat(amount || 0) + parseFloat(delivery_cost || 0);
       }
 
       // use a transaction so bill + billTrans + store updates succeed or roll back together
@@ -84,23 +83,35 @@ module.exports = {
           return res.status(400).json("نوع الفاتورة غير صالح");
         }
 
-        let newbill = await Bill.create(
-          {
-            bill_counter,
-            amount,
-            paymentMethod,
-            type,
-            date,
-            shiftTime,
-            admin: admin.username,
-            ClientId: clientId,
-            AdminAdminId: admin_id,
-            isDelivery: !!isDelivery,
-            delivery_cost: delivery_cost || 0,
-            delivery_address: delivery_address || "",
-          },
-          { transaction: t },
-        );
+        // prepare bill payload
+        const billPayload = {
+          bill_counter,
+          amount,
+          type,
+          date,
+          shiftTime,
+          admin: admin.username,
+          ClientId: clientId,
+          AdminAdminId: admin_id,
+          isDelivery: !!isDelivery,
+          delivery_cost: delivery_cost || 0,
+          delivery_address: delivery_address || "",
+        };
+
+        // persist paymentMethods JSON when provided; keep single paymentMethod for compatibility
+        if (
+          paymentMethods &&
+          Array.isArray(paymentMethods) &&
+          paymentMethods.length > 0
+        ) {
+          billPayload.paymentMethods = paymentMethods;
+          billPayload.paymentMethod =
+            paymentMethods.length === 1 ? paymentMethods[0].method : null;
+        } else if (paymentMethod) {
+          billPayload.paymentMethod = paymentMethod;
+        }
+
+        let newbill = await Bill.create(billPayload, { transaction: t });
 
         // add the new bill id to the bill transactions and adjust store quantities
         for (const billtran of trans) {
@@ -134,16 +145,17 @@ module.exports = {
             if (totalNeeded === 0) continue;
 
             //-----------------for safe store valueing -------------
-            // if (
-            //   si.quantity < totalNeeded ||
-            //   si.warn_value >= si.quantity ||
-            //   si.warn_value >= si.quantity - totalNeeded
-            // ) {
-            //   await t.rollback();
-            //   return res
-            //     .status(400)
-            //     .json(`كمية ${si.name} في المخزن غير كافية`);
-            // }
+            console.log(si.quantity, totalNeeded);
+            if (
+              si.quantity < totalNeeded
+              // si.warn_value >= si.quantity ||
+              // si.warn_value >= si.quantity - totalNeeded
+            ) {
+              await t.rollback();
+              return res
+                .status(400)
+                .json(`كمية ${si.name} في المخزن غير كافية`);
+            }
 
             // subtract from store quantity using a literal to avoid race conditions
             await Store.update(

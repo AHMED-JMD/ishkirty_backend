@@ -187,4 +187,23 @@ module.exports = {
       if (error) throw error;
     }
   },
+  updateCategoryIds: async (req, res) => {
+    try {
+      const spieces = await Spieces.findAll();
+      let updated = 0;
+      for (const s of spieces) {
+        if (!s.category) continue;
+        const category = await Category.findOne({
+          where: { name: s.category },
+        });
+        if (category && s.categoryId !== category.id) {
+          await s.update({ categoryId: category.id });
+          updated++;
+        }
+      }
+      res.json({ success: true, updated });
+    } catch (error) {
+      if (error) throw error;
+    }
+  },
 };

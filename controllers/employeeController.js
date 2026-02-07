@@ -105,16 +105,22 @@ module.exports = {
 
   addEmpTran: async (req, res) => {
     try {
-      const { emp_id, admin_id, type, amount, date } = req.body;
+      const { emp_id, admin_id, type, amount, payment_method, date } = req.body;
 
-      if (!emp_id || !type || amount === undefined || !date || !admin_id)
+      if (
+        !emp_id ||
+        !type ||
+        amount === undefined ||
+        !date ||
+        !admin_id ||
+        !payment_method
+      )
         return res.status(400).json("enter all feilds");
 
       const emp = await Employee.findByPk(emp_id);
       if (!emp) return res.status(400).json("employee not found");
 
       // resolve admin
-      console.log("admin_id:", admin_id);
       let admin = await Admin.findByPk(admin_id);
       if (!admin) return res.status(400).json("admin not found");
 
@@ -124,6 +130,7 @@ module.exports = {
         EmployeeId: emp.id,
         admin: admin.username,
         AdminAdminId: admin_id,
+        payment_method: payment_method,
         type,
         amount: amt,
         date,
@@ -142,7 +149,7 @@ module.exports = {
       throw error;
     }
   },
-
+  //TODO: GET BY ADMIN ID
   getEmpTranByDate: async (req, res) => {
     try {
       const { startDate, endDate } = req.body;
@@ -227,7 +234,7 @@ module.exports = {
         await tr.destroy({ transaction: tx });
 
         await tx.commit();
-        res.json({ success: true, newSalary });
+        res.json({ success: true });
       } catch (error) {
         await tx.rollback();
         throw error;

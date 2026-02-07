@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 0,
       },
+      total_fawry: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0,
+      },
       total_dept: {
         type: DataTypes.FLOAT,
         allowNull: false,

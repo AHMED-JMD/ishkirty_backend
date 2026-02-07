@@ -16,8 +16,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 0,
       },
-      type: {
+      store_type: {
         type: DataTypes.ENUM("بيع", "تصنيع"),
+        allowNull: false,
+      },
+      type: {
+        type: DataTypes.ENUM("خصم", "اضافة"),
+        defaultValue: "اضافة",
         allowNull: false,
       },
       buy_price: {
@@ -32,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       admin: { type: DataTypes.STRING, allowNull: false, defaultValue: "" },
 
       payment_method: {
-        type: DataTypes.ENUM("بنكك", "كاش", "حساب"),
+        type: DataTypes.ENUM("بنكك", "كاش", "حساب", "فوري"),
         allowNull: false,
         defaultValue: "كاش",
       },

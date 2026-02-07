@@ -7,6 +7,7 @@ const {
   getByDate,
   update,
   delete: del,
+  unlockDaily,
   SyncDB,
 } = require("../controllers/dailyController");
 
@@ -18,5 +19,6 @@ router.post("/sync", SyncDB);
 router.post("/date", getByDate);
 router.post("/update", update);
 router.post("/delete", del);
+router.post("/unlock", unlockDaily);
 
 module.exports = router;

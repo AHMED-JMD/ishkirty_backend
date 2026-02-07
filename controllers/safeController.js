@@ -13,6 +13,7 @@ module.exports = {
     try {
       const fields = _.pick(req.body, [
         "bank_amount",
+        "fawry_amount",
         "cash_amount",
         "dept_amount",
       ]);
@@ -35,8 +36,12 @@ module.exports = {
   transfer: async (req, res) => {
     const { id, from, to, amount, clientId, admin_id } = req.body;
     if (
-      !["cash_amount", "bank_amount", "dept_amount"].includes(from) ||
-      !["cash_amount", "bank_amount", "dept_amount"].includes(to) ||
+      !["cash_amount", "bank_amount", "fawry_amount", "dept_amount"].includes(
+        from,
+      ) ||
+      !["cash_amount", "bank_amount", "fawry_amount", "dept_amount"].includes(
+        to,
+      ) ||
       !admin_id
     ) {
       return res.status(400).json({ error: "Invalid transfer fields" });
@@ -107,13 +112,17 @@ module.exports = {
         date,
         cash_sales,
         bank_sales,
+        fawry_sales,
         account_sales,
         cash_costs,
         bank_costs,
+        fawry_costs,
         account_costs,
         dailyId,
         admin_id,
       } = req.body;
+
+      console.log(req.body);
 
       if (!date || !admin_id) return res.status(400).json("enter date");
 
@@ -135,6 +144,7 @@ module.exports = {
       const safe = await Safe.findByPk(1);
       let total_cash = 0,
         total_bank = 0,
+        total_fawry = 0,
         total_dept = 0;
       if (safe) {
         if (cash_sales !== undefined && cash_costs !== undefined) {
@@ -144,6 +154,10 @@ module.exports = {
         if (bank_sales !== undefined && bank_costs !== undefined) {
           total_bank = Number(bank_sales) - Number(bank_costs);
           safe.bank_amount += total_bank;
+        }
+        if (fawry_sales !== undefined && fawry_costs !== undefined) {
+          total_fawry = Number(fawry_sales) - Number(fawry_costs);
+          safe.fawry_amount += total_fawry;
         }
         if (account_sales !== undefined && account_costs !== undefined) {
           total_dept = Number(account_sales) - Number(account_costs);
@@ -155,6 +169,7 @@ module.exports = {
           date,
           total_cash,
           total_bank,
+          total_fawry,
           total_dept,
           SafeId: safe.id,
           AdminAdminId: admin_id,
