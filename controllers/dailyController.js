@@ -4,6 +4,8 @@ const Sequelize = require("sequelize");
 const admin = require("../models/admin");
 
 const Daily = db.models.Daily;
+const Safe = db.models.Safe;
+const SafeDailies = db.models.SafeDailies;
 const Bill = db.models.Bill;
 const EmpTrans = db.models.EmpTrans;
 const PurchaseRequest = db.models.PurchaseRequest;
@@ -316,6 +318,34 @@ module.exports = {
           transaction: t,
         });
 
+        //delete safe daily and revert safe amounts
+        const safeDaily = await SafeDailies.findOne({ where: { DailyId: id } });
+
+        if (safeDaily) {
+          // Get the associated Safe
+          const safe = await Safe.findByPk(safeDaily.SafeId);
+          if (!safe) {
+            return res.status(404).json({ error: "Associated Safe not found" });
+          }
+          // Deduct the totals from the Safe
+          await safe.update(
+            {
+              cash_amount: safe.cash_amount - safeDaily.total_cash,
+              bank_amount: safe.bank_amount - safeDaily.total_bank,
+              fawry_amount: safe.fawry_amount - safeDaily.total_fawry,
+              dept_amount: safe.dept_amount - safeDaily.total_dept,
+            },
+            { transaction: t },
+          );
+
+          await safeDaily.destroy({ transaction: t });
+        }
+      } catch (err) {
+        await t.rollback();
+        throw err;
+      }
+
+      try {
         // finally delete the daily
         await Daily.destroy({ where: { id, date }, transaction: t });
 
