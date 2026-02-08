@@ -29,7 +29,6 @@ module.exports = {
         delivery_address = "",
       } = req.body;
 
-      console.log(req.body);
       //check req.body
       // require either a single paymentMethod or paymentMethods array; amount is optional
       if (
@@ -145,7 +144,6 @@ module.exports = {
             if (totalNeeded === 0) continue;
 
             //-----------------for safe store valueing -------------
-            console.log(si.quantity, totalNeeded);
             if (
               si.quantity < totalNeeded
               // si.warn_value >= si.quantity ||

@@ -60,9 +60,7 @@ module.exports = {
     try {
       const _feilds = _.pick(req.body, ["name", "categoryid", "price"]);
 
-      let { filename } = req.file;
-      //make sure image is sent
-      if (!filename) return res.status(400).json("enter the image");
+      const filename = req.file?.filename || null;
       //make sure feilds are completed
       if (Object.keys(_feilds).length < 2)
         return res.status(400).json("enter all feilds");

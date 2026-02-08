@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       ImgLink: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       price: {
         type: DataTypes.BIGINT,
