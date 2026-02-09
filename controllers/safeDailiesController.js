@@ -4,10 +4,14 @@ const SafeDailies = db.models.SafeDailies;
 const Daily = db.models.Daily;
 const Safe = db.models.Safe;
 const Admin = db.models.Admin;
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   add: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { date, total_cash, total_bank, total_dept, admin_id } = req.body;
 
       //check admin
@@ -22,6 +26,7 @@ module.exports = {
         total_bank,
         total_dept,
         AdminAdminId: admin_id || null,
+        business_location,
       });
       res.json(entry);
     } catch (error) {
@@ -30,7 +35,13 @@ module.exports = {
   },
   getAll: async (req, res) => {
     try {
-      const entries = await SafeDailies.findAll({ order: [["date", "DESC"]] });
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
+      const entries = await SafeDailies.findAll({
+        where: { business_location },
+        order: [["date", "DESC"]],
+      });
       res.json(entries);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -38,6 +49,9 @@ module.exports = {
   },
   getByDate: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { startDate, endDate } = req.body;
       if (!startDate || !endDate) {
         return res
@@ -49,6 +63,7 @@ module.exports = {
           date: {
             [Op.between]: [startDate, endDate],
           },
+          business_location,
         },
         order: [["date", "DESC"]],
       });
@@ -60,9 +75,14 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, date, total_cash, total_bank, total_dept } = req.body;
 
-      const entry = await SafeDailies.findByPk(id);
+      const entry = await SafeDailies.findOne({
+        where: { id, business_location },
+      });
       if (!entry) return res.status(404).json({ error: "Not found" });
 
       await entry.update({ date, total_cash, total_bank, total_dept });
@@ -74,16 +94,23 @@ module.exports = {
   },
   deleteSafeDaily: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id } = req.body;
       // Find the SafeDaily entry first
 
-      const safeDaily = await SafeDailies.findOne({ where: { DailyId: id } });
+      const safeDaily = await SafeDailies.findOne({
+        where: { DailyId: id, business_location },
+      });
 
       if (!safeDaily) {
         return res.status(404).json({ error: "SafeDaily not found" });
       }
       // Get the associated Safe
-      const safe = await Safe.findByPk(safeDaily.SafeId);
+      const safe = await Safe.findOne({
+        where: { id: safeDaily.SafeId, business_location },
+      });
       if (!safe) {
         return res.status(404).json({ error: "Associated Safe not found" });
       }

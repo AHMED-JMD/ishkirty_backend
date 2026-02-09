@@ -7,10 +7,14 @@ const SpiceStore = db.models.SpiceStore;
 const sequelize = db.sequelize;
 const PurchaseRequest = db.models.PurchaseRequest;
 const { Op } = require("sequelize");
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   addnew: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { name, quantity, sell_price, warn_value, type, isKilo, admin_id } =
         req.body;
 
@@ -23,7 +27,7 @@ module.exports = {
         return res.status(400).json("not authorized");
 
       // check if store item exists
-      let item = await Store.findOne({ where: { name } });
+      let item = await Store.findOne({ where: { name, business_location } });
       if (item) return res.status(400).json("store item exist");
 
       await Store.create({
@@ -33,6 +37,7 @@ module.exports = {
         price: sell_price ? Number(sell_price) : 0,
         type: type !== undefined ? type : "بيع",
         isKilo: isKilo ? Boolean(isKilo) : false,
+        business_location,
       });
 
       res.json("success");
@@ -43,11 +48,14 @@ module.exports = {
 
   getall: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { type } = req.body;
       if (!type) return res.status(400).json("الرجاء اختيار نوع المخزن");
 
       let items = await Store.findAll({
-        where: { type },
+        where: { type, business_location },
         order: [["quantity", "DESC"]],
       });
 
@@ -58,6 +66,9 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, name, quantity, sell_price, warn_value, isKilo, admin_id } =
         req.body;
 
@@ -68,11 +79,13 @@ module.exports = {
       if (!admin || admin.role !== "admin")
         return res.status(400).json("not authorized");
 
-      const item = await Store.findByPk(id);
+      const item = await Store.findOne({ where: { id, business_location } });
       if (!item) return res.status(400).json("store item not found");
 
       if (name && name !== item.name) {
-        const exists = await Store.findOne({ where: { name } });
+        const exists = await Store.findOne({
+          where: { name, business_location },
+        });
         if (exists) return res.status(400).json("store item exist");
       }
 
@@ -91,7 +104,7 @@ module.exports = {
         if (diffUnit !== 0) {
           //find all SpiceStore associations for this store item
           const associations = await SpiceStore.findAll({
-            where: { StoreId: item.id },
+            where: { StoreId: item.id, business_location },
           });
           for (const assoc of associations) {
             //check quantityNeeded !=0
@@ -100,7 +113,8 @@ module.exports = {
 
             //find the spice
             const spice = await Spieces.findByPk(assoc.SpieceId);
-            if (!spice) continue;
+            if (!spice || spice.business_location !== business_location)
+              continue;
 
             const costChange = qtyNeeded * diffUnit;
             if (costChange !== 0) {
@@ -130,6 +144,9 @@ module.exports = {
 
   deleteStore: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, admin_id } = req.body;
 
       if (!id || !admin_id) return res.status(400).json("enter ids");
@@ -139,12 +156,12 @@ module.exports = {
       if (!admin || admin.role !== "admin")
         return res.status(400).json("not authorized");
 
-      const item = await Store.findByPk(id);
+      const item = await Store.findOne({ where: { id, business_location } });
       if (!item) return res.status(400).json("store item not found");
 
       //updating Spice cost
       const associations = await SpiceStore.findAll({
-        where: { StoreId: item.id },
+        where: { StoreId: item.id, business_location },
       });
       //getting association
       if (associations.length !== 0) {
@@ -155,7 +172,7 @@ module.exports = {
 
           //find the spice
           const spice = await Spieces.findByPk(assoc.SpieceId);
-          if (!spice) continue;
+          if (!spice || spice.business_location !== business_location) continue;
 
           const costChange = qtyNeeded * item.price;
           if (costChange !== 0) {
@@ -167,7 +184,9 @@ module.exports = {
       }
 
       // remove any associations in SpiceStore first
-      await SpiceStore.destroy({ where: { StoreId: item.id } });
+      await SpiceStore.destroy({
+        where: { StoreId: item.id, business_location },
+      });
 
       //remove item
       await item.destroy();
@@ -180,10 +199,13 @@ module.exports = {
 
   searched: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { name } = req.body;
       if (!name) return res.status(400).json("enter all feilds");
 
-      let items = await Store.findAll({ where: { name } });
+      let items = await Store.findAll({ where: { name, business_location } });
       res.json(items);
     } catch (error) {
       throw error;
@@ -193,18 +215,25 @@ module.exports = {
   // attach a store item to a spice with the required quantity per spice unit accepts: { spiceId, storeId?, quantityNeeded }
   addStoreSpices: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { spiceId, storeId, quantityNeeded, store_type } = req.body;
 
       if (!spiceId || !storeId || quantityNeeded === undefined || !store_type)
         return res.status(400).json("enter all feilds");
 
       // resolve spice
-      let spice = await Spieces.findByPk(spiceId);
+      let spice = await Spieces.findOne({
+        where: { id: spiceId, business_location },
+      });
 
       if (!spice) return res.status(400).json("spice not found");
 
       // resolve store item
-      let store = await Store.findByPk(storeId);
+      let store = await Store.findOne({
+        where: { id: storeId, business_location },
+      });
 
       if (!store) return res.status(400).json("store item not found");
       //check store type
@@ -213,7 +242,11 @@ module.exports = {
 
       // create or update association: if exists update quantityNeeded, else create
       const existing = await SpiceStore.findOne({
-        where: { SpieceId: spice.id, StoreId: store.id },
+        where: {
+          SpieceId: spice.id,
+          StoreId: store.id,
+          business_location,
+        },
       });
 
       if (existing) {
@@ -269,6 +302,7 @@ module.exports = {
         StoreId: store.id,
         quantityNeeded,
         store_type,
+        business_location,
       });
 
       res.json({
@@ -284,14 +318,17 @@ module.exports = {
 
   getStoreSpice: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id } = req.body;
 
       if (!id) return res.status(400).json("enter spice id");
 
       // SpiceStore holds the quantityNeeded and references Store via StoreId
       const associations = await SpiceStore.findAll({
-        where: { SpieceId: id },
-        include: [{ model: Store }],
+        where: { SpieceId: id, business_location },
+        include: [{ model: Store, where: { business_location } }],
       });
 
       const list = associations.map((a) => ({
@@ -311,12 +348,15 @@ module.exports = {
   // accepts: { storeId, spiceId }
   deleteStoreSpice: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { storeId, spiceId } = req.body;
 
       if (!storeId || !spiceId) return res.status(400).json("enter all feilds");
 
       const association = await SpiceStore.findOne({
-        where: { StoreId: storeId, SpieceId: spiceId },
+        where: { StoreId: storeId, SpieceId: spiceId, business_location },
       });
 
       if (!association) return res.status(400).json("association not found");
@@ -334,6 +374,9 @@ module.exports = {
   createPurchase: async (req, res) => {
     const t = await sequelize.transaction();
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const {
         store_item,
         vendor,
@@ -361,7 +404,10 @@ module.exports = {
       let admin = await Admin.findByPk(admin_id);
       if (!admin) return res.status(400).json("admin not found");
 
-      const store = await Store.findByPk(store_item, { transaction: t });
+      const store = await Store.findOne({
+        where: { id: store_item, business_location },
+        transaction: t,
+      });
       if (!store) {
         await t.rollback();
         return res.status(400).json("store item not found");
@@ -383,6 +429,7 @@ module.exports = {
           type: tran_type !== undefined ? tran_type : "اضافة",
           admin: admin.username,
           AdminAdminId: admin_id,
+          business_location,
         },
         { transaction: t },
       );
@@ -412,8 +459,14 @@ module.exports = {
   // get all purchases
   getPurchases: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const purchases = await PurchaseRequest.findAll({
-        include: [{ model: Store }],
+        where: { business_location },
+        include: [
+          { model: Store, where: { business_location }, required: false },
+        ],
         order: [["date", "DESC"]],
       });
 
@@ -427,6 +480,9 @@ module.exports = {
   //TODO: GET BY ADMIN ID
   getPurchasesByDate: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { startDate, endDate, type, admin_id } = req.body;
       if (!startDate || !endDate || !type)
         return res.status(400).json("enter startDate and endDate and type");
@@ -448,8 +504,11 @@ module.exports = {
             },
             store_type: type !== undefined ? type : "بيع",
             AdminAdminId: admin.role !== "admin" ? admin_id : { [Op.ne]: null },
+            business_location,
           },
-          include: [{ model: Store }],
+          include: [
+            { model: Store, where: { business_location }, required: false },
+          ],
           order: [["date", "DESC"]],
         });
       } else {
@@ -459,8 +518,11 @@ module.exports = {
               [Op.between]: [startDate, endDate],
             },
             store_type: type !== undefined ? type : "بيع",
+            business_location,
           },
-          include: [{ model: Store }],
+          include: [
+            { model: Store, where: { business_location }, required: false },
+          ],
           order: [["date", "DESC"]],
         });
       }
@@ -475,6 +537,9 @@ module.exports = {
   deletePurchase: async (req, res) => {
     const t = await sequelize.transaction();
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, admin_id } = req.body;
       if (!id || !admin_id)
         return res.status(400).json("enter id and admin_id");
@@ -484,14 +549,20 @@ module.exports = {
       if (!admin || admin.role !== "admin")
         return res.status(400).json("not authorized");
 
-      const purchase = await PurchaseRequest.findByPk(id, { transaction: t });
+      const purchase = await PurchaseRequest.findOne({
+        where: { id, business_location },
+        transaction: t,
+      });
       if (!purchase) {
         await t.rollback();
         return res.status(400).json("purchase not found");
       }
 
       //update store value
-      const store = await Store.findByPk(purchase.StoreId, { transaction: t });
+      const store = await Store.findOne({
+        where: { id: purchase.StoreId, business_location },
+        transaction: t,
+      });
       if (store) {
         const newQty = Number(store.quantity) - Number(purchase.net_quantity);
 

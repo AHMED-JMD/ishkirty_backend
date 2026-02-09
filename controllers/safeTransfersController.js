@@ -2,10 +2,14 @@ const db = require("../models/index");
 const { Op } = require("sequelize");
 const SafeTransfers = db.models.SafeTransfers;
 const Safe = db.models.Safe;
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   add: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { date, from, to, amount, clientId, admin_id } = req.body;
 
       //check admin
@@ -25,6 +29,7 @@ module.exports = {
         clientId,
         admin: admin.username,
         AdminAdminId: admin_id,
+        business_location,
       });
       res.json(entry);
     } catch (error) {
@@ -33,6 +38,9 @@ module.exports = {
   },
   getByDate: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { startDate, endDate } = req.body;
       if (!startDate || !endDate) {
         return res
@@ -44,6 +52,7 @@ module.exports = {
           date: {
             [Op.between]: [startDate, endDate],
           },
+          business_location,
         },
         order: [["date", "DESC"]],
       });
@@ -54,7 +63,11 @@ module.exports = {
   },
   getAll: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const entries = await SafeTransfers.findAll({
+        where: { business_location },
         order: [["date", "DESC"]],
       });
       res.json(entries);
@@ -64,9 +77,14 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, date, from, to, amount, clientId } = req.body;
 
-      const entry = await SafeTransfers.findByPk(id);
+      const entry = await SafeTransfers.findOne({
+        where: { id, business_location },
+      });
       if (!entry) return res.status(404).json({ error: "Not found" });
 
       await entry.update({ date, from, to, amount, clientId });
@@ -79,12 +97,19 @@ module.exports = {
   },
   deleteTransfer: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id } = req.body;
-      const entry = await SafeTransfers.findByPk(id);
+      const entry = await SafeTransfers.findOne({
+        where: { id, business_location },
+      });
       if (!entry) return res.status(404).json({ error: "Not found" });
 
       // Update Safe values
-      const safe = await Safe.findByPk(entry.SafeId);
+      const safe = await Safe.findOne({
+        where: { id: entry.SafeId, business_location },
+      });
       if (safe) {
         // Reverse the transfer
         if (
@@ -97,7 +122,7 @@ module.exports = {
         }
       }
 
-      await SafeTransfers.destroy({ where: { id } });
+      await SafeTransfers.destroy({ where: { id, business_location } });
       res.json({ success: true });
     } catch (error) {
       res.status(500).json({ error: error.message });

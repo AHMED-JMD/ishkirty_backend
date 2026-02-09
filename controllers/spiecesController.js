@@ -4,11 +4,18 @@ const Category = db.models.Category;
 const _ = require("lodash");
 const path = require("path");
 const deleteFile = require("../middlewares/deleteImage");
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   getAll: async (req, res) => {
     try {
-      let spieces = await Spieces.findAll({ order: [["price", "DESC"]] });
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
+      let spieces = await Spieces.findAll({
+        where: { business_location },
+        order: [["price", "DESC"]],
+      });
 
       res.json(spieces);
     } catch (error) {
@@ -17,12 +24,15 @@ module.exports = {
   },
   getByType: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { category } = req.body;
 
       if (!category) return res.status(400).json("enter all feilds");
 
       let spieces = await Spieces.findAll({
-        where: { category },
+        where: { category, business_location },
         order: [["price", "DESC"]],
       });
 
@@ -33,8 +43,11 @@ module.exports = {
   },
   getFavourites: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let spieces = await Spieces.findAll({
-        where: { isFavourites: true },
+        where: { isFavourites: true, business_location },
         order: [["price", "DESC"]],
       });
 
@@ -45,10 +58,13 @@ module.exports = {
   },
   findOne: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { name } = req.body;
       //find the bill
       let spieces = await Spieces.findAll({
-        where: { name },
+        where: { name, business_location },
       });
       //send the bill
       res.json(spieces);
@@ -58,6 +74,9 @@ module.exports = {
   },
   add: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const _feilds = _.pick(req.body, ["name", "categoryid", "price"]);
 
       const filename = req.file?.filename || null;
@@ -78,6 +97,7 @@ module.exports = {
           category: category.name,
           price: _feilds.price,
           categoryId: category.id,
+          business_location,
         },
       });
       if (spieces) return res.status(400).json("spices exist");
@@ -89,6 +109,7 @@ module.exports = {
         categoryId: category.id,
         ImgLink: filename,
         price: _feilds.price,
+        business_location,
       });
 
       res.json("success");
@@ -98,6 +119,9 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const _feilds = _.pick(req.body, [
         "id",
         "name",
@@ -112,7 +136,11 @@ module.exports = {
       if (!_feilds) return res.status(400).json("enter all feilds");
 
       let spieces = await Spieces.findOne({
-        where: { favBtn: _feilds.favBtn, isControll: _feilds.isControll },
+        where: {
+          favBtn: _feilds.favBtn,
+          isControll: _feilds.isControll,
+          business_location,
+        },
       });
       if (spieces) return res.status(400).json("تم اختيار الزر في صنف مسبقا");
 
@@ -134,7 +162,7 @@ module.exports = {
             favBtn: "",
             isControll: false,
           },
-          { where: { id: _feilds.id } },
+          { where: { id: _feilds.id, business_location } },
         );
       } else {
         //check if it is normal update
@@ -157,7 +185,7 @@ module.exports = {
             favBtn: favBtn,
             isControll: isCtrl,
           },
-          { where: { id: _feilds.id } },
+          { where: { id: _feilds.id, business_location } },
         );
       }
 
@@ -168,17 +196,23 @@ module.exports = {
   },
   deleteSpieces: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { id } = req.body;
 
       if (!id) return res.status(400).json("enter all feilds");
 
       //get spieces data and delete img
-      let spieces = await Spieces.findOne({ where: { id } });
+      let spieces = await Spieces.findOne({
+        where: { id, business_location },
+      });
+      if (!spieces) return res.status(400).json("spices not found");
       //delete image
       deleteFile(path.join(__dirname, `../public/${spieces.ImgLink}`));
 
       //delete all data
-      await Spieces.destroy({ where: { id } });
+      await Spieces.destroy({ where: { id, business_location } });
 
       res.json("success");
     } catch (error) {
@@ -187,7 +221,10 @@ module.exports = {
   },
   updateCategoryIds: async (req, res) => {
     try {
-      const spieces = await Spieces.findAll();
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
+      const spieces = await Spieces.findAll({ where: { business_location } });
       let updated = 0;
       for (const s of spieces) {
         if (!s.category) continue;

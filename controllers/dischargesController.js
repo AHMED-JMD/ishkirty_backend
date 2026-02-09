@@ -3,10 +3,14 @@ const db = require("../models/index");
 const Discharges = db.models.Discharges;
 const Daily = db.models.Daily;
 const Admin = db.models.Admin;
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   add: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const {
         name,
         price,
@@ -33,6 +37,7 @@ module.exports = {
         DailyId: dailyId !== undefined ? dailyId : null,
         admin: admin.username,
         AdminAdminId: admin_id,
+        business_location,
       });
 
       res.json({ success: true, discharge });
@@ -43,8 +48,14 @@ module.exports = {
 
   getAll: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const discharges = await Discharges.findAll({
-        include: [Daily],
+        where: { business_location },
+        include: [
+          { model: Daily, where: { business_location }, required: false },
+        ],
         order: [["date", "DESC"]],
       });
       res.json(discharges);
@@ -56,6 +67,9 @@ module.exports = {
   //TODO: GET BY ADMIN ID
   getByDate: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { startDate, endDate } = req.body;
 
       const discharges = await Discharges.findAll({
@@ -63,8 +77,11 @@ module.exports = {
           date: {
             [Op.between]: [startDate, endDate],
           },
+          business_location,
         },
-        include: [Daily],
+        include: [
+          { model: Daily, where: { business_location }, required: false },
+        ],
         order: [["date", "DESC"]],
       });
 
@@ -76,11 +93,16 @@ module.exports = {
 
   update: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, name, price, date, isMonthly, dailyId, payment_method } =
         req.body;
       if (!id) return res.status(400).json("enter id");
 
-      const item = await Discharges.findByPk(id);
+      const item = await Discharges.findOne({
+        where: { id, business_location },
+      });
       if (!item) return res.status(400).json("discharge not found");
 
       await item.update({
@@ -101,6 +123,9 @@ module.exports = {
 
   delete: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, admin_id: body_admin_id } = req.body;
       const admin_id = body_admin_id || (req.user && req.user.id);
 
@@ -112,7 +137,7 @@ module.exports = {
 
       if (!id) return res.status(400).json("enter id");
 
-      await Discharges.destroy({ where: { id } });
+      await Discharges.destroy({ where: { id, business_location } });
       res.json("success");
     } catch (error) {
       throw error;

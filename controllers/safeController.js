@@ -7,10 +7,14 @@ const SafeDailies = db.models.SafeDailies;
 const Admin = db.models.Admin;
 
 const _ = require("lodash");
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   add: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const fields = _.pick(req.body, [
         "bank_amount",
         "fawry_amount",
@@ -18,7 +22,7 @@ module.exports = {
         "dept_amount",
       ]);
 
-      const safe = await Safe.create(fields);
+      const safe = await Safe.create({ ...fields, business_location });
 
       res.json(safe);
     } catch (error) {
@@ -27,13 +31,19 @@ module.exports = {
   },
   getAll: async (req, res) => {
     try {
-      const safes = await Safe.findAll();
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
+      const safes = await Safe.findAll({ where: { business_location } });
       res.json(safes);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
   transfer: async (req, res) => {
+    const business_location = requireBusinessLocation(req, res);
+    if (!business_location) return;
+
     const { id, from, to, amount, clientId, admin_id } = req.body;
     if (
       !["cash_amount", "bank_amount", "fawry_amount", "dept_amount"].includes(
@@ -58,7 +68,7 @@ module.exports = {
         return res.status(400).json({ error: "Invalid admin_id" });
       }
 
-      const safe = await Safe.findByPk(id);
+      const safe = await Safe.findOne({ where: { id, business_location } });
       if (!safe) return res.status(404).json({ error: "Safe not found" });
 
       if (safe[from] < amount)
@@ -99,6 +109,7 @@ module.exports = {
         clientId: clientId || null,
         SafeId: safe.id,
         AdminAdminId: admin_id,
+        business_location,
       });
 
       res.json(safe);
@@ -108,6 +119,9 @@ module.exports = {
   },
   dailySafe: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const {
         date,
         cash_sales,
@@ -127,7 +141,9 @@ module.exports = {
       if (!date || !admin_id) return res.status(400).json("enter date");
 
       // Check if SafeDailies exists for this date
-      const existing = await SafeDailies.findOne({ where: { date } });
+      const existing = await SafeDailies.findOne({
+        where: { date, business_location },
+      });
       if (existing) {
         return res.json({
           message: "Safe Daily already exists for this date. Safe not updated.",
@@ -141,7 +157,7 @@ module.exports = {
       }
 
       // Update Safe with id=1
-      const safe = await Safe.findByPk(1);
+      const safe = await Safe.findOne({ where: { business_location } });
       let total_cash = 0,
         total_bank = 0,
         total_fawry = 0,
@@ -174,12 +190,13 @@ module.exports = {
           SafeId: safe.id,
           AdminAdminId: admin_id,
           DailyId: dailyId,
+          business_location,
         });
 
         // Update Daily.isAddedtoSafe to true for this date
         await Daily.update(
           { isAddedtoSafe: true, safeId: safe.id },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         return res.json({ success: true, safe, safeDaily });

@@ -10,9 +10,9 @@ app.use(
   cors({
     origin: "http://localhost:8080", // Allow all origins (for development)
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "business_location"],
     credentials: true,
-  })
+  }),
 );
 //static routes
 app.use(express.static(path.join(__dirname, "/public")));

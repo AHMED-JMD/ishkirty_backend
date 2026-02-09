@@ -1,11 +1,20 @@
 const db = require("../models/index");
 const Category = db.models.Category;
 const Spieces = db.models.Spieces;
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   getAll: async (req, res) => {
     try {
-      let categories = await Category.findAll({ include: [Spieces] });
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
+      let categories = await Category.findAll({
+        where: { business_location },
+        include: [
+          { model: Spieces, where: { business_location }, required: false },
+        ],
+      });
       res.json(categories);
     } catch (error) {
       if (error) throw error;
@@ -13,10 +22,18 @@ module.exports = {
   },
   findOne: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { id } = req.params;
       if (!id) return res.status(400).json("enter all feilds");
 
-      let category = await Category.findOne({ where: { id }, include: [Spieces] });
+      let category = await Category.findOne({
+        where: { id, business_location },
+        include: [
+          { model: Spieces, where: { business_location }, required: false },
+        ],
+      });
       res.json(category);
     } catch (error) {
       if (error) throw error;
@@ -24,13 +41,18 @@ module.exports = {
   },
   add: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { name, description } = req.body;
       if (!name) return res.status(400).json("enter all feilds");
 
-      let exists = await Category.findOne({ where: { name } });
+      let exists = await Category.findOne({
+        where: { name, business_location },
+      });
       if (exists) return res.status(400).json("category exists");
 
-      await Category.create({ name, description });
+      await Category.create({ name, description, business_location });
       res.json("success");
     } catch (error) {
       if (error) throw error;
@@ -38,10 +60,16 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { id, name, description } = req.body;
       if (!id || !name) return res.status(400).json("enter all feilds");
 
-      await Category.update({ name, description }, { where: { id } });
+      await Category.update(
+        { name, description },
+        { where: { id, business_location } },
+      );
       res.json("success");
     } catch (error) {
       if (error) throw error;
@@ -49,12 +77,18 @@ module.exports = {
   },
   deleteCategory: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { id } = req.body;
       if (!id) return res.status(400).json("enter all feilds");
 
       // disassociate spieces first
-      await Spieces.update({ categoryId: null }, { where: { categoryId: id } });
-      await Category.destroy({ where: { id } });
+      await Spieces.update(
+        { categoryId: null },
+        { where: { categoryId: id, business_location } },
+      );
+      await Category.destroy({ where: { id, business_location } });
 
       res.json("success");
     } catch (error) {

@@ -4,8 +4,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       date: DataTypes.DATEONLY,
       amount: DataTypes.BIGINT,
+      business_location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "port sudan",
+      },
     },
-    { freezeTableName: true }
+    { freezeTableName: true },
   );
 
   return transfer;

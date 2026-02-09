@@ -11,10 +11,14 @@ const EmpTrans = db.models.EmpTrans;
 const PurchaseRequest = db.models.PurchaseRequest;
 const Discharges = db.models.Discharges;
 const Admin = db.models.Admin;
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   add: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const {
         date,
         cash_sales,
@@ -36,7 +40,7 @@ module.exports = {
       if (!admin) return res.status(400).json("admin not found");
 
       //find daily
-      let daily = await Daily.findOne({ where: { date } });
+      let daily = await Daily.findOne({ where: { date, business_location } });
 
       if (daily) {
         if (admin.role !== "admin" && daily.AdminAdminId !== admin.admin_id) {
@@ -60,7 +64,7 @@ module.exports = {
             AdminAdminId: admin.admin_id,
             isCreated: true,
           },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         //update bills
@@ -68,7 +72,7 @@ module.exports = {
           {
             DailyId: daily.id,
           },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         //update employee trans
@@ -76,7 +80,7 @@ module.exports = {
           {
             DailyId: daily.id,
           },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         //update purchase requests
@@ -84,7 +88,7 @@ module.exports = {
           {
             DailyId: daily.id,
           },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         //update discharges
@@ -92,7 +96,7 @@ module.exports = {
           {
             DailyId: daily.id,
           },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         res.json("تم تعديل اليومية بنجاح");
@@ -114,6 +118,7 @@ module.exports = {
             account_costs !== undefined ? Number(account_costs) : 0.0,
           AdminAdminId: admin.admin_id,
           isCreated: true,
+          business_location,
         });
 
         //update bills
@@ -121,7 +126,7 @@ module.exports = {
           {
             DailyId: newDaily.id,
           },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         //update employee trans
@@ -129,7 +134,7 @@ module.exports = {
           {
             DailyId: newDaily.id,
           },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         //update purchase requests
@@ -137,7 +142,7 @@ module.exports = {
           {
             DailyId: newDaily.id,
           },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         //update discharges
@@ -145,7 +150,7 @@ module.exports = {
           {
             DailyId: newDaily.id,
           },
-          { where: { date } },
+          { where: { date, business_location } },
         );
 
         res.json("تم انشاء اليومية بنجاح");
@@ -157,8 +162,21 @@ module.exports = {
 
   getAll: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const dailies = await Daily.findAll({
-        include: [Bill, EmpTrans, PurchaseRequest, Discharges],
+        where: { business_location },
+        include: [
+          { model: Bill, where: { business_location }, required: false },
+          { model: EmpTrans, where: { business_location }, required: false },
+          {
+            model: PurchaseRequest,
+            where: { business_location },
+            required: false,
+          },
+          { model: Discharges, where: { business_location }, required: false },
+        ],
         order: [["date", "DESC"]],
       });
       res.json(dailies);
@@ -169,6 +187,9 @@ module.exports = {
 
   getByDate: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { startDate, endDate, admin_id } = req.body;
 
       if (!admin_id) return res.status(400).json("enter admin_id");
@@ -187,6 +208,7 @@ module.exports = {
               [Op.between]: [startDate, endDate],
             },
             isCreated: true,
+            business_location,
           },
           include: [adminInclude],
           order: [["date", "DESC"]],
@@ -198,6 +220,7 @@ module.exports = {
             date: {
               [Op.between]: [startDate, endDate],
             },
+            business_location,
           },
           include: [adminInclude],
           order: [["date", "DESC"]],
@@ -212,6 +235,9 @@ module.exports = {
 
   getOne: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { date, admin_id } = req.body;
       if (!date || !admin_id) return res.status(400).json("enter all fields");
 
@@ -225,6 +251,7 @@ module.exports = {
           where: {
             date,
             AdminAdminId: admin_id,
+            business_location,
           },
           order: [["date", "DESC"]],
         });
@@ -232,8 +259,21 @@ module.exports = {
         dailies = await Daily.findOne({
           where: {
             date,
+            business_location,
           },
-          include: [EmpTrans, PurchaseRequest, Discharges],
+          include: [
+            { model: EmpTrans, where: { business_location }, required: false },
+            {
+              model: PurchaseRequest,
+              where: { business_location },
+              required: false,
+            },
+            {
+              model: Discharges,
+              where: { business_location },
+              required: false,
+            },
+          ],
           order: [["date", "DESC"]],
         });
       }
@@ -246,10 +286,13 @@ module.exports = {
 
   update: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, date, today_sales, today_costs } = req.body;
       if (!id) return res.status(400).json("enter id");
 
-      const item = await Daily.findByPk(id);
+      const item = await Daily.findOne({ where: { id, business_location } });
       if (!item) return res.status(400).json("daily not found");
 
       await item.update({
@@ -268,6 +311,9 @@ module.exports = {
 
   delete: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, date } = req.body;
       if (!id || !date) return res.status(400).json("enter id and date");
 
@@ -275,14 +321,17 @@ module.exports = {
       try {
         // revert emp transactions (update employee salary and delete transactions)
         const empTransList = await EmpTrans.findAll({
-          where: { [Op.or]: [{ date }, { DailyId: id }] },
+          where: {
+            [Op.or]: [{ date }, { DailyId: id }],
+            business_location,
+          },
         });
 
         for (const tr of empTransList) {
           const emp = await db.models.Employee.findByPk(tr.EmployeeId, {
             transaction: t,
           });
-          if (emp) {
+          if (emp && emp.business_location === business_location) {
             const amt = Number(tr.amount || 0);
             let newSalary = Number(emp.salary || 0);
             if (tr.type === "اضافة") newSalary -= amt;
@@ -295,14 +344,17 @@ module.exports = {
 
         // revert purchases (reduce store quantity) and delete purchases
         const purchases = await PurchaseRequest.findAll({
-          where: { [Op.or]: [{ date }, { DailyId: id }] },
+          where: {
+            [Op.or]: [{ date }, { DailyId: id }],
+            business_location,
+          },
         });
 
         for (const p of purchases) {
           const store = await db.models.Store.findByPk(p.StoreId, {
             transaction: t,
           });
-          if (store) {
+          if (store && store.business_location === business_location) {
             const newQty = Number(store.quantity) - Number(p.net_quantity || 0);
             await store.update(
               { quantity: newQty < 0 ? 0 : newQty },
@@ -314,16 +366,23 @@ module.exports = {
 
         // delete discharges related to this daily
         await Discharges.destroy({
-          where: { [Op.or]: [{ date }, { DailyId: id }] },
+          where: {
+            [Op.or]: [{ date }, { DailyId: id }],
+            business_location,
+          },
           transaction: t,
         });
 
         //delete safe daily and revert safe amounts
-        const safeDaily = await SafeDailies.findOne({ where: { DailyId: id } });
+        const safeDaily = await SafeDailies.findOne({
+          where: { DailyId: id, business_location },
+        });
 
         if (safeDaily) {
           // Get the associated Safe
-          const safe = await Safe.findByPk(safeDaily.SafeId);
+          const safe = await Safe.findOne({
+            where: { id: safeDaily.SafeId, business_location },
+          });
           if (!safe) {
             return res.status(404).json({ error: "Associated Safe not found" });
           }
@@ -347,7 +406,10 @@ module.exports = {
 
       try {
         // finally delete the daily
-        await Daily.destroy({ where: { id, date }, transaction: t });
+        await Daily.destroy({
+          where: { id, date, business_location },
+          transaction: t,
+        });
 
         await t.commit();
         res.json({ success: true });
@@ -362,10 +424,16 @@ module.exports = {
 
   unlockDaily: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, date } = req.body;
       if (!id || !date) return res.status(400).json("enter id and date");
 
-      await Daily.update({ isCreated: false }, { where: { id, date } });
+      await Daily.update(
+        { isCreated: false },
+        { where: { id, date, business_location } },
+      );
 
       res.json("success");
     } catch (error) {

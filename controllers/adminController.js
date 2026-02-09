@@ -3,10 +3,14 @@ const Admin = db.models.Admin;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 let admin = {
   signup: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { username, phoneNum, password, shift } = req.body;
       //check req.body
       if (!(username && phoneNum && password)) {
@@ -14,7 +18,9 @@ let admin = {
       }
 
       //make sure no admin is replicated
-      let admin = await Admin.findOne({ where: { username } });
+      let admin = await Admin.findOne({
+        where: { username, business_location },
+      });
       if (admin) return res.status(400).json("admin already exist");
 
       //hash user password
@@ -27,6 +33,7 @@ let admin = {
         phoneNum,
         shift,
         password: hashedPassword,
+        business_location,
       });
 
       //send to client
@@ -45,6 +52,9 @@ let admin = {
   },
   login: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { username, password } = req.body;
 
       if (!username || !password) {
@@ -54,6 +64,10 @@ let admin = {
       Admin.findOne({ where: { username } }).then((user) => {
         if (!user) {
           return res.status(400).json("المستخدم غير موجود !");
+        }
+
+        if (user.business_location !== business_location) {
+          return res.status(403).json("ليس لديك صلاحية الدخول لهذا الفرع");
         }
 
         bcrypt.compare(password, user.password).then((isMatch) => {
@@ -73,6 +87,7 @@ let admin = {
                     phoneNum: user.phoneNum,
                     username: user.username,
                     role: user.role,
+                    business_location: user.business_location,
                   },
                 });
               },
@@ -86,9 +101,12 @@ let admin = {
   },
   getAll: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let managers = await Admin.findAll({
         attributes: { exclude: ["password"] },
-        where: { role: "manager" },
+        where: { role: "manager", business_location },
       });
 
       res.json(managers);
@@ -97,7 +115,10 @@ let admin = {
     }
   },
   getbyid: async (req, res) => {
-    Admin.findOne({ where: { admin_id: req.user.id } })
+    const business_location = requireBusinessLocation(req, res);
+    if (!business_location) return;
+
+    Admin.findOne({ where: { admin_id: req.user.id, business_location } })
       .then((user) => {
         res.json({
           statusCode: 200,
@@ -107,6 +128,7 @@ let admin = {
             phoneNum: user.phoneNum,
             username: user.username,
             role: user.role,
+            business_location: user.business_location,
           },
         });
       })
@@ -114,6 +136,9 @@ let admin = {
   },
   updatePassword: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { admin_id, password, newPassword } = req.body;
 
       if (!admin_id || !password || !newPassword) {
@@ -121,7 +146,9 @@ let admin = {
       }
 
       //find and verify admin
-      let admin = await Admin.findOne({ where: { admin_id } });
+      let admin = await Admin.findOne({
+        where: { admin_id, business_location },
+      });
 
       if (!admin) return res.status(404).json("provide a valid id");
       //match password
@@ -144,9 +171,12 @@ let admin = {
   },
   delete_user: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { username } = req.body;
 
-      await Admin.destroy({ where: { username } });
+      await Admin.destroy({ where: { username, business_location } });
       //send response
       res.json("manager deleted");
     } catch (error) {

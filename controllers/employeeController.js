@@ -4,10 +4,14 @@ const EmpTrans = db.models.EmpTrans;
 const Admin = db.models.Admin;
 
 const { Op } = require("sequelize");
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   add: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { name, jobTitle, shift, salary, admin_id } = req.body;
 
       //check admin
@@ -18,7 +22,9 @@ module.exports = {
 
       if (!name) return res.status(400).json("enter all feilds");
 
-      const existing = await Employee.findOne({ where: { name } });
+      const existing = await Employee.findOne({
+        where: { name, business_location },
+      });
       if (existing) return res.status(400).json("employee exists");
 
       const emp = await Employee.create({
@@ -27,6 +33,7 @@ module.exports = {
         shift: shift !== undefined ? shift : null,
         fixed_salary: salary !== undefined ? Number(salary) : 0,
         salary: salary !== undefined ? Number(salary) : 0,
+        business_location,
       });
 
       res.json({ success: true, employee: emp });
@@ -37,7 +44,13 @@ module.exports = {
 
   getAll: async (req, res) => {
     try {
-      const list = await Employee.findAll({ order: [["name", "ASC"]] });
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
+      const list = await Employee.findAll({
+        where: { business_location },
+        order: [["name", "ASC"]],
+      });
       res.json(list);
     } catch (error) {
       throw error;
@@ -46,6 +59,9 @@ module.exports = {
 
   update: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, name, jobTitle, shift, salary, admin_id } = req.body;
 
       //check admin
@@ -56,11 +72,13 @@ module.exports = {
 
       if (!id) return res.status(400).json("enter id");
 
-      const emp = await Employee.findByPk(id);
+      const emp = await Employee.findOne({ where: { id, business_location } });
       if (!emp) return res.status(400).json("employee not found");
 
       if (name && name !== emp.name) {
-        const exists = await Employee.findOne({ where: { name } });
+        const exists = await Employee.findOne({
+          where: { name, business_location },
+        });
         if (exists) return res.status(400).json("employee exists");
       }
 
@@ -79,6 +97,9 @@ module.exports = {
 
   delete: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, admin_id } = req.body;
 
       //check admin
@@ -89,11 +110,13 @@ module.exports = {
 
       if (!id) return res.status(400).json("enter id");
 
-      const emp = await Employee.findByPk(id);
+      const emp = await Employee.findOne({ where: { id, business_location } });
       if (!emp) return res.status(400).json("employee not found");
 
       // remove related transactions first
-      await EmpTrans.destroy({ where: { EmployeeId: emp.id } });
+      await EmpTrans.destroy({
+        where: { EmployeeId: emp.id, business_location },
+      });
 
       await emp.destroy();
 
@@ -105,6 +128,9 @@ module.exports = {
 
   addEmpTran: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { emp_id, admin_id, type, amount, payment_method, date } = req.body;
 
       if (
@@ -117,7 +143,9 @@ module.exports = {
       )
         return res.status(400).json("enter all feilds");
 
-      const emp = await Employee.findByPk(emp_id);
+      const emp = await Employee.findOne({
+        where: { id: emp_id, business_location },
+      });
       if (!emp) return res.status(400).json("employee not found");
 
       // resolve admin
@@ -134,6 +162,7 @@ module.exports = {
         type,
         amount: amt,
         date,
+        business_location,
       });
 
       // update employee salary
@@ -152,6 +181,9 @@ module.exports = {
   //TODO: GET BY ADMIN ID
   getEmpTranByDate: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { startDate, endDate } = req.body;
       if (!startDate || !endDate)
         return res.status(400).json("enter request data");
@@ -159,9 +191,16 @@ module.exports = {
       const list = await EmpTrans.findAll({
         where: {
           date: { [Op.between]: [startDate, endDate] },
+          business_location,
         },
         order: [["date", "DESC"]],
-        include: [{ model: Employee, attributes: ["name"] }],
+        include: [
+          {
+            model: Employee,
+            attributes: ["name"],
+            where: { business_location },
+          },
+        ],
       });
 
       // Add employee_name to each result
@@ -176,6 +215,9 @@ module.exports = {
   },
   getEmpTran: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { emp_id, startDate, endDate } = req.body;
       if (!emp_id) return res.status(400).json("enter emp_id");
 
@@ -183,9 +225,16 @@ module.exports = {
         where: {
           date: { [Op.between]: [startDate, endDate] },
           EmployeeId: emp_id,
+          business_location,
         },
         order: [["date", "DESC"]],
-        include: [{ model: Employee, attributes: ["name"] }],
+        include: [
+          {
+            model: Employee,
+            attributes: ["name"],
+            where: { business_location },
+          },
+        ],
       });
 
       // Add employee_name to each result
@@ -201,6 +250,9 @@ module.exports = {
 
   deleteEmpTran: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { id, admin_id } = req.body;
 
       //check admin
@@ -211,10 +263,12 @@ module.exports = {
 
       if (!id) return res.status(400).json("enter id");
 
-      const tr = await EmpTrans.findByPk(id);
+      const tr = await EmpTrans.findOne({ where: { id, business_location } });
       if (!tr) return res.status(400).json("transaction not found");
       //find employee
-      const emp = await Employee.findByPk(tr.EmployeeId);
+      const emp = await Employee.findOne({
+        where: { id: tr.EmployeeId, business_location },
+      });
       if (!emp) return res.status(400).json("employee not found");
 
       //create transaction for safety
@@ -245,6 +299,9 @@ module.exports = {
   },
   runNewMonth: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { admin_id } = req.body;
 
       //check admin
@@ -258,7 +315,10 @@ module.exports = {
         // set date for new month entry
         const date = req.body.date || new Date().toISOString().slice(0, 10);
 
-        const employees = await Employee.findAll({ transaction: t });
+        const employees = await Employee.findAll({
+          where: { business_location },
+          transaction: t,
+        });
 
         for (const emp of employees) {
           // create an empTrans of type add with amount 0
@@ -270,6 +330,7 @@ module.exports = {
               type: "اضافة",
               amount: 0,
               date,
+              business_location,
             },
             { transaction: t },
           );

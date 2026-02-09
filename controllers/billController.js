@@ -9,10 +9,14 @@ const SpiceStore = db.models.SpiceStore;
 const sequelize = db.sequelize;
 
 const { Op } = require("sequelize");
+const { requireBusinessLocation } = require("../middlewares/businessLocation");
 
 module.exports = {
   add: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let {
         bill_counter,
         date,
@@ -95,6 +99,7 @@ module.exports = {
           isDelivery: !!isDelivery,
           delivery_cost: delivery_cost || 0,
           delivery_address: delivery_address || "",
+          business_location,
         };
 
         // persist paymentMethods JSON when provided; keep single paymentMethod for compatibility
@@ -116,13 +121,14 @@ module.exports = {
         for (const billtran of trans) {
           // find the spice by name (front-end sends spice name in billtran.spices)
           const spice = await Spieces.findOne({
-            where: { name: billtran.spices },
+            where: { name: billtran.spices, business_location },
             transaction: t,
           });
           if (!spice) continue;
 
           // get store items required for this spice (through SpiceStore)
           const storeItems = await spice.getStores({
+            where: { business_location },
             joinTableAttributes: ["quantityNeeded"],
             transaction: t,
           });
@@ -172,6 +178,7 @@ module.exports = {
               date,
               BillId: newbill.id,
               SpieceId: spice.id,
+              business_location,
             },
             { transaction: t },
           );
@@ -184,13 +191,15 @@ module.exports = {
       }
 
       //update client id if it is not null
-      let client = await Client.findOne({ where: { id: clientId } });
+      let client = await Client.findOne({
+        where: { id: clientId, business_location },
+      });
 
       if (client) {
         //update account
         await Client.update(
           { account: client.account + parseInt(amount) },
-          { where: { id: client.id } },
+          { where: { id: client.id, business_location } },
         );
       }
 
@@ -202,6 +211,9 @@ module.exports = {
   },
   getAll: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { isDeleted, todayDate } = req.body;
 
       //check body
@@ -213,6 +225,7 @@ module.exports = {
         where: {
           isDeleted,
           [Op.or]: [{ date: todayDate }, { updatedAt: todayDate }],
+          business_location,
         },
         order: [["id", "DESC"]],
       });
@@ -225,12 +238,21 @@ module.exports = {
   },
   getOne: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { bill_id } = req.body;
 
       //find the bill
       let bill = await Bill.findOne({
-        where: { id: bill_id },
-        include: BillTrans,
+        where: { id: bill_id, business_location },
+        include: [
+          {
+            model: BillTrans,
+            where: { business_location },
+            required: false,
+          },
+        ],
       });
 
       //send the bill
@@ -241,12 +263,15 @@ module.exports = {
   },
   getClientBills: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { clientId } = req.body;
 
       if (!clientId) return res.status(400).json("wrong req feilds");
 
       let bills = await Bill.findAll({
-        where: { ClientId: clientId },
+        where: { ClientId: clientId, business_location },
         order: [["id", "DESC"]],
       });
 
@@ -258,6 +283,9 @@ module.exports = {
   },
   getAdminBills: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { admin_id } = req.body;
 
       if (!admin_id) return res.status(400).json("wrong req feilds");
@@ -265,7 +293,7 @@ module.exports = {
       let currentDate = new Date();
       //get data from db
       let bills = await Bill.findAll({
-        where: { AdminAdminId: admin_id, date: currentDate },
+        where: { AdminAdminId: admin_id, date: currentDate, business_location },
         order: [["id", "DESC"]],
       });
 
@@ -277,11 +305,16 @@ module.exports = {
   },
   getBillTrans: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       let { billId } = req.body;
       if (!billId) return res.status(400).json("no bill id found");
 
       //find transaction for the bill
-      let billtrans = await BillTrans.findAll({ where: { BillId: billId } });
+      let billtrans = await BillTrans.findAll({
+        where: { BillId: billId, business_location },
+      });
 
       //send request
       res.json(billtrans);
@@ -291,6 +324,9 @@ module.exports = {
   },
   SearchInDates: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { start_date, end_date, isDeleted, admin_id } = req.body;
 
       if (!(start_date && end_date))
@@ -305,13 +341,18 @@ module.exports = {
             date: { [Op.between]: [start_date, end_date] },
             isDeleted,
             AdminAdminId: admin_id,
+            business_location,
           },
           order: [["id", "DESC"]],
         });
       } else {
         //without admin
         bills = await Bill.findAll({
-          where: { date: { [Op.between]: [start_date, end_date] }, isDeleted },
+          where: {
+            date: { [Op.between]: [start_date, end_date] },
+            isDeleted,
+            business_location,
+          },
           order: [["id", "DESC"]],
         });
       }
@@ -328,6 +369,9 @@ module.exports = {
   },
   deletedBillsUpdate: async (req, res) => {
     try {
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
       const { comment, id } = req.body;
 
       if (!(comment && id)) return res.status(400).json("enter all feilds");
@@ -339,7 +383,7 @@ module.exports = {
           isDeleted: true,
         },
         {
-          where: { id },
+          where: { id, business_location },
           order: [["id", "DESC"]],
         },
       );
@@ -353,7 +397,12 @@ module.exports = {
   deleteBillTrans: async (req, res) => {
     const { id } = req.body;
     try {
-      let billtrans = await BillTrans.destroy({ where: { id } });
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
+      let billtrans = await BillTrans.destroy({
+        where: { id, business_location },
+      });
 
       //send request
       res.json(billtrans);
@@ -362,15 +411,18 @@ module.exports = {
     }
   },
   deleteBill: async (req, res) => {
+    const business_location = requireBusinessLocation(req, res);
+    if (!business_location) return;
+
     let { id } = req.body;
 
     if (!id) return res.status(400).json("enter all feilds");
 
     //delete bill trans
-    await BillTrans.destroy({ where: { BillId: id } });
+    await BillTrans.destroy({ where: { BillId: id, business_location } });
 
     //delete from db
-    await Bill.destroy({ where: { id } });
+    await Bill.destroy({ where: { id, business_location } });
 
     //sent request
     res.json("success");
