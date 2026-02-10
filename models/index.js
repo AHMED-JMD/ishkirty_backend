@@ -4,22 +4,31 @@ const { connect } = require("..");
 const fs = require("fs");
 
 //connecting to mysql
+const useSSL =
+  String(process.env.ONLINE_DBSSL || "false")
+    .toLowerCase()
+    .trim() === "true";
+
+const sslCAPath = process.env.ONLINE_DB_SSL_CA || null;
+
+const sslConfig = useSSL
+  ? {
+      rejectUnauthorized: true,
+      ca: sslCAPath ? fs.readFileSync(sslCAPath) : undefined,
+    }
+  : undefined;
+
 const sequelize = new Sequelize(
   process.env.DBNAME,
   process.env.DBUSER,
   process.env.DBPASSWORD,
   {
     host: process.env.DBHOST,
+    port: process.env.DBPORT ? Number(process.env.DBPORT) : DBPORT || 3306,
     dialect: process.env.DIALECT,
     dialectOptions: {
       connectTimeout: 60000,
-      // ssl: {
-      //   // Only need CA certificate for Aiven
-      //   ca: process.env.AIVEN_DB_SSL_CA
-      //     ? fs.readFileSync(process.env.AIVEN_DB_SSL_CA)
-      //     : undefined,
-      //   rejectUnauthorized: true, // This is important for Aiven
-      // },
+      // ...(sslConfig ? { ssl: sslConfig } : {}),
     },
     logging: console.log, // Enable query logging
     pool: {

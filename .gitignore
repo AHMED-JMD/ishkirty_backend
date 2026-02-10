@@ -2,4 +2,4 @@ node_modules
 .env
 daemon
 client/build
-ca.pem
+ca-certificate.crt

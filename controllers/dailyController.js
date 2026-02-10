@@ -1,6 +1,7 @@
 const db = require("../models/index");
 const { Op } = require("sequelize");
 const Sequelize = require("sequelize");
+const fs = require("fs");
 const admin = require("../models/admin");
 
 const Daily = db.models.Daily;
@@ -443,8 +444,12 @@ module.exports = {
 
   SyncDB: async (req, res) => {
     try {
-      const { admin_id } = req.body;
-      if (!admin_id) return res.status(400).json("enter admin_id");
+      const business_location = requireBusinessLocation(req, res);
+      if (!business_location) return;
+
+      const { admin_id, date } = req.body;
+      if (!admin_id || !date)
+        return res.status(400).json("enter admin_id and date");
 
       // verify admin exists locally
       const Admin = db.models.Admin;
@@ -457,7 +462,10 @@ module.exports = {
         ONLINE_DBUSER,
         ONLINE_DBPASSWORD,
         ONLINE_DBHOST,
+        ONLINE_DBPORT,
         ONLINE_DIALECT,
+        ONLINE_DBSSL,
+        ONLINE_DB_SSL_CA,
       } = process.env;
 
       if (
@@ -470,16 +478,32 @@ module.exports = {
       }
 
       // create remote sequelize
+      const useSSL =
+        String(ONLINE_DBSSL || "false")
+          .toLowerCase()
+          .trim() === "true";
+      const sslCAPath = ONLINE_DB_SSL_CA || null;
+      const sslConfig = useSSL
+        ? {
+            rejectUnauthorized: true,
+            ca: sslCAPath ? fs.readFileSync(sslCAPath) : undefined,
+          }
+        : undefined;
+
       const remoteSequelize = new Sequelize(
         ONLINE_DBNAME,
         ONLINE_DBUSER,
         ONLINE_DBPASSWORD,
         {
           host: ONLINE_DBHOST,
+          port: ONLINE_DBPORT ? Number(ONLINE_DBPORT) : undefined,
           dialect: ONLINE_DIALECT,
           logging: false,
           pool: { max: 10, min: 0, acquire: 60000, idle: 10000 },
-          dialectOptions: { connectTimeout: 60000 },
+          dialectOptions: {
+            connectTimeout: 60000,
+            ...(sslConfig ? { ssl: sslConfig } : {}),
+          },
           retry: { max: 3 },
         },
       );
@@ -502,7 +526,16 @@ module.exports = {
       }
 
       // attempt connection to remote DB before proceeding
-      await connectWithRetry(remoteSequelize, 3);
+      try {
+        await connectWithRetry(remoteSequelize, 3);
+      } catch (err) {
+        await remoteSequelize.close();
+        return res
+          .status(400)
+          .json(
+            "تعذر الاتصال بقاعدة بيانات الانترنت. تحقق من الإنترنت أو الإعدادات.",
+          );
+      }
 
       // initialize remote models (same as models/index.js)
       const RemoteAdmin = require("../models/admin")(
@@ -514,6 +547,10 @@ module.exports = {
         Sequelize.DataTypes,
       );
       const RemoteSpieces = require("../models/spieces")(
+        remoteSequelize,
+        Sequelize.DataTypes,
+      );
+      const RemoteCategory = require("../models/categories")(
         remoteSequelize,
         Sequelize.DataTypes,
       );
@@ -575,10 +612,24 @@ module.exports = {
       RemoteBillTrans.belongsTo(RemoteBill);
       RemoteSpieces.hasMany(RemoteBillTrans);
       RemoteBillTrans.belongsTo(RemoteSpieces);
+      RemoteCategory.hasMany(RemoteSpieces, { foreignKey: "categoryId" });
+      RemoteSpieces.belongsTo(RemoteCategory, { foreignKey: "categoryId" });
       RemoteClient.hasMany(RemoteBill);
       RemoteBill.belongsTo(RemoteClient);
       RemoteAdmin.hasMany(RemoteBill);
       RemoteBill.belongsTo(RemoteAdmin);
+      RemoteAdmin.hasMany(RemoteDaily);
+      RemoteDaily.belongsTo(RemoteAdmin);
+      RemoteAdmin.hasMany(RemoteSafeDailies);
+      RemoteSafeDailies.belongsTo(RemoteAdmin);
+      RemoteAdmin.hasMany(RemoteSafeTransfers);
+      RemoteSafeTransfers.belongsTo(RemoteAdmin);
+      RemoteAdmin.hasMany(RemoteEmpTrans);
+      RemoteEmpTrans.belongsTo(RemoteAdmin);
+      RemoteAdmin.hasMany(RemotePurchaseRequest);
+      RemotePurchaseRequest.belongsTo(RemoteAdmin);
+      RemoteAdmin.hasMany(RemoteDischarges);
+      RemoteDischarges.belongsTo(RemoteAdmin);
       RemoteAdmin.hasMany(RemoteTransfer);
       RemoteTransfer.belongsTo(RemoteAdmin);
       RemoteSpieces.belongsToMany(RemoteStore, { through: RemoteSpiceStore });
@@ -629,6 +680,7 @@ module.exports = {
       const order = [
         { local: db.models.Admin, remote: RemoteAdmin },
         { local: db.models.Client, remote: RemoteClient },
+        { local: db.models.Category, remote: RemoteCategory },
         { local: db.models.Spieces, remote: RemoteSpieces },
         { local: db.models.Store, remote: RemoteStore },
         { local: db.models.SpiceStore, remote: RemoteSpiceStore },
@@ -645,6 +697,18 @@ module.exports = {
         { local: db.models.SafeTransfers, remote: RemoteSafeTransfers },
       ];
 
+      const dateFilteredModels = new Set([
+        db.models.Daily,
+        db.models.Bill,
+        db.models.BillTrans,
+        db.models.Transfer,
+        db.models.PurchaseRequest,
+        db.models.EmpTrans,
+        db.models.Discharges,
+        db.models.SafeDailies,
+        db.models.SafeTransfers,
+      ]);
+
       // run sync in a remote transaction
       const t = await remoteSequelize.transaction();
       try {
@@ -655,13 +719,17 @@ module.exports = {
           });
         }
 
-        // truncate remote tables then bulk insert local data
+        // delete matching remote rows then bulk insert local data
         for (const m of order) {
-          const localRows = await m.local.findAll({ raw: true });
+          const where = { business_location };
+          if (dateFilteredModels.has(m.local)) {
+            where.date = date;
+          }
+
+          const localRows = await m.local.findAll({ where, raw: true });
+
           await m.remote.destroy({
-            where: {},
-            truncate: true,
-            force: true,
+            where,
             transaction: t,
           });
           if (localRows && localRows.length > 0) {

@@ -77,6 +77,8 @@ module.exports = {
       const business_location = requireBusinessLocation(req, res);
       if (!business_location) return;
 
+      console.log("---------------iam here for testing-------------");
+
       const _feilds = _.pick(req.body, ["name", "categoryid", "price"]);
 
       const filename = req.file?.filename || null;
