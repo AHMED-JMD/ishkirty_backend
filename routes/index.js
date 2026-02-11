@@ -11,6 +11,7 @@ const employee = require("./employee");
 const discharges = require("./discharges");
 const daily = require("./daily");
 const safe = require("./safe");
+const businessLocation = require("./businessLocation");
 
 /**
  * @description register all of your routes here and they will be
@@ -31,6 +32,7 @@ router.use("/employee", employee);
 router.use("/discharges", discharges);
 router.use("/daily", daily);
 router.use("/safe", safe);
+router.use("/business-location", businessLocation);
 router.use("/safe-dailies", require("./safeDailies"));
 router.use("/safe-transfers", require("./safeTransfers"));
 

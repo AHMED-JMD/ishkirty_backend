@@ -542,6 +542,10 @@ module.exports = {
         remoteSequelize,
         Sequelize.DataTypes,
       );
+      const RemoteBusinessLocation = require("../models/businessLocation")(
+        remoteSequelize,
+        Sequelize.DataTypes,
+      );
       const RemoteClient = require("../models/client")(
         remoteSequelize,
         Sequelize.DataTypes,
@@ -673,11 +677,44 @@ module.exports = {
         as: "safe",
       });
 
+      // BusinessLocation relations
+      const remoteBusinessLocationModels = [
+        RemoteAdmin,
+        RemoteClient,
+        RemoteSpieces,
+        RemoteCategory,
+        RemoteBill,
+        RemoteBillTrans,
+        RemoteTransfer,
+        RemoteStore,
+        RemoteSpiceStore,
+        RemotePurchaseRequest,
+        RemoteEmployee,
+        RemoteEmpTrans,
+        RemoteDischarges,
+        RemoteDaily,
+        RemoteSafe,
+        RemoteSafeDailies,
+        RemoteSafeTransfers,
+      ];
+
+      remoteBusinessLocationModels.forEach((Model) => {
+        RemoteBusinessLocation.hasMany(Model, {
+          foreignKey: "business_location",
+          sourceKey: "name",
+        });
+        Model.belongsTo(RemoteBusinessLocation, {
+          foreignKey: "business_location",
+          targetKey: "name",
+        });
+      });
+
       // sync remote structure (create tables if missing)
       await remoteSequelize.sync();
 
       // prepare insertion order to respect FKs=(foreign keys)
       const order = [
+        { local: db.models.BusinessLocation, remote: RemoteBusinessLocation },
         { local: db.models.Admin, remote: RemoteAdmin },
         { local: db.models.Client, remote: RemoteClient },
         { local: db.models.Category, remote: RemoteCategory },

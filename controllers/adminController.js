@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const Admin = db.models.Admin;
+const BusinessLocation = db.models.BusinessLocation;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -11,9 +12,9 @@ let admin = {
       const business_location = requireBusinessLocation(req, res);
       if (!business_location) return;
 
-      let { username, phoneNum, password, shift } = req.body;
+      let { username, phoneNum, password, shift, role } = req.body;
       //check req.body
-      if (!(username && phoneNum && password)) {
+      if (!(username && phoneNum && password && role)) {
         return res.status(400).json("قم بادخال جميع الحقول");
       }
 
@@ -22,6 +23,12 @@ let admin = {
         where: { username, business_location },
       });
       if (admin) return res.status(400).json("admin already exist");
+
+      // ensure business location exists
+      const location = await BusinessLocation.findByPk(business_location);
+      if (!location) {
+        return res.status(400).json("location not found");
+      }
 
       //hash user password
       const salt = await bcrypt.genSalt(10);
@@ -32,6 +39,7 @@ let admin = {
         username,
         phoneNum,
         shift,
+        role,
         password: hashedPassword,
         business_location,
       });

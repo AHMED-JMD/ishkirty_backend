@@ -4,19 +4,19 @@ const { connect } = require("..");
 const fs = require("fs");
 
 //connecting to mysql
-const useSSL =
-  String(process.env.ONLINE_DBSSL || "false")
-    .toLowerCase()
-    .trim() === "true";
+// const useSSL =
+//   String(process.env.ONLINE_DBSSL || "false")
+//     .toLowerCase()
+//     .trim() === "true";
 
-const sslCAPath = process.env.ONLINE_DB_SSL_CA || null;
+// const sslCAPath = process.env.ONLINE_DB_SSL_CA || null;
 
-const sslConfig = useSSL
-  ? {
-      rejectUnauthorized: true,
-      ca: sslCAPath ? fs.readFileSync(sslCAPath) : undefined,
-    }
-  : undefined;
+// const sslConfig = useSSL
+//   ? {
+//       rejectUnauthorized: true,
+//       ca: sslCAPath ? fs.readFileSync(sslCAPath) : undefined,
+//     }
+//   : undefined;
 
 const sequelize = new Sequelize(
   process.env.DBNAME,
@@ -48,6 +48,10 @@ db.sequelize = sequelize;
 db.models = {};
 //require the objects
 let Admin = require("./admin")(sequelize, Sequelize.DataTypes);
+let BusinessLocation = require("./businessLocation")(
+  sequelize,
+  Sequelize.DataTypes,
+);
 let Client = require("./client")(sequelize, Sequelize.DataTypes);
 let Spieces = require("./spieces")(sequelize, Sequelize.DataTypes);
 let Category = require("./categories")(sequelize, Sequelize.DataTypes);
@@ -156,10 +160,43 @@ Daily.belongsToMany(Safe, {
 
 Safe.hasMany(SafeTransfers, { foreignKey: "SafeId", as: "safeTransfers" });
 SafeTransfers.belongsTo(Safe, { foreignKey: "SafeId", as: "safe" });
+
+// BusinessLocation relations -------------------
+const businessLocationModels = [
+  Admin,
+  Client,
+  Spieces,
+  Category,
+  Bill,
+  BillTrans,
+  Transfer,
+  Store,
+  SpiceStore,
+  PurchaseRequest,
+  Employee,
+  EmpTrans,
+  Discharges,
+  Daily,
+  Safe,
+  SafeDailies,
+  SafeTransfers,
+];
+
+businessLocationModels.forEach((Model) => {
+  BusinessLocation.hasMany(Model, {
+    foreignKey: "business_location",
+    sourceKey: "name",
+  });
+  Model.belongsTo(BusinessLocation, {
+    foreignKey: "business_location",
+    targetKey: "name",
+  });
+});
 //-----------------------END OF RELATIONS --------------------------------
 
 // //add to db models
 db.models.Admin = Admin;
+db.models.BusinessLocation = BusinessLocation;
 db.models.Client = Client;
 db.models.Spieces = Spieces;
 db.models.Category = Category;
