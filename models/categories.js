@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
       },
       description: {
         type: DataTypes.STRING,
@@ -18,7 +17,15 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: "port sudan",
       },
     },
-    { freezeTableName: true },
+    {
+      freezeTableName: true,
+      // indexes: [
+      //   {
+      //     unique: true,
+      //     fields: ["name", "business_location"],
+      //   },
+      // ],
+    },
   );
 
   return Category;

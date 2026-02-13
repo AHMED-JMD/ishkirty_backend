@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   add,
-  getAll,
+  getAllLocDailies,
   getOne,
   getByDate,
   update,
@@ -12,7 +12,7 @@ const {
 } = require("../controllers/dailyController");
 
 router.post("/", add);
-router.get("/", getAll);
+router.post("/locs-dailies", getAllLocDailies);
 router.post("/get-one", getOne);
 router.post("/sync", SyncDB);
 

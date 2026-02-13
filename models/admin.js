@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       business_location: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: "port sudan",
+        // defaultValue: "الفرع الرئيسي",
       },
     },
     { freezeTableName: true },

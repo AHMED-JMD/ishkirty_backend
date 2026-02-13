@@ -161,23 +161,23 @@ module.exports = {
     }
   },
 
-  getAll: async (req, res) => {
+  getAllLocDailies: async (req, res) => {
     try {
       const business_location = requireBusinessLocation(req, res);
       if (!business_location) return;
 
+      const { startDate, endDate, admin_id } = req.body;
+
+      //check admin exists
+      const admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("admin not found");
+
+      if (admin.role !== "super admin") {
+        return res.status(403).json("ليس لديك صلاحية عرض كل المواقع");
+      }
+
       const dailies = await Daily.findAll({
-        where: { business_location },
-        include: [
-          { model: Bill, where: { business_location }, required: false },
-          { model: EmpTrans, where: { business_location }, required: false },
-          {
-            model: PurchaseRequest,
-            where: { business_location },
-            required: false,
-          },
-          { model: Discharges, where: { business_location }, required: false },
-        ],
+        where: { date: { [Op.between]: [startDate, endDate] } },
         order: [["date", "DESC"]],
       });
       res.json(dailies);

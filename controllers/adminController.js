@@ -74,7 +74,10 @@ let admin = {
           return res.status(400).json("المستخدم غير موجود !");
         }
 
-        if (user.business_location !== business_location) {
+        if (
+          user.role !== "super admin" &&
+          user.business_location !== business_location
+        ) {
           return res.status(403).json("ليس لديك صلاحية الدخول لهذا الفرع");
         }
 
@@ -126,7 +129,7 @@ let admin = {
     const business_location = requireBusinessLocation(req, res);
     if (!business_location) return;
 
-    Admin.findOne({ where: { admin_id: req.user.id, business_location } })
+    Admin.findOne({ where: { admin_id: req.user.id } })
       .then((user) => {
         res.json({
           statusCode: 200,
