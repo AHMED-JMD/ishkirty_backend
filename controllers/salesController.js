@@ -3,6 +3,7 @@ const db = require("../models/index");
 const Bill = db.models.Bill;
 const Spieces = db.models.Spieces;
 const BillTrans = db.models.BillTrans;
+const Admin = db.models.Admin;
 const { Op } = require("sequelize");
 const { sequelize } = db;
 const { requireBusinessLocation } = require("../middlewares/businessLocation");
@@ -13,16 +14,37 @@ module.exports = {
       const business_location = requireBusinessLocation(req, res);
       if (!business_location) return;
 
-      const { start_date, end_date } = req.body;
+      const { start_date, end_date, admin_id } = req.body;
 
+      if (!(start_date && end_date && admin_id))
+        return res.status(400).json("invalid request body");
+
+      //bill for by admin role
+      let admin = await Admin.findOne({ where: { admin_id } });
+      if (!admin) {
+        return res.status(400).json("المسؤول غير موجود");
+      }
       // fetch bills and aggregate payment amounts by method + shiftTime
-      const bills = await Bill.findAll({
-        where: {
-          date: { [Op.between]: [start_date, end_date] },
-          isDeleted: false,
-          business_location,
-        },
-      });
+      let bills;
+
+      if (admin.role !== "admin" && admin.role !== "super admin") {
+        bills = await Bill.findAll({
+          where: {
+            date: { [Op.between]: [start_date, end_date] },
+            AdminAdminId: admin_id,
+            isDeleted: false,
+            business_location,
+          },
+        });
+      } else {
+        bills = await Bill.findAll({
+          where: {
+            date: { [Op.between]: [start_date, end_date] },
+            isDeleted: false,
+            business_location,
+          },
+        });
+      }
 
       const lookup = {}; // key: method__shift -> sum
 
@@ -170,15 +192,22 @@ module.exports = {
       throw error;
     }
   },
+
   allSpicesSales: async (req, res) => {
     try {
       const business_location = requireBusinessLocation(req, res);
       if (!business_location) return;
 
-      const { start_date, end_date } = req.body;
+      const { start_date, end_date, admin_id } = req.body;
 
-      if (!(start_date && end_date))
+      if (!(start_date && end_date && admin_id))
         return res.status(400).json("invalid request body");
+
+      //check admin
+      let admin = await db.models.Admin.findOne({ where: { admin_id } });
+      if (!admin) {
+        return res.status(400).json("المسؤول غير موجود");
+      }
 
       //get all spices
       const spieces = await Spieces.findAll({
@@ -192,14 +221,18 @@ module.exports = {
           //get all bill trans of a spice
           const bills = await BillTrans.findAll({
             where: {
-              name: spice.name,
+              SpieceId: spice.id,
               date: { [Op.between]: [start_date, end_date] },
               business_location,
             },
             include: [
               {
                 model: Bill,
-                where: { isDeleted: false, business_location },
+                where: {
+                  isDeleted: false,
+                  business_location,
+                  ...(admin.role !== "admin" ? { AdminAdminId: admin_id } : {}),
+                },
                 attributes: [], // don't need Bill fields in result
                 required: true, // inner join: only BillTrans with a matching Bill
               },
@@ -235,6 +268,7 @@ module.exports = {
       throw error;
     }
   },
+
   searchedSales: async (req, res) => {
     try {
       const business_location = requireBusinessLocation(req, res);

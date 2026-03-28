@@ -83,11 +83,9 @@ module.exports = {
       let { id } = req.body;
       if (!id) return res.status(400).json("enter all feilds");
 
-      // disassociate spieces first
-      await Spieces.update(
-        { categoryId: null },
-        { where: { categoryId: id, business_location } },
-      );
+      // delete spieces first
+      await Spieces.destroy({ where: { categoryId: id, business_location } });
+      //delete category
       await Category.destroy({ where: { id, business_location } });
 
       res.json("success");

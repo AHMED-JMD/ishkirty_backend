@@ -41,10 +41,16 @@ module.exports = {
       if (!admin) return res.status(400).json("admin not found");
 
       //find daily
-      let daily = await Daily.findOne({ where: { date, business_location } });
+      let daily = await Daily.findOne({
+        where: { date, business_location, AdminAdminId: admin_id },
+      });
 
       if (daily) {
-        if (admin.role !== "admin" && daily.AdminAdminId !== admin.admin_id) {
+        if (
+          admin.role !== "admin" &&
+          admin.role !== "super admin" &&
+          daily.AdminAdminId !== admin.admin_id
+        ) {
           return res.status(403).json("ليس لديك صلاحية تعديل هذه اليومية");
         }
         //update existing one
@@ -200,8 +206,11 @@ module.exports = {
       if (!admin) return res.status(400).json("admin not found");
 
       let dailies;
-      const adminInclude = { model: Admin, attributes: ["username"] };
-      if (admin.role !== "admin") {
+      const adminInclude = {
+        model: Admin,
+        attributes: ["username", "admin_id"],
+      };
+      if (admin.role !== "admin" && admin.role !== "super admin") {
         // only created dailies for non-admins
         dailies = await Daily.findAll({
           where: {
@@ -209,6 +218,7 @@ module.exports = {
               [Op.between]: [startDate, endDate],
             },
             isCreated: true,
+            AdminAdminId: admin_id,
             business_location,
           },
           include: [adminInclude],
@@ -247,7 +257,7 @@ module.exports = {
       if (!admin) return res.status(400).json("admin not found");
 
       let dailies;
-      if (admin.role !== "admin") {
+      if (admin.role !== "admin" && admin.role !== "super admin") {
         dailies = await Daily.findOne({
           where: {
             date,

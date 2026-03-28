@@ -70,20 +70,45 @@ module.exports = {
       const business_location = requireBusinessLocation(req, res);
       if (!business_location) return;
 
-      const { startDate, endDate } = req.body;
+      const { startDate, endDate, admin_id } = req.body;
 
-      const discharges = await Discharges.findAll({
-        where: {
-          date: {
-            [Op.between]: [startDate, endDate],
+      if (!startDate || !endDate || !admin_id)
+        return res.status(400).json("enter all feilds");
+
+      //check admin
+      let discharges;
+
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("not authorized");
+      //check role is not admin
+      if (admin.role !== "admin" && admin.role !== "super admin") {
+        discharges = await Discharges.findAll({
+          where: {
+            date: {
+              [Op.between]: [startDate, endDate],
+            },
+            AdminAdminId: admin_id,
+            business_location,
           },
-          business_location,
-        },
-        include: [
-          { model: Daily, where: { business_location }, required: false },
-        ],
-        order: [["date", "DESC"]],
-      });
+          include: [
+            { model: Daily, where: { business_location }, required: false },
+          ],
+          order: [["date", "DESC"]],
+        });
+      } else {
+        discharges = await Discharges.findAll({
+          where: {
+            date: {
+              [Op.between]: [startDate, endDate],
+            },
+            business_location,
+          },
+          include: [
+            { model: Daily, where: { business_location }, required: false },
+          ],
+          order: [["date", "DESC"]],
+        });
+      }
 
       res.json(discharges);
     } catch (error) {

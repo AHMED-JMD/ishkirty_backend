@@ -184,24 +184,47 @@ module.exports = {
       const business_location = requireBusinessLocation(req, res);
       if (!business_location) return;
 
-      const { startDate, endDate } = req.body;
-      if (!startDate || !endDate)
+      const { startDate, endDate, admin_id } = req.body;
+      if (!startDate || !endDate || !admin_id)
         return res.status(400).json("enter request data");
 
-      const list = await EmpTrans.findAll({
-        where: {
-          date: { [Op.between]: [startDate, endDate] },
-          business_location,
-        },
-        order: [["date", "DESC"]],
-        include: [
-          {
-            model: Employee,
-            attributes: ["name"],
-            where: { business_location },
+      let list;
+      //check admin
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("admin not found");
+      //check role is not admin
+      if (admin.role !== "admin" && admin.role !== "super admin") {
+        list = await EmpTrans.findAll({
+          where: {
+            date: { [Op.between]: [startDate, endDate] },
+            business_location,
+            AdminAdminId: admin_id,
           },
-        ],
-      });
+          order: [["date", "DESC"]],
+          include: [
+            {
+              model: Employee,
+              attributes: ["name"],
+              where: { business_location },
+            },
+          ],
+        });
+      } else {
+        list = await EmpTrans.findAll({
+          where: {
+            date: { [Op.between]: [startDate, endDate] },
+            business_location,
+          },
+          order: [["date", "DESC"]],
+          include: [
+            {
+              model: Employee,
+              attributes: ["name"],
+              where: { business_location },
+            },
+          ],
+        });
+      }
 
       // Add employee_name to each result
       const result = list.map((item) => ({

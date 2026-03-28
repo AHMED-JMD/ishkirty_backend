@@ -214,21 +214,40 @@ module.exports = {
       const business_location = requireBusinessLocation(req, res);
       if (!business_location) return;
 
-      const { isDeleted, todayDate } = req.body;
+      const { isDeleted, todayDate, admin_id } = req.body;
 
       //check body
-      if (isDeleted === undefined)
+      if (isDeleted === undefined || !todayDate || !admin_id)
         return res.status(400).json("invalid req body");
 
+      //check admin exist or not
+      let admin = await Admin.findOne({ where: { admin_id } });
+      if (!admin) {
+        return res.status(400).json("المسؤول غير موجود");
+      }
+
       //finding and paginating bills from db
-      let bills = await Bill.findAll({
-        where: {
-          isDeleted,
-          [Op.or]: [{ date: todayDate }, { updatedAt: todayDate }],
-          business_location,
-        },
-        order: [["id", "DESC"]],
-      });
+      let bills;
+      if (admin.role !== "admin" && admin.role !== "super admin") {
+        bills = await Bill.findAll({
+          where: {
+            isDeleted,
+            AdminAdminId: admin_id,
+            [Op.or]: [{ date: todayDate }, { updatedAt: todayDate }],
+            business_location,
+          },
+          order: [["id", "DESC"]],
+        });
+      } else {
+        bills = await Bill.findAll({
+          where: {
+            isDeleted,
+            [Op.or]: [{ date: todayDate }, { updatedAt: todayDate }],
+            business_location,
+          },
+          order: [["id", "DESC"]],
+        });
+      }
 
       //send response
       res.json(bills);
@@ -333,8 +352,14 @@ module.exports = {
         return res.status(400).json("bad request feilds");
 
       //check admin exist or not
+      //check admin exist or not
+      let admin = await Admin.findOne({ where: { admin_id } });
+      if (!admin) {
+        return res.status(400).json("المسؤول غير موجود");
+      }
+
       let bills;
-      if (admin_id) {
+      if (admin.role !== "admin" && admin.role !== "super admin") {
         //get with admin
         bills = await Bill.findAll({
           where: {
@@ -375,18 +400,70 @@ module.exports = {
       const { comment, id } = req.body;
 
       if (!(comment && id)) return res.status(400).json("enter all feilds");
+      //update store quantity
+      const t = await sequelize.transaction();
+      try {
+        let trans = await BillTrans.findAll({
+          where: { BillId: id, business_location },
+          transaction: t,
+        });
 
-      //update db
-      await Bill.update(
-        {
-          comment,
-          isDeleted: true,
-        },
-        {
-          where: { id, business_location },
-          order: [["id", "DESC"]],
-        },
-      );
+        for (const billtran of trans) {
+          // find the spice by name (front-end sends spice name in billtran.spices)
+          const spice = await Spieces.findOne({
+            where: { name: billtran.name, business_location },
+            transaction: t,
+          });
+          if (!spice) continue;
+
+          // get store items required for this spice (through SpiceStore)
+          const storeItems = await spice.getStores({
+            where: { business_location },
+            joinTableAttributes: ["quantityNeeded"],
+            transaction: t,
+          });
+
+          // increment each related store item by quantityNeeded * sold quantity
+          for (const si of storeItems) {
+            const neededPerUnit =
+              si.SpiceStore && si.SpiceStore.quantityNeeded
+                ? parseFloat(si.SpiceStore.quantityNeeded)
+                : 0;
+            const soldCount = Number(billtran.quantity || 0);
+            let totalNeeded = neededPerUnit * soldCount;
+
+            //check if it's kilos
+            if (si.isKilo) {
+              totalNeeded = totalNeeded / 1000;
+            }
+            if (totalNeeded === 0) continue;
+
+            // add back to store quantity using a literal to avoid race conditions
+            await Store.update(
+              { quantity: sequelize.literal(`quantity + ${totalNeeded}`) },
+              { where: { id: si.id }, transaction: t },
+            );
+          }
+        }
+
+        //update db
+        await Bill.update(
+          {
+            comment,
+            isDeleted: true,
+          },
+          {
+            where: { id, business_location },
+            order: [["id", "DESC"]],
+            transaction: t,
+          },
+        );
+
+        await t.commit();
+      } catch (err) {
+        await t.rollback();
+        throw err;
+      }
 
       //send request
       res.json("updated bill");

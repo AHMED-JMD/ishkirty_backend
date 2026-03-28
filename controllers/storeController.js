@@ -393,7 +393,7 @@ module.exports = {
         !store_item ||
         !date ||
         quantity === undefined ||
-        !net_quantity ||
+        net_quantity === undefined ||
         !payment_method ||
         !admin_id ||
         !tran_type
@@ -484,26 +484,23 @@ module.exports = {
       if (!business_location) return;
 
       const { startDate, endDate, type, admin_id } = req.body;
-      if (!startDate || !endDate || !type)
-        return res.status(400).json("enter startDate and endDate and type");
+
+      if (!startDate || !endDate || !type || !admin_id)
+        return res.status(400).json("enter all feilds");
 
       let purchases;
-
-      //if admin_id provided,
-      //  filter by admin_id,
-      //  else return for all admins
-      if (admin_id) {
-        //check admin
-        let admin = await Admin.findByPk(admin_id);
-        if (!admin) return res.status(400).json("admin not found");
-
+      //check admin
+      let admin = await Admin.findByPk(admin_id);
+      if (!admin) return res.status(400).json("admin not found");
+      //check role is not admin
+      if (admin.role !== "admin") {
         purchases = await PurchaseRequest.findAll({
           where: {
             date: {
               [Op.between]: [startDate, endDate],
             },
             store_type: type !== undefined ? type : "بيع",
-            AdminAdminId: admin.role !== "admin" ? admin_id : { [Op.ne]: null },
+            AdminAdminId: admin_id,
             business_location,
           },
           include: [
